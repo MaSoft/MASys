@@ -567,7 +567,8 @@ _JS = r"""
   document.querySelectorAll('[data-accion=csv]').forEach(function(b){
     b.addEventListener('click', function(){
       var sec = b.closest('section'), t = sec.querySelector('table'), lineas = [];
-      function celda(x){ return '"' + (x.textContent || '').trim().replace(/"/g, '""') + '"'; }
+      // Como la exportación CSV de MASys (_csv_safe_cell): lo que empieza por = + - @ tabulador o retorno no llega a Excel como fórmula
+      function celda(x){ var s = (x.textContent || '').trim(); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return '"' + s.replace(/"/g, '""') + '"'; }
       lineas.push(Array.prototype.map.call(t.querySelectorAll('tr.cab th'), celda).join(';'));
       Array.prototype.forEach.call(t.tBodies[0].rows, function(tr){ if (!tr.classList.contains('fuera')) lineas.push(Array.prototype.map.call(tr.cells, celda).join(';')); });
       var blob = new Blob(['﻿' + lineas.join('\r\n')], {type: 'text/csv;charset=utf-8'});
