@@ -43,7 +43,9 @@ try {{
     [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
     $OutputEncoding = [System.Text.Encoding]::UTF8
 
-    $acl = Get-Acl '{path}'
+    # -LiteralPath: con -Path una carpeta con corchetes en el nombre («Cont[2024]») se toma como comodín y
+    # devuelve 0 permisos sin error. -ErrorAction Stop: sin él, Get-Acl no lanza y el catch no se usa nunca.
+    $acl = Get-Acl -LiteralPath '{path}' -ErrorAction Stop
     $acl.Access | ForEach-Object {{
         $rights = $_.FileSystemRights.ToString()
         if ($rights -match '^\d+$') {{
@@ -62,7 +64,8 @@ try {{
         }}
     }} | ConvertTo-Json
 }} catch {{
-    @({{ IdentityReference='ERROR'; FileSystemRights=$_.Exception.Message; AccessControlType='Deny'; IsInherited=$false }}) | ConvertTo-Json
+    # Tabla hash dentro de @( ): antes era un bloque de script y su JSON no traía IdentityReference='ERROR'.
+    @(@{{ IdentityReference='ERROR'; FileSystemRights=$_.Exception.Message; AccessControlType='Deny'; IsInherited=$false }}) | ConvertTo-Json
 }}
 """
 
@@ -4715,7 +4718,7 @@ foreach ($t in (Get-ScheduledTask)) {{
         $carpeta = ($t.TaskPath.Trim('\')) -replace '[\\/:*?"<>|]', '_'
         $nombre = $t.TaskName -replace '[\\/:*?"<>|]', '_'
         $archivo = if ($carpeta) {{ "$carpeta`_$nombre.xml" }} else {{ "$nombre.xml" }}
-        $xml | Out-File -FilePath (Join-Path $destino $archivo) -Encoding UTF8
+        $xml | Out-File -LiteralPath (Join-Path $destino $archivo) -Encoding UTF8
         $total++
     }} catch {{
         $fallidas++
@@ -4732,7 +4735,7 @@ PS_BACKUP_SERVICIOS = r"""
 try {{
     Get-CimInstance Win32_Service |
         Select-Object Name, DisplayName, StartMode, State, StartName, PathName |
-        Export-Csv -Path '{destino}\Servicios.csv' -NoTypeInformation -Encoding UTF8
+        Export-Csv -LiteralPath '{destino}\Servicios.csv' -NoTypeInformation -Encoding UTF8
     @{{ Ok = $true }} | ConvertTo-Json
 }} catch {{
     @{{ Ok = $false; Error = $_.Exception.Message }} | ConvertTo-Json
@@ -4745,7 +4748,7 @@ PS_BACKUP_IMPRESORAS = r"""
 try {{
     Get-Printer |
         Select-Object Name, DriverName, PortName, Shared, Published, Type |
-        Export-Csv -Path '{destino}\Impresoras.csv' -NoTypeInformation -Encoding UTF8
+        Export-Csv -LiteralPath '{destino}\Impresoras.csv' -NoTypeInformation -Encoding UTF8
     @{{ Ok = $true }} | ConvertTo-Json
 }} catch {{
     @{{ Ok = $false; Error = $_.Exception.Message }} | ConvertTo-Json

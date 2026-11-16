@@ -958,7 +958,7 @@ _PERFIL_WLAN_XML_CON_CLAVE = """<?xml version="1.0"?>
                 <useOneX>false</useOneX>
             </authEncryption>
             <sharedKey>
-                <keyType>passPhrase</keyType>
+                <keyType>{key_type}</keyType>
                 <protected>false</protected>
                 <keyMaterial>{password}</keyMaterial>
             </sharedKey>
@@ -1073,8 +1073,10 @@ def wifi_crear_perfil_y_conectar(ssid: str, password: str, autenticacion: str, i
     if encryption == "none":
         xml_perfil = _PERFIL_WLAN_XML_ABIERTO.format(ssid=ssid_xml)
     else:
+        # WEP usa clave de red (networkKey); WPA/WPA2/WPA3 personal, frase de paso (passPhrase).
         xml_perfil = _PERFIL_WLAN_XML_CON_CLAVE.format(
             ssid=ssid_xml, authentication=authentication, encryption=encryption,
+            key_type="networkKey" if encryption == "WEP" else "passPhrase",
             password=_escapar_xml(password))
 
     archivo_temp = None

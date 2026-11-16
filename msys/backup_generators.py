@@ -869,9 +869,13 @@ class SqlBackupThread(QThread):
             for idx, nombre_bd in enumerate(self.claves):
                 self.progress.emit(int((idx / total) * 90), f"Copiando base de datos {nombre_bd}...")
                 ruta_bak = os.path.join(self.destino, f"{nombre_bd}.bak")
+                # Nombre entre corchetes con «]» doblado y textos con «'» doblado: una carpeta como «O'Brien»
+                # rompía la orden de SQL.
+                nombre_id = nombre_bd.replace("]", "]]")
+                nombre_txt = nombre_bd.replace("'", "''")
                 query = (
-                    f"BACKUP DATABASE [{nombre_bd}] TO DISK = N'{ruta_bak}' "
-                    f"WITH INIT, STATS = 25, NAME = N'{nombre_bd}-Full-MASys';"
+                    f"BACKUP DATABASE [{nombre_id}] TO DISK = N'{ruta_bak.replace(chr(39), chr(39) * 2)}' "
+                    f"WITH INIT, STATS = 25, NAME = N'{nombre_txt}-Full-MASys';"
                 )
                 resultado = subprocess.run(
                     [self.sqlcmd_path, "-S", self.servidor, "-E", "-b", "-Q", query],
