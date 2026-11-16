@@ -6,7 +6,7 @@ import tempfile
 import unittest
 
 from msys.core.utils import _existe_ejecutable, _is_eol_software, _csv_safe_cell
-from msys.collectors import serie_usb_visible, ContentCopyMoveThread
+from msys.collectors import serie_usb_visible, ContentCopyMoveThread, DataDriveCleanupThread
 
 
 class ExisteEjecutableTest(unittest.TestCase):
@@ -131,6 +131,36 @@ class CopiarMoverSinPerderDatosTest(unittest.TestCase):
         res = self._correr([{"nombre": "X", "ruta": os.path.join(self.base, "X")}], os.path.join("X", "sub"), "copiar", {})
         self.assertEqual(res["o"], 1)
         self.assertEqual(os.listdir(os.path.join(self.base, "X", "sub")), [])
+
+
+class LimpiezaUnidadDatosTest(unittest.TestCase):
+    """Limpieza de partición de datos: «recycler», «.Trashes»… se borraban a cualquier profundidad."""
+
+    def setUp(self):
+        self.raiz = tempfile.mkdtemp(prefix="masys unidad ")
+        for rel in (r"RECYCLER\S-1-5", r".Trashes\501", r"Proyectos\app\recycler", r"Fotos\.Trashes",
+                    r"Fotos\@eaDir\miniatura"):
+            os.makedirs(os.path.join(self.raiz, rel))
+        for rel in (r"RECYCLER\S-1-5\x.dat", r"Proyectos\app\recycler\Adaptador.kt", r"Fotos\.Trashes\nota.txt",
+                    r"Fotos\@eaDir\miniatura\m.jpg", r"Proyectos\informe.docx", r"Proyectos\borrar.tmp"):
+            with open(os.path.join(self.raiz, rel), "w") as f:
+                f.write("x")
+
+    def tearDown(self):
+        shutil.rmtree(self.raiz, ignore_errors=True)
+
+    def test_solo_en_la_raiz(self):
+        t = DataDriveCleanupThread("Z")
+        t._raiz = self.raiz
+        t._limpiar_archivos_basura()
+        existe = lambda rel: os.path.exists(os.path.join(self.raiz, rel))
+        self.assertFalse(existe("RECYCLER"))
+        self.assertFalse(existe(".Trashes"))
+        self.assertFalse(existe(r"Fotos\@eaDir"))
+        self.assertFalse(existe(r"Proyectos\borrar.tmp"))
+        self.assertTrue(existe(r"Proyectos\app\recycler\Adaptador.kt"))
+        self.assertTrue(existe(r"Fotos\.Trashes\nota.txt"))
+        self.assertTrue(existe(r"Proyectos\informe.docx"))
 
 
 if __name__ == "__main__":

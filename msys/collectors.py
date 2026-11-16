@@ -5559,6 +5559,10 @@ _PATRONES_OFFICE_LOCK_EXT = {"doc", "docx", "xls", "xlsx", "ppt", "pptx"}
 # Carpetas de caché/metadatos que se regeneran solas (macOS/Synology) —
 # mismo nivel de seguridad que Thumbs.db, se borran enteras como unidad.
 _CARPETAS_BASURA_REGENERABLE = {".spotlight-v100", ".fseventsd", ".temporaryitems", "@eadir"}
+# Solo existen en la RAÍZ de la unidad (macOS las crea ahí; RECYCLER es la papelera de Windows XP en la raíz; .Trashes
+# y #recycle, también). Antes se borraban a cualquier profundidad: una carpeta del usuario llamada «recycler» (habitual
+# en proyectos Android) se borraba entera y sin papelera. @eaDir (Synology) sí va en cada carpeta.
+_CARPETAS_SOLO_EN_RAIZ = {".spotlight-v100", ".fseventsd", ".temporaryitems", ".trashes", "#recycle", "recycler"}
 # Carpetas "papelera" de otros sistemas/herramientas que aparecen sueltas
 # en discos externos o antiguos — vaciarlas es como vaciar una papelera:
 # pierdes la recuperación, pero no es basura de otro tipo.
@@ -5645,6 +5649,7 @@ class DataDriveCleanupThread(QThread):
     def __init__(self, letra: str):
         super().__init__()
         self._letra = letra.rstrip(":")
+        self._raiz = f"{self._letra}:\\"
         self._stop_requested = False
 
     def request_stop(self):
@@ -5686,7 +5691,7 @@ class DataDriveCleanupThread(QThread):
         _es_archivo_basura. Devuelve un dict con el desglose:
         {"archivos": (bytes, n), "carpetas_regenerables": (bytes, n),
          "papeleras_residuales": (bytes, n), "gsdata_historial": (bytes, n)}."""
-        raiz = f"{self._letra}:\\"
+        raiz = self._raiz
         resultado = {
             "archivos": [0, 0],
             "carpetas_regenerables": [0, 0],
@@ -5698,6 +5703,7 @@ class DataDriveCleanupThread(QThread):
             if self._stop_requested:
                 break
             actual = pendientes.pop()
+            en_raiz = actual == raiz
             try:
                 entradas = list(os.scandir(actual))
             except OSError:
@@ -5711,6 +5717,9 @@ class DataDriveCleanupThread(QThread):
                         if nombre_lower in self._CARPETAS_EXCLUIDAS:
                             continue
                         if _es_reparse_point(entrada.path):
+                            continue
+                        if nombre_lower in _CARPETAS_SOLO_EN_RAIZ and not en_raiz:
+                            pendientes.append(entrada.path)   # carpeta normal del usuario: se recorre, no se borra
                             continue
                         if nombre_lower in _CARPETAS_BASURA_REGENERABLE:
                             resultado["carpetas_regenerables"][0] += _tamano_y_borrar_carpeta(
