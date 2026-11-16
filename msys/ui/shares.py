@@ -227,7 +227,7 @@ class CompartidasMixin:
     def apply_filter(self):
         """Aplica filtro de búsqueda en compartidas."""
         pattern = self.search.text()
-        rx = QRegExp(pattern, Qt.CaseInsensitive, QRegExp.RegExp)
+        rx = QRegExp(pattern, Qt.CaseInsensitive, QRegExp.FixedString)  # literal, como el resto de MASys: «C:\Program Files» u «Office (64» no encontraban nada
         self.proxy.setFilterRegExp(rx)
         self._update_shares_counter()
         # Refrescar vista activa automáticamente

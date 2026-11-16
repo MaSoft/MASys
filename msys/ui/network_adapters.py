@@ -463,7 +463,7 @@ class RedesMixin:
     def apply_network_filter(self):
         """Aplica filtro de búsqueda en adaptadores de red."""
         pattern = self.search_network.text()
-        rx = QRegExp(pattern, Qt.CaseInsensitive, QRegExp.RegExp)
+        rx = QRegExp(pattern, Qt.CaseInsensitive, QRegExp.FixedString)  # literal, como el resto de MASys: «C:\Program Files» u «Office (64» no encontraban nada
         self.network_proxy.setFilterRegExp(rx)
         self._update_network_counter()
 

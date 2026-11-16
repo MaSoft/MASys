@@ -313,7 +313,7 @@ class CredencialesMixin:
     def apply_creds_filter(self):
         """Aplica filtro de búsqueda en credenciales."""
         pattern = self.search_creds.text()
-        rx = QRegExp(pattern, Qt.CaseInsensitive, QRegExp.RegExp)
+        rx = QRegExp(pattern, Qt.CaseInsensitive, QRegExp.FixedString)  # literal, como el resto de MASys: «C:\Program Files» u «Office (64» no encontraban nada
         self.creds_proxy.setFilterRegExp(rx)
         self._update_creds_counter()
 

@@ -168,7 +168,7 @@ class UnidadesRemotasMixin:
     def apply_drives_filter(self):
         """Aplica filtro de búsqueda en unidades remotas."""
         pattern = self.search_drives.text()
-        rx = QRegExp(pattern, Qt.CaseInsensitive, QRegExp.RegExp)
+        rx = QRegExp(pattern, Qt.CaseInsensitive, QRegExp.FixedString)  # literal, como el resto de MASys: «C:\Program Files» u «Office (64» no encontraban nada
         self.drives_proxy.setFilterRegExp(rx)
         self._update_drives_counter()
 

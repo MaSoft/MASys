@@ -283,7 +283,7 @@ class WiFiMixin:
     def apply_wifi_filter(self):
         """Aplica filtro de búsqueda en WiFi."""
         pattern = self.search_wifi.text()
-        rx = QRegExp(pattern, Qt.CaseInsensitive, QRegExp.RegExp)
+        rx = QRegExp(pattern, Qt.CaseInsensitive, QRegExp.FixedString)  # literal, como el resto de MASys: «C:\Program Files» u «Office (64» no encontraban nada
         self.wifi_proxy.setFilterRegExp(rx)
         self._update_wifi_counter()
 
