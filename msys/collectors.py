@@ -652,6 +652,10 @@ class ShareCollector(QThread):
                     dirs.clear()  # Evita que os.walk continúe en subdirectorios
                     continue
 
+                # Junctions fuera, como en el resto de recorridos de este módulo: os.walk las sigue (comprobado,
+                # Python 3.12) y una que apunte hacia arriba repetía las mismas carpetas hasta max_depth niveles.
+                dirs[:] = [d for d in dirs if not _es_reparse_point(os.path.join(root, d))]
+
                 # Filtrar carpetas ocultas si es necesario
                 if not self.include_hidden:
                     dirs[:] = [d for d in dirs if not self._is_hidden(os.path.join(root, d))]
