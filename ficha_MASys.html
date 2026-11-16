@@ -273,6 +273,140 @@ footer { text-align: center; padding: 20px 0 0; margin-top: 40px; border-top: 1p
 </table>
 <p>Fuera del &#225;rbol: <strong>&#128192; Copias de seguridad</strong>, <strong>&#128218; Base de conocimiento</strong>, <strong>&#128421;&#65039; Acceso remoto</strong> y <strong>&#128241; M&#243;viles Android</strong> (botones bajo el &#225;rbol) y <strong>&#128736;&#65039; Soporte</strong> (barra inferior, cambia seg&#250;n la secci&#243;n activa). <strong>&#9729;&#65039; Microsoft 365</strong> est&#225; en Historial PS &#8250; Lanzar Scripts.</p>
 
+<h2>Funciones de la aplicaci&#243;n</h2>
+<p>Qu&#233; hace cada secci&#243;n, las herramientas que lleva dentro y las funciones comunes a todas.</p>
+<h3>Sistema</h3>
+<table>
+<tr><th>Secci&#243;n</th><th>Funciones</th></tr>
+<tr><td><strong>Sistema</strong></td><td>Fichas de hardware, sistema operativo, placa base y BIOS. Reinicio directo en la configuraci&#243;n de firmware (BIOS/UEFI).</td></tr>
+<tr><td><strong>Registro de Windows</strong></td><td>B&#250;squeda en el registro, escaneo de entradas hu&#233;rfanas, copia de seguridad de ramas antes de tocar y borrado seguro.</td></tr>
+<tr><td><strong>Iconos</strong></td><td>Bibliotecas de iconos de Windows con extracci&#243;n a ICO y PNG, reconstrucci&#243;n de las cach&#233;s de iconos y miniaturas, accesos directos rotos, espaciado y posici&#243;n de los iconos del escritorio, prioridad de los iconos superpuestos (OneDrive, Dropbox, Git&#8230;) e iconos personalizados de unidades.</td></tr>
+<tr><td><strong>Extensiones y programas</strong></td><td>Qu&#233; programa abre cada extensi&#243;n y cada protocolo, calculado igual que el Explorador. Detecta elecciones rotas, las restablece y exporta o importa las asociaciones en el XML de DISM.</td></tr>
+<tr><td><strong>Caracter&#237;sticas de Windows</strong></td><td>Caracter&#237;sticas opcionales y capacidades (RSAT, OpenSSH, idiomas&#8230;) en una sola tabla, perfiles listos &#8212; puesto de soporte IT, desarrollo, endurecer el equipo, programas antiguos &#8212; que ense&#241;an antes qu&#233; cambian, e instalaci&#243;n de .NET 3.5 sin internet.</td></tr>
+<tr><td><strong>Estabilidad</strong></td><td>Pantallazos azules con el c&#243;digo explicado y su causa habitual, an&#225;lisis del volcado para saber qu&#233; controlador lo provoc&#243;, apagados inesperados, apps que se cierran o dejan de responder e &#237;ndice de estabilidad de Windows.</td></tr>
+<tr><td><strong>Procesos</strong></td><td>Tabla con panel de detalle y notas, cambio de prioridad, finalizar / suspender / reanudar y detecci&#243;n de procesos sospechosos.</td></tr>
+<tr><td><strong>Programas de Inicio</strong></td><td>Claves Run de HKLM/HKCU (32 y 64 bits) y carpetas de inicio de todos los usuarios. Activar/desactivar por fila o en lote usando la misma clave que el Administrador de tareas, con verificaci&#243;n de firma digital.</td></tr>
+<tr><td><strong>Servicios</strong></td><td>Iniciar / detener / reiniciar, cambio de tipo de arranque, notas, y detecci&#243;n de servicios sospechosos, con rutas sin comillas o atascados.</td></tr>
+<tr><td><strong>Actualizaciones de Windows</strong></td><td>Listado de actualizaciones, instalaci&#243;n de un KB concreto y restablecimiento completo de Windows Update.</td></tr>
+<tr><td><strong>Variables de Entorno</strong></td><td>Alta, edici&#243;n y borrado de variables, desglose y b&#250;squeda dentro de PATH, copia del registro antes de escribir e historial de cambios.</td></tr>
+<tr><td><strong>Eventos del Sistema</strong></td><td>Consulta del visor de eventos con detalle por evento, filtros y aviso de eventos cr&#237;ticos recientes.</td></tr>
+</table>
+<h3>Disco y Archivos</h3>
+<table>
+<tr><th>Secci&#243;n</th><th>Funciones</th></tr>
+<tr><td><strong>Carpetas Compartidas</strong></td><td>An&#225;lisis de los recursos compartidos del equipo o de una ruta concreta, con control de profundidad, vista jer&#225;rquica (recurso &#8594; usuario &#8594; permisos) o de carpetas, e historial de conexiones.</td></tr>
+<tr><td><strong>Unidades Remotas</strong></td><td>Unidades de red mapeadas: conectar, desconectar, probar y ver el historial de conexiones.</td></tr>
+<tr><td><strong>Contenido</strong></td><td>B&#250;squeda de archivos y carpetas por nombre o expresi&#243;n regular, extensi&#243;n, tama&#241;o y fecha, acotada a un &#225;mbito (perfil de usuario, escritorio o ubicaci&#243;n libre). Gesti&#243;n de la papelera de reciclaje.</td></tr>
+<tr><td><strong>Discos Duros</strong></td><td>Salud de cada disco, verificaci&#243;n con CHKDSK y b&#250;squeda de archivos duplicados grandes (&#8805; 500 MB) que solo propone, nunca borra.</td></tr>
+</table>
+<h3>Red</h3>
+<table>
+<tr><th>Secci&#243;n</th><th>Funciones</th></tr>
+<tr><td><strong>WiFi</strong></td><td>Perfiles guardados con su clave, generaci&#243;n de c&#243;digo QR para compartir una red con un m&#243;vil, y escaneo de redes cercanas con conexi&#243;n directa.</td></tr>
+<tr><td><strong>Conexiones de Red</strong></td><td>Conexiones activas con resoluci&#243;n de nombre de host y men&#250; contextual.</td></tr>
+<tr><td><strong>Firewall</strong></td><td>Reglas del cortafuegos con cambio de acci&#243;n/estado, comprobaci&#243;n de puertos concretos y an&#225;lisis de puertos abiertos poco habituales.</td></tr>
+<tr><td><strong>Conexiones Remotas</strong></td><td>Sesiones y configuraci&#243;n de escritorio remoto (RDP).</td></tr>
+<tr><td><strong>Redes</strong></td><td>Adaptadores de red: habilitar, deshabilitar y reiniciar; vaciado de la cach&#233; DNS.</td></tr>
+<tr><td><strong>Red Local</strong></td><td>Tabla ARP: equipos vistos en el segmento de red local.</td></tr>
+<tr><td><strong>Herramientas de red</strong></td><td>Diagn&#243;stico por capas de cualquier destino &#8212; de la tarjeta de red a Microsoft 365 &#8212; con investigaci&#243;n de puertos e informe t&#233;cnico o para el cliente. Consultas DNS en varios servidores, WHOIS (RDAP), cabeceras web, certificado TLS e IP p&#250;blica.</td></tr>
+</table>
+<h3>Usuarios y Seguridad</h3>
+<table>
+<tr><th>Secci&#243;n</th><th>Funciones</th></tr>
+<tr><td><strong>Usuarios</strong></td><td>Cuentas locales, de dominio y del sistema: activar/desactivar, permisos e historial, con exportaci&#243;n.</td></tr>
+<tr><td><strong>Credenciales</strong></td><td>Administrador de credenciales de Windows: probar, a&#241;adir, editar y eliminar entradas.</td></tr>
+<tr><td><strong>Certificados</strong></td><td>Almacenes de certificados del equipo y del usuario, con exportaci&#243;n y aviso de certificados sospechosos.</td></tr>
+<tr><td><strong>Cuentas de Correo</strong></td><td>Cuentas y firmas de Outlook, con exportaci&#243;n de buzones a ficheros PST independientes.</td></tr>
+<tr><td><strong>Navegadores y Nube</strong></td><td>Firefox, Chrome y Edge por perfil: marcadores, historial, descargas, extensiones y contrase&#241;as guardadas. Gestor de favoritos para cargarlos, revisarlos, editarlos, comprobar enlaces rotos, reorganizarlos y volver a escribirlos en el navegador o migrarlos a otro (exporta e importa en formato est&#225;ndar). Auditor&#237;a de contrase&#241;as: fortaleza, reutilizadas y comprobaci&#243;n de si est&#225;n expuestas en filtraciones conocidas mediante Have I Been Pwned, sin que la contrase&#241;a salga del equipo (k-anonymity). Cuentas y carpetas vinculadas de OneDrive.</td></tr>
+<tr><td><strong>Active Directory</strong></td><td>Consulta del dominio mediante RSAT, con instalador de RSAT integrado si no est&#225; presente.</td></tr>
+<tr><td><strong>Pol&#237;ticas de Grupo</strong></td><td>Estado de uni&#243;n a dominio / Entra ID (dsregcmd), GPO aplicadas (gpresult) e inscripci&#243;n en Intune/MDM. No depende de RSAT: siempre disponible.</td></tr>
+<tr><td><strong>Sesiones Activas</strong></td><td>Sesiones de usuario abiertas en el equipo en este momento.</td></tr>
+<tr><td><strong>Seguridad</strong></td><td>Fichas de antivirus, cortafuegos, cifrado (BitLocker) y endurecimiento (UAC, SMBv1, PowerShell Remoting, AutoRun, Credential Guard, protecci&#243;n LSA&#8230;), con informe de seguridad.</td></tr>
+</table>
+<h3>Hardware y Perif&#233;ricos</h3>
+<table>
+<tr><th>Secci&#243;n</th><th>Funciones</th></tr>
+<tr><td><strong>Administrador de Dispositivos</strong></td><td>Controladores instalados, copia de seguridad completa de los controladores de terceros (para antes de reinstalar Windows), dispositivos ocultos o fantasma y dispositivos con problema.</td></tr>
+<tr><td><strong>Impresoras</strong></td><td>Impresoras instaladas, cola de impresi&#243;n por impresora (pausar / reanudar / eliminar trabajos) y reinicio del servicio de cola (Spooler).</td></tr>
+<tr><td><strong>Dispositivos USB</strong></td><td>Dispositivos actuales, historial completo de almacenamiento USB conectado alguna vez al equipo, y detecci&#243;n de dispositivos sospechosos tipo BadUSB (mismo VID/PID present&#225;ndose con varias clases a la vez).</td></tr>
+<tr><td><strong>Gr&#225;ficas y Monitores</strong></td><td>Adaptadores gr&#225;ficos y monitores; cambio de resoluci&#243;n de forma independiente por monitor, con cuenta atr&#225;s de seguridad para confirmar.</td></tr>
+<tr><td><strong>Bluetooth</strong></td><td>Adaptadores y dispositivos Bluetooth emparejados.</td></tr>
+<tr><td><strong>M&#243;vil Android</strong></td><td>Recibe por la red local, cifrados con AES-256, los informes de la app MASysMov: ficha del m&#243;vil, hallazgos de seguridad, apps y permisos, conexiones y rastreadores, espacio, bater&#237;a, procesos, evoluci&#243;n y copias de apps. Tambi&#233;n comprueba si un puerto de tu red se ve desde internet.</td></tr>
+</table>
+<h3>Administraci&#243;n</h3>
+<table>
+<tr><th>Secci&#243;n</th><th>Funciones</th></tr>
+<tr><td><strong>Software Instalado</strong></td><td>Inventario de programas con lista negra, desinstalaci&#243;n y men&#250; contextual.</td></tr>
+<tr><td><strong>Tareas Programadas</strong></td><td>Tareas del programador de Windows con detecci&#243;n de tareas sospechosas y calendario de pr&#243;ximas ejecuciones.</td></tr>
+<tr><td><strong>Historial de PowerShell</strong></td><td>Historial de comandos de PowerShell con detecci&#243;n de bypass y ofuscaci&#243;n, y un lanzador de scripts .ps1 propios del t&#233;cnico.</td></tr>
+<tr><td><strong>Licencias</strong></td><td>Estado de activaci&#243;n de Windows y de Office / Microsoft 365 le&#237;do de la plataforma de protecci&#243;n de software (SPP).</td></tr>
+<tr><td><strong>Gestor de Paquetes</strong></td><td>Paquetes de winget: instalaci&#243;n individual o en lote en segundo plano y bloqueo/desbloqueo de la actualizaci&#243;n de un paquete concreto.</td></tr>
+<tr><td><strong>SQL Server</strong></td><td>Detecci&#243;n de instancias de SQL Server, Express y LocalDB por registro; control de sus servicios (motor y agente) y copia de seguridad .bak de las bases de datos.</td></tr>
+<tr><td><strong>Inventario de migraci&#243;n</strong></td><td>Todo lo que hay que tener en cuenta al cambiar de equipo, en 18 categor&#237;as y sin copiar datos ni contrase&#241;as. En el equipo nuevo dice qu&#233; falta, reinstala los programas con winget y genera una lista de comprobaci&#243;n imprimible.</td></tr>
+</table>
+<h3>Herramientas de Microsoft 365, Exchange Online y SharePoint</h3>
+<p>En <strong>Administraci&#243;n &#8250; Historial PS &#8250; &#128640; Lanzar Scripts &#8250; &#9729;&#65039; Microsoft 365</strong>. Cada una con su gu&#237;a de uso y su plantilla CSV.</p>
+<table>
+<tr><th>Herramienta</th><th>Qu&#233; hace</th></tr>
+<tr><td><strong>Crear buzones compartidos</strong></td><td>Crea buzones compartidos desde un CSV y da Acceso total y Enviar como a los usuarios de cada fila.</td></tr>
+<tr><td><strong>Cambio de dominio de correo</strong></td><td>Cambia la direcci&#243;n principal de una lista de buzones a otro dominio; la antigua queda como alias.</td></tr>
+<tr><td><strong>Correos grandes de la migraci&#243;n</strong></td><td>Localiza los correos que una migraci&#243;n IMAP omite por superar el l&#237;mite de tama&#241;o de Exchange Online (LargeItem).</td></tr>
+<tr><td><strong>Estado de la migraci&#243;n IMAP</strong></td><td>Estado de los lotes de migraci&#243;n cuenta por cuenta, con CSV, para saber qu&#233; cuentas necesitan intervenci&#243;n.</td></tr>
+<tr><td><strong>Migraci&#243;n IMAP a Exchange Online</strong></td><td>Migra el correo de un proveedor IMAP a Exchange Online: crea el origen de migraci&#243;n y un lote con las cuentas.</td></tr>
+<tr><td><strong>Permisos de buzones</strong></td><td>Aplica en lote los permisos de buzones de usuario, compartidos y salas: acceso, enviar como, enviar en nombre y calendario.</td></tr>
+<tr><td><strong>Reintentar un usuario de la migraci&#243;n IMAP</strong></td><td>Saca de su lote una cuenta con la contrase&#241;a incorrecta o caducada y la mete en uno nuevo con la contrase&#241;a correcta.</td></tr>
+<tr><td><strong>Salas de reuniones</strong></td><td>Crea o reconfigura salas que se reservan desde Outlook y Teams, con sus reglas de reserva.</td></tr>
+<tr><td><strong>Crear cuentas en Microsoft 365</strong></td><td>Crea de una vez todas las cuentas de un CSV en un inquilino de Microsoft 365.</td></tr>
+<tr><td><strong>Env&#237;o masivo de correo personalizado</strong></td><td>Env&#237;a a cada persona de un CSV su propio correo a partir de una plantilla HTML con sus datos.</td></tr>
+<tr><td><strong>Informe de lo compartido con externos</strong></td><td>Excel con los sitios de SharePoint y los OneDrive que comparten contenido con personas externas.</td></tr>
+<tr><td><strong>Invitados externos (B2B)</strong></td><td>Da de alta como invitados a personas de otras empresas a partir de un CSV.</td></tr>
+<tr><td><strong>Respuestas a un correo a Excel</strong></td><td>Lee las respuestas a un env&#237;o masivo y las ordena en un Excel.</td></tr>
+<tr><td><strong>Restablecer contrase&#241;as</strong></td><td>Restablece la contrase&#241;a de las cuentas de un CSV: la indicada o una generada de 16 caracteres.</td></tr>
+<tr><td><strong>Verificar cuentas</strong></td><td>Revisa las cuentas de un CSV o de todo el inquilino y da un veredicto de cada una.</td></tr>
+<tr><td><strong>Inventario de sitios de SharePoint</strong></td><td>Lista en CSV todos los sitios de SharePoint Online y, por defecto, los OneDrive personales.</td></tr>
+</table>
+<h3>Herramientas de diagn&#243;stico de Windows</h3>
+<p>Cada una con un bot&#243;n en la secci&#243;n donde encaja y su gu&#237;a de uso; los resultados quedan en <code>INFORMES\&lt;herramienta&gt;\&lt;fecha&gt;</code>.</p>
+<table>
+<tr><th>Herramienta</th><th>Qu&#233; hace</th></tr>
+<tr><td><strong>Auditor&#237;a de accesos</strong></td><td>Informe de accesos a partir del registro de Seguridad de Windows.</td></tr>
+<tr><td><strong>Aviso de Escritorio remoto</strong></td><td>Quita, en todos los usuarios con sesi&#243;n, la advertencia que muestra Escritorio remoto al abrir archivos .rdp desde las actualizaciones de abril de 2026.</td></tr>
+<tr><td><strong>Claves de recuperaci&#243;n BitLocker</strong></td><td>Estado de BitLocker y contrase&#241;as de recuperaci&#243;n de 48 d&#237;gitos de cada unidad.</td></tr>
+<tr><td><strong>Diagn&#243;stico HTTPS / TLS</strong></td><td>Diagnostica y corrige los fallos de conexi&#243;n segura (SSL/TLS) de programas, scripts e integraciones.</td></tr>
+<tr><td><strong>Evaluaci&#243;n de Windows 11</strong></td><td>Eval&#250;a un equipo con Windows 10 u 11 de cara a Windows 11.</td></tr>
+<tr><td><strong>Exportar Thunderbird</strong></td><td>Guarda lo que solo existe en el equipo, como contactos y calendario, antes de pasar de Thunderbird a Outlook.</td></tr>
+<tr><td><strong>Instalar Microsoft 365 / Office</strong></td><td>Instala Office en silencio con la Herramienta de implementaci&#243;n de Office (ODT) de Microsoft.</td></tr>
+<tr><td><strong>Vigilar microcortes de red</strong></td><td>Detecta los cortes de pocos segundos con un ping cada segundo a la puerta de enlace y a otros destinos.</td></tr>
+<tr><td><strong>Monitor de impresoras de red</strong></td><td>Comprueba cada pocos segundos todas las impresoras de red para cazar los fallos intermitentes.</td></tr>
+<tr><td><strong>Monitor de rendimiento</strong></td><td>Tarea programada que mide en segundo plano y, tras uno a tres d&#237;as de uso, genera un informe de por qu&#233; va lento el equipo.</td></tr>
+</table>
+<h3>Funciones comunes</h3>
+<table>
+<tr><th>Funci&#243;n</th><th>Descripci&#243;n</th></tr>
+<tr><td><strong>Soporte contextual</strong></td><td>Un bot&#243;n por secci&#243;n que re&#250;ne las reparaciones habituales (SFC/DISM, punto de restauraci&#243;n, an&#225;lisis de memoria, reinicio del Explorador, restablecer Windows Update, vaciar DNS&#8230;) y, adem&#225;s, los problemas detectados sobre los datos que ya tienes cargados: servicios o tareas sospechosos, PATH inseguro, discos con avisos&#8230; Cada aviso se puede validar para dejar de mostrarlo.</td></tr>
+<tr><td><strong>Credenciales alternativas</strong></td><td>Ejecuta los an&#225;lisis con otro usuario (DOMINIO\\Usuario o usuario@dominio) sin cerrar la aplicaci&#243;n &#8212; pensado para inspeccionar recursos y equipos remotos a los que tu sesi&#243;n actual no llega.</td></tr>
+<tr><td><strong>B&#250;squeda global</strong></td><td>Busca un t&#233;rmino en los datos de todas las secciones cargadas a la vez, sin ir pesta&#241;a por pesta&#241;a.</td></tr>
+<tr><td><strong>Snapshots del sistema</strong></td><td>Guarda el estado completo del equipo en un fichero y comp&#225;ralo con otro momento posterior para ver exactamente qu&#233; ha cambiado.</td></tr>
+<tr><td><strong>Perfiles de navegaci&#243;n</strong></td><td>Muestra, oculta y reordena las secciones, y guarda configuraciones con nombre para cada tipo de intervenci&#243;n. El perfil &#171;MASys&#187; es el predeterminado y queda protegido.</td></tr>
+<tr><td><strong>Tema e integraci&#243;n</strong></td><td>Tema claro y oscuro, icono en la bandeja del sistema y ventana de trabajo amplia. Aplicaci&#243;n de escritorio sin servicio en segundo plano ni conexi&#243;n a la nube; el agente de an&#225;lisis remoto es opcional.</td></tr>
+<tr><td><strong>Exportaci&#243;n e informes</strong></td><td>CSV, HTML, PDF y Excel de la secci&#243;n activa o de todo el equipo, y an&#225;lisis de seguridad b&#225;sico con informe PDF.</td></tr>
+<tr><td><strong>Historial de acciones</strong></td><td>Las operaciones sensibles crean una copia de seguridad previa cuando es posible y quedan registradas.</td></tr>
+</table>
+<h3>Copias de seguridad (10 generadores con restauraci&#243;n)</h3>
+<table>
+<tr><th>Copia</th><th>Contenido</th></tr>
+<tr><td><strong>Registro de Windows</strong></td><td>HKLM\\SOFTWARE, HKLM\\SYSTEM y HKCU.</td></tr>
+<tr><td><strong>Credenciales y accesos</strong></td><td>Administrador de credenciales (con sus claves DPAPI), perfiles WiFi con clave, SSH y Git.</td></tr>
+<tr><td><strong>Navegadores</strong></td><td>Marcadores, contrase&#241;as, historial, cookies y sesiones de un perfil.</td></tr>
+<tr><td><strong>Configuraci&#243;n del sistema</strong></td><td>Firewall, tareas, servicios, variables de entorno, red, impresoras, directiva local y certificados.</td></tr>
+<tr><td><strong>Correo</strong></td><td>Configuraci&#243;n de cuentas y firmas de Outlook.</td></tr>
+<tr><td><strong>Perfil de usuario</strong></td><td>Escritorio, Documentos, Im&#225;genes, V&#237;deos, M&#250;sica, Descargas y AppData\\Roaming.</td></tr>
+<tr><td><strong>Nube</strong></td><td>Cuentas y carpetas vinculadas de OneDrive.</td></tr>
+<tr><td><strong>Configuraci&#243;n de MASys</strong></td><td>Ajustes propios: lista negra, v&#237;nculos winget, avisos validados y cat&#225;logo de scripts.</td></tr>
+<tr><td><strong>Bases de datos SQL Server</strong></td><td>BACKUP DATABASE (.bak) de una instancia local, con autenticaci&#243;n de Windows.</td></tr>
+<tr><td><strong>Forense / auditor&#237;a</strong></td><td>Captura pericial con el motor MaPeriT &#8212; en caliente sobre el equipo en marcha o en fr&#237;o sobre un disco conectado sin arrancar &#8212; con consola elevada, informe HTML y cadena de custodia.</td></tr>
+</table>
+
 <h2>Cambio de nombre (4.1.7)</h2>
 <p>MultiSYS pasa a llamarse MASys en la ventana, la bandeja, los informes, las copias, los documentos y el c&#243;digo. Se mantienen a prop&#243;sito, porque guardan datos o los usa el LAUNCHER:</p>
 <ul>
