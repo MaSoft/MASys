@@ -2719,6 +2719,12 @@ class ScheduledTaskCollector(QThread):
             self.finished_error.emit(str(e))
 
 
+# -TaskName y -TaskPath admiten comodines (comprobado: «A[d]obe Acrobat Update Task» encuentra «Adobe Acrobat Update
+# Task»): con corchetes en el nombre se podía activar, lanzar o BORRAR otra tarea. Se busca por nombre y ruta exactos.
+_PS_TAREA_EXACTA = ("$t = @(Get-ScheduledTask | Where-Object {{ $_.TaskName -eq '{nombre}' -and $_.TaskPath -eq '{ruta}' }}); "
+                    "if ($t.Count -ne 1) {{ throw 'No se encuentra la tarea' }}; ")
+
+
 class ScheduledTaskManager:
     """Acciones sobre una tarea programada por Nombre+Ruta (TaskPath) — el
     nombre solo no es único: dos tareas en carpetas distintas del
@@ -2729,19 +2735,19 @@ class ScheduledTaskManager:
 
     def enable(self, nombre: str, ruta: str) -> Tuple[bool, str]:
         return run_powershell_command_params(
-            "Enable-ScheduledTask -TaskName '{nombre}' -TaskPath '{ruta}'", nombre=nombre, ruta=ruta)
+            _PS_TAREA_EXACTA + "$t[0] | Enable-ScheduledTask | Out-Null", nombre=nombre, ruta=ruta)
 
     def disable(self, nombre: str, ruta: str) -> Tuple[bool, str]:
         return run_powershell_command_params(
-            "Disable-ScheduledTask -TaskName '{nombre}' -TaskPath '{ruta}'", nombre=nombre, ruta=ruta)
+            _PS_TAREA_EXACTA + "$t[0] | Disable-ScheduledTask | Out-Null", nombre=nombre, ruta=ruta)
 
     def run_now(self, nombre: str, ruta: str) -> Tuple[bool, str]:
         return run_powershell_command_params(
-            "Start-ScheduledTask -TaskName '{nombre}' -TaskPath '{ruta}'", nombre=nombre, ruta=ruta)
+            _PS_TAREA_EXACTA + "$t[0] | Start-ScheduledTask", nombre=nombre, ruta=ruta)
 
     def delete(self, nombre: str, ruta: str) -> Tuple[bool, str]:
         return run_powershell_command_params(
-            "Unregister-ScheduledTask -TaskName '{nombre}' -TaskPath '{ruta}' -Confirm:$false",
+            _PS_TAREA_EXACTA + "$t[0] | Unregister-ScheduledTask -Confirm:$false",
             nombre=nombre, ruta=ruta)
 
 
@@ -2844,7 +2850,12 @@ class PrinterManager:
         return self._metodo_impresora(nombre, "Resume")
 
     def remove(self, nombre: str) -> Tuple[bool, str]:
-        return run_powershell_command_params("Remove-Printer -Name '{nombre}'", nombre=nombre)
+        # -Name admite comodines (comprobado: Get-Printer -Name 'Micro[s]oft Print to PDF' encuentra «Microsoft Print
+        # to PDF»): con corchetes en el nombre se podía borrar OTRA impresora. Se busca por nombre exacto.
+        return run_powershell_command_params(
+            "$p = @(Get-Printer | Where-Object {{ $_.Name -eq '{nombre}' }}); "
+            "if ($p.Count -ne 1) {{ throw 'No se encuentra la impresora' }}; "
+            "Remove-Printer -InputObject $p[0]", nombre=nombre)
 
     def get_print_jobs(self, nombre: str) -> Tuple[bool, Any]:
         """Trabajos en la cola de una impresora (Get-PrintJob). Devuelve

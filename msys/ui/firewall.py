@@ -412,7 +412,7 @@ class FirewallMixin:
             return
         nombre_escapado = escape_powershell_string(regla.nombre_interno)
         ok, error = run_powershell_command(
-            f"Set-NetFirewallRule -Name '{nombre_escapado}' -Action {nueva_accion}")
+            f"$r = @(Get-NetFirewallRule | Where-Object {{ $_.Name -eq '{nombre_escapado}' }}); if ($r.Count -ne 1) {{ throw 'No se encuentra la regla' }}; $r[0] | Set-NetFirewallRule -Action {nueva_accion}")
         self._registrar_historial("🔥 Firewall", f"Cambiar regla a {texto_nuevo}", regla.nombre, ok, error)
         if ok:
             regla.accion = texto_nuevo
@@ -443,7 +443,7 @@ class FirewallMixin:
             return
         nombre_escapado = escape_powershell_string(regla.nombre_interno)
         ok, error = run_powershell_command(
-            f"Set-NetFirewallRule -Name '{nombre_escapado}' -Enabled {nuevo_valor}")
+            f"$r = @(Get-NetFirewallRule | Where-Object {{ $_.Name -eq '{nombre_escapado}' }}); if ($r.Count -ne 1) {{ throw 'No se encuentra la regla' }}; $r[0] | Set-NetFirewallRule -Enabled {nuevo_valor}")
         self._registrar_historial("🔥 Firewall", "Habilitar regla" if nuevo_valor == "True" else "Deshabilitar regla",
                                   regla.nombre, ok, error)
         if ok:
@@ -495,7 +495,8 @@ class FirewallMixin:
             "netsh advfirewall export '{ruta}' | Out-Null; if ($LASTEXITCODE -ne 0) {{ throw 'netsh devolvió error' }}")
         if not ok_copia and not self._seguir_sin_copia("la configuración del firewall", copia):
             return
-        ok, error = run_powershell_command(f"Remove-NetFirewallRule -Name '{nombre_escapado}'")
+        # Por nombre exacto: -Name admite comodines y con corchetes podía borrar otra regla.
+        ok, error = run_powershell_command(f"$r = @(Get-NetFirewallRule | Where-Object {{ $_.Name -eq '{nombre_escapado}' }}); if ($r.Count -ne 1) {{ throw 'No se encuentra la regla' }}; $r[0] | Remove-NetFirewallRule")
         if ok and ok_copia:
             error = f"Copia previa: {copia} (restaurar: netsh advfirewall import \"{copia}\")"
         self.repair_audit_db.registrar(

@@ -247,8 +247,9 @@ class TareasProgramadasMixin:
         # 5.5.0: copia del XML de la tarea antes de borrarla (se restaura con schtasks /create /xml)
         ok_copia, copia = self._copia_previa(
             "TAREAS", f"{row.nombre}.xml",
-            "Export-ScheduledTask -TaskName '{nombre}' -TaskPath '{ruta_tarea}' | "
-            "Out-File -LiteralPath '{ruta}' -Encoding Unicode",
+            "$t = @(Get-ScheduledTask | Where-Object {{ $_.TaskName -eq '{nombre}' -and $_.TaskPath -eq '{ruta_tarea}' }}); "
+            "if ($t.Count -ne 1) {{ throw 'No se encuentra la tarea' }}; "
+            "Export-ScheduledTask -InputObject $t[0] | Out-File -LiteralPath '{ruta}' -Encoding Unicode",
             nombre=row.nombre, ruta_tarea=row.ruta or "\\")
         if not ok_copia and not self._seguir_sin_copia(f"la tarea «{row.nombre}»", copia):
             return

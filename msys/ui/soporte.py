@@ -3791,7 +3791,7 @@ class SoporteMixin:
                     continue
                 nombre_escapado = escape_powershell_string(regla.nombre_interno)
                 ok, error = run_powershell_command(
-                    f"Set-NetFirewallRule -Name '{nombre_escapado}' -Action Block")
+                    f"$r = @(Get-NetFirewallRule | Where-Object {{ $_.Name -eq '{nombre_escapado}' }}); if ($r.Count -ne 1) {{ throw 'No se encuentra la regla' }}; $r[0] | Set-NetFirewallRule -Action Block")
                 self.repair_audit_db.registrar(
                     seccion="🔥 Firewall", accion="Cambiar a Bloquear (revisión de reglas amplias)",
                     objetivo=regla.nombre, exito=ok, detalle=error if not ok else "OK",
