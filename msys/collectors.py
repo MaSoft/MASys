@@ -6242,7 +6242,7 @@ class NetworkDeviceCollector(QThread):
 
 
 def _ejecutar_streaming_con_progreso(argv, on_texto, on_pct, stop_check, timeout_segundos,
-                                      auto_confirmar_stdin=False):
+                                      auto_confirmar_stdin=False, codificacion="oem"):
     """Ejecuta argv capturando su salida carácter a carácter — necesario
     porque herramientas como SFC/DISM/CHKDSK actualizan la MISMA línea con
     retorno de carro ('\\r'), no con saltos de línea, así que leer con
@@ -6256,7 +6256,11 @@ def _ejecutar_streaming_con_progreso(argv, on_texto, on_pct, stop_check, timeout
     CHKDSK con /f o /r sobre un volumen bloqueado (típicamente el de
     sistema) pregunta interactivamente si programar la comprobación para
     el próximo reinicio — sin esto, el proceso se queda esperando una
-    entrada que nunca llega y cuelga hasta el timeout."""
+    entrada que nunca llega y cuelga hasta el timeout.
+
+    codificacion: «oem» para DISM y CHKDSK; sfc.exe escribe en UTF-16 cuando su salida va a una tubería (comprobado:
+    b'C\x00o\x00m\x00…'). Leído como OEM cada carácter llegaba con un nulo detrás: el «%» no se reconocía (sin
+    progreso) y el registro salía lleno de nulos."""
     startupinfo = subprocess.STARTUPINFO()
     startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
     startupinfo.wShowWindow = subprocess.SW_HIDE
@@ -6264,7 +6268,7 @@ def _ejecutar_streaming_con_progreso(argv, on_texto, on_pct, stop_check, timeout
     proceso = subprocess.Popen(
         argv, stdin=subprocess.PIPE if auto_confirmar_stdin else None,
         stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-        text=True, encoding='oem', errors='replace',
+        text=True, encoding=codificacion, errors='replace',
         creationflags=subprocess.CREATE_NO_WINDOW, startupinfo=startupinfo,
     )
     if auto_confirmar_stdin:
@@ -6336,13 +6340,14 @@ class SFCDISMRepairThread(QThread):
     def request_stop(self):
         self._stop_requested = True
 
-    def _ejecutar_streaming(self, argv, etapa):
+    def _ejecutar_streaming(self, argv, etapa, codificacion="oem"):
         return _ejecutar_streaming_con_progreso(
             argv,
             on_texto=self.progreso_texto.emit,
             on_pct=lambda pct: self.progreso_porcentaje.emit(etapa, pct),
             stop_check=lambda: self._stop_requested,
             timeout_segundos=self.TIMEOUT_POR_ETAPA_SEGUNDOS,
+            codificacion=codificacion,
         )
 
     def run(self):
@@ -6356,7 +6361,7 @@ class SFCDISMRepairThread(QThread):
                 return
 
             self.etapa_cambiada.emit("Fase 2/2 — SFC: verificando archivos de sistema...")
-            ok_sfc, log_sfc = self._ejecutar_streaming(["sfc", "/scannow"], "SFC")
+            ok_sfc, log_sfc = self._ejecutar_streaming(["sfc", "/scannow"], "SFC", codificacion="utf-16-le")
 
             log_completo = f"=== DISM /RestoreHealth ===\n{log_dism}\n\n=== SFC /scannow ===\n{log_sfc}"
             self.finished_ok.emit(ok_dism and ok_sfc, log_completo)
