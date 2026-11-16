@@ -204,6 +204,8 @@ class ReportingMixin:
         empresa = dlg_empresa.textValue()
         if not ok or not empresa.strip():
             empresa = "Cliente"
+        # Va dentro del HTML en 4 sitios (título, cabecera, resumen, pie): escapado como el resto de datos del informe
+        empresa = html_escape(empresa.strip())
 
         default_name = f"InformePermisos_{time.strftime('%Y%m%d_%H%M%S')}.html"
         path = dialogo_guardar_archivo(self, "Guardar HTML", ruta_guardado_predeterminada(default_name), "HTML (*.html)")
