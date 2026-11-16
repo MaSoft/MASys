@@ -4000,7 +4000,10 @@ try {
         $ordenado = $grupo.Group | Sort-Object { [version]($_.Version -replace '[^\d\.]', '') } -Descending -ErrorAction SilentlyContinue
         if (-not $ordenado) { $ordenado = $grupo.Group }
         foreach ($antiguo in ($ordenado | Select-Object -Skip 1)) {
-            & pnputil /delete-driver $antiguo.Publicado /uninstall 2>&1 | Out-Null
+            # SIN /uninstall: según la ayuda de pnputil, «/uninstall: desinstalar el paquete de controladores de los
+            # dispositivos que lo usan» — quitaba el controlador a un dispositivo que lo estuviera usando (p. ej. una
+            # versión anterior elegida a propósito). Sin él, pnputil se niega si el paquete está en uso.
+            & pnputil /delete-driver $antiguo.Publicado 2>&1 | Out-Null
         }
     }
 
