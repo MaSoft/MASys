@@ -1610,7 +1610,11 @@ class ServiceManager:
         """Detiene (con sus dependientes), arranca y vuelve a arrancar los dependientes que estaban en marcha."""
         dependientes = self._dependientes_activos(service_name)
         try:
-            win32serviceutil.StopServiceWithDeps(service_name, waitSecs=30)
+            try:
+                win32serviceutil.StopServiceWithDeps(service_name, waitSecs=30)
+            except pywintypes.error as exc:
+                if getattr(exc, "winerror", None) != 1062:   # 1062 = no estaba iniciado: se arranca igual
+                    raise
             win32serviceutil.StartService(service_name)
             win32serviceutil.WaitForServiceStatus(service_name, win32service.SERVICE_RUNNING, 30)
         except pywintypes.error as exc:

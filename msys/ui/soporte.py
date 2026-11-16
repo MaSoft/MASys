@@ -1548,15 +1548,14 @@ class SoporteMixin:
         ):
             return
 
+        # restart_service vuelve a arrancar los servicios que dependían de cada uno y estaban en marcha. Antes se
+        # detenían todos (con sus dependientes, StopServiceWithDeps) y solo se arrancaban los de la lista: al reiniciar
+        # los de Windows Update quedaban parados los que dependen de CryptSvc (AppIDSvc = AppLocker, entre otros).
         avisos = []
         for nombre in nombres:
-            ok, msg = self.service_manager.stop_service(nombre)
+            ok, msg = self.service_manager.restart_service(nombre)
             if not ok:
-                avisos.append(f"detener {nombre}: {msg}")
-        for nombre in nombres:
-            ok, msg = self.service_manager.start_service(nombre)
-            if not ok:
-                avisos.append(f"iniciar {nombre}: {msg}")
+                avisos.append(f"{nombre}: {msg}")
 
         exito = not avisos
         self.repair_audit_db.registrar(
