@@ -6241,6 +6241,24 @@ class NetworkDeviceCollector(QThread):
             self.finished_error.emit(str(e))
 
 
+# Letra de «Sí» de las preguntas (S/N) de CHKDSK según el idioma de la interfaz de Windows (comprobado en
+# es-ES\ulib.dll.mui: «…se reinicie (S/N)»). Antes se respondía siempre «Y»: en un Windows en español no se programaba
+# la comprobación y MASys decía igualmente «programado para el próximo reinicio».
+_LETRA_SI_POR_IDIOMA = {0x0A: "S", 0x10: "S", 0x16: "S", 0x03: "S", 0x56: "S",   # es, it, pt, ca, gl
+                        0x07: "J", 0x13: "J",                                    # de, nl
+                        0x0C: "O"}                                               # fr
+
+
+def _respuesta_si_consola() -> str:
+    try:
+        idioma = ctypes.windll.kernel32.GetUserDefaultUILanguage() & 0x3FF
+    except Exception:
+        idioma = 0x09
+    letra = _LETRA_SI_POR_IDIOMA.get(idioma, "Y")
+    # Si la letra no fuese la buena, CHKDSK vuelve a preguntar y le llega «Y»
+    return f"{letra}\n" if letra == "Y" else f"{letra}\nY\n"
+
+
 def _ejecutar_streaming_con_progreso(argv, on_texto, on_pct, stop_check, timeout_segundos,
                                       auto_confirmar_stdin=False, codificacion="oem"):
     """Ejecuta argv capturando su salida carácter a carácter — necesario
@@ -6252,7 +6270,7 @@ def _ejecutar_streaming_con_progreso(argv, on_texto, on_pct, stop_check, timeout
     independiente del idioma de Windows — el texto localizado de éxito/
     fallo no se intenta reconocer, eso lo decide el código de salida).
 
-    auto_confirmar_stdin=True escribe 'Y\\n' a stdin nada más arrancar:
+    auto_confirmar_stdin=True escribe «Sí» (en el idioma de Windows) a stdin nada más arrancar:
     CHKDSK con /f o /r sobre un volumen bloqueado (típicamente el de
     sistema) pregunta interactivamente si programar la comprobación para
     el próximo reinicio — sin esto, el proceso se queda esperando una
@@ -6273,7 +6291,7 @@ def _ejecutar_streaming_con_progreso(argv, on_texto, on_pct, stop_check, timeout
     )
     if auto_confirmar_stdin:
         try:
-            proceso.stdin.write("Y\n")
+            proceso.stdin.write(_respuesta_si_consola())
             proceso.stdin.flush()
             proceso.stdin.close()
         except OSError:
