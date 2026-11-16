@@ -1,6 +1,6 @@
 # MASys
 
-Herramienta de técnico IT para Windows: reúne en una sola ventana las tareas de soporte de un equipo (inventario de hardware y sistema, servicios, procesos, red, usuarios, credenciales, seguridad, software, copias de seguridad y reparaciones). 44 secciones en un árbol lateral por categorías, con datos reales del equipo en tablas ordenables y las acciones de soporte de cada sección.
+Herramienta de técnico IT para Windows: reúne en una sola ventana las tareas de soporte de un equipo (inventario de hardware y sistema, servicios, procesos, red, usuarios, credenciales, seguridad, software, copias de seguridad y reparaciones). 45 secciones en un árbol lateral por categorías, con datos reales del equipo en tablas ordenables y las acciones de soporte de cada sección.
 
 **Software libre y gratuito desarrollado por [Masoft.es](https://masoft.es)** · Licencia [MIT](LICENSE) · [Página de MASys](https://masoft.es/masys.html)
 

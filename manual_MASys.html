@@ -91,7 +91,7 @@ footer { text-align: center; padding: 32px; color: var(--text-light); font-size:
 
 <nav>
   <div class="nav-title">MASys</div>
-  <div class="nav-subtitle">Manual de las secciones nuevas &middot; v5.7.0</div>
+  <div class="nav-subtitle">Manual de las secciones nuevas &middot; v5.7.3</div>
   <ul>
     <li class="section-title">Inicio</li>
     <li><a href="#intro">Introducción y propósito</a></li>
@@ -166,7 +166,7 @@ footer { text-align: center; padding: 32px; color: var(--text-light); font-size:
 
 <main>
 <div class="page-header">
-  <span class="version">Versión 5.7.0 &middot; Windows 10 y 11</span>
+  <span class="version">Versión 5.7.3 &middot; Windows 10 y 11</span>
   <h1>MASys</h1>
   <div class="tagline">Herramienta de técnico IT para Windows. Este manual cubre las seis secciones añadidas en la versión 4.1: iconos, extensiones y programas, características de Windows, herramientas de red, inventario de migración y móvil Android.</div>
 </div>
@@ -244,10 +244,11 @@ footer { text-align: center; padding: 32px; color: var(--text-light); font-size:
   <div class="flow-step">La sección carga sus datos al abrirla por primera vez</div>
   <div class="flow-step">&#128260; Actualizar vuelve a leerlos</div>
 </div>
-<p><strong>Instalador:</strong> <code>MASys_Setup_v5.7.0.exe</code> se instala para el usuario actual en <code>%LOCALAPPDATA%\Programs\MASys</code>, sin pedir administrador; crea el acceso en el menú Inicio y, si se marca, en el escritorio. Al actualizar o desinstalar no se borran los datos (<code>multisys.db</code>, <code>movil.db</code>, <code>INFORMES</code>, <code>BACKUPS</code>, <code>SCRIPTS</code>, <code>COPIAS_MOVIL</code>). Si MASys está abierto, el instalador pide cerrarlo.</p>
-<p><strong>Portable:</strong> descomprimir <code>MASys_Portable_v5.7.0.zip</code> en cualquier carpeta y abrir <code>MASys.exe</code>. Todo se guarda dentro de esa carpeta. Los móviles enlazados solo se pueden leer con la misma cuenta de Windows que los enlazó.</p>
+<p><strong>Instalador:</strong> <code>MASys_Setup_v5.7.3.exe</code> se instala para el usuario actual en <code>%LOCALAPPDATA%\Programs\MASys</code>, sin pedir administrador; crea el acceso en el menú Inicio y, si se marca, en el escritorio. Al actualizar o desinstalar no se borran los datos (<code>multisys.db</code>, <code>movil.db</code>, <code>INFORMES</code>, <code>BACKUPS</code>, <code>SCRIPTS</code>, <code>COPIAS_MOVIL</code>). Si MASys está abierto, el instalador pide cerrarlo.</p>
+<p><strong>Portable:</strong> descomprimir <code>MASys_Portable_v5.7.3.zip</code> en cualquier carpeta y abrir <code>MASys.exe</code>. Todo se guarda dentro de esa carpeta. Los móviles enlazados solo se pueden leer con la misma cuenta de Windows que los enlazó.</p>
+<p><strong>Ejecutable único:</strong> <code>MASys_v5.7.3.exe</code> es MASys en un solo archivo; los datos se guardan en la carpeta donde esté.</p>
 <pre><span class="comment">:: Despliegue sin ventanas (GPO o scripts de administración)</span>
-<span class="cmd">MASys_Setup_v5.7.0.exe</span> <span class="param">/VERYSILENT /SUPPRESSMSGBOXES /TASKS=</span><span class="string">"desktopicon"</span></pre>
+<span class="cmd">MASys_Setup_v5.7.3.exe</span> <span class="param">/VERYSILENT /SUPPRESSMSGBOXES /TASKS=</span><span class="string">"desktopicon"</span></pre>
 <p>Las secciones nuevas aparecen solas en el árbol, en su categoría, aunque la configuración del usuario sea de una versión anterior. Se pueden ocultar o reordenar igual que las demás.</p>
 </section>
 
@@ -688,6 +689,12 @@ PowerShell en <code>INFORMES\M365\&lt;herramienta&gt;</code> con sus plantillas 
 listo para adaptar. Prueba siempre primero con <code>-Simular</code>.</p>
 <p>Además: toda acción que cambia el sistema queda en el historial de reparaciones; un error inesperado ya no cierra MASys (avisa
 y sigue abierto); y el icono de eliminar es &#10005; en todos los botones y menús.</p>
+<h3>Correcciones de la 5.7.3</h3>
+<ul>
+<li><strong>&#9881;&#65039; Procesos</strong> y <strong>&#128736;&#65039; Servicios</strong>: el hash del ejecutable salía vacío si la ruta tenía corchetes (<code>[</code> <code>]</code>).</li>
+<li><strong>&#128231; Cuentas Correo › Exportar a PST</strong>: fallaba si el nombre del archivo tenía corchetes.</li>
+<li><strong>Copia forense (MaPeriT)</strong>: SW 1.7.5 y OF 1.1.2. El registro se monta siempre desde una copia de trabajo y el original no se modifica. SW lee el ShimCache completo; OF copia también la papelera, Amcache y todas las tareas programadas.</li>
+</ul>
 <div class="alert alert-info">No se han podido probar en real, por seguridad: las acciones que cortarían la red o la sesión (deshabilitar
 adaptador, cerrar sesión, reiniciar en BIOS), las que instalan o desinstalan software y actualizaciones, las restauraciones de copias
 y las copias de Credenciales y Navegadores (sacan credenciales a disco). Su código se revisó línea a línea.</div>
@@ -1301,7 +1308,7 @@ Dirección = <span class="string">midominio.ddns.net</span>   <span class="param
 
 <h3>Revisar el equipo de un cliente sin conectarse</h3>
 <pre><span class="cmd">&#128421;&#65039; Acceso remoto</span> &#8250; <span class="param">&#128232; Enviar al cliente</span> &#8250; Agente de análisis   <span class="comment"># instrucciones + tu código</span>
-<span class="comment"># Envía también el enlace a MASys_Agente_v5.2.0.exe (carpeta AGENTE\ de MASys, subido a OneDrive)</span>
+<span class="comment"># Envía también el enlace a MASys_Agente_v5.7.3.exe (carpeta AGENTE\ de MASys, subido a OneDrive)</span>
 <span class="comment"># El cliente pega el código, pulsa «Analizar y crear el archivo» y te manda el .msysinf</span>
 <span class="param">&#128229; Informes del agente</span> &#8250; <span class="param">&#128229; Abrir archivo…</span> &#8250; cliente = <span class="string">Asesoría del Norte</span>
 <span class="param">&#127760; Ver informe</span>   ·   <span class="param">&#8644; Cambios con el anterior</span>   <span class="comment"># al mes siguiente</span></pre>
@@ -1477,7 +1484,7 @@ Dirección = <span class="string">midominio.ddns.net</span>   <span class="param
 </div>
 </section>
 
-<footer>MASys &middot; Versión 5.7.0 &middot; Actualizado el 31/10/2026<br>Aplicación desarrollada por Masoft.es</footer>
+<footer>MASys &middot; Versión 5.7.3 &middot; Actualizado el 16/11/2026<br>Aplicación desarrollada por Masoft.es</footer>
 </main>
 </body>
 </html>
