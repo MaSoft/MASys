@@ -578,7 +578,12 @@ def _rutas_candidatas_ejecutable(cadena: str) -> List[str]:
         candidatas.add(cadena[1:fin] if fin != -1 else cadena[1:])
     sin_comillas = cadena.strip('"')
     candidatas.add(sin_comillas)
-    candidatas.add(sin_comillas.split(" ", 1)[0])
+    # Sin comillas, Windows (CreateProcess) prueba la línea cortada en cada espacio: «C:\Program Files\X\setup.exe -l0x0a»
+    # es C:\Program Files\X\setup.exe con un argumento. Antes solo se probaba hasta el PRIMER espacio («C:\Program») y el
+    # desinstalador, que existe, salía como entrada huérfana para borrar.
+    partes = sin_comillas.split(" ")
+    for i in range(1, len(partes)):
+        candidatas.add(" ".join(partes[:i]))
     return [os.path.expandvars(_normalizar_ruta_nt(c)) for c in candidatas if c]
 
 
@@ -598,7 +603,9 @@ def _existe_ejecutable(cadena: str) -> bool:
         if not es_absoluta:
             continue
         alguna_absoluta = True
-        if os.path.exists(candidata):
+        # isfile y no exists: un trozo de la línea puede ser una CARPETA que existe («C:\Program Files» de
+        # «C:\Program Files (x86)\Borrado\x.exe /S») y daría por bueno un ejecutable que ya no está.
+        if os.path.isfile(candidata):
             return True
     return not alguna_absoluta
 
