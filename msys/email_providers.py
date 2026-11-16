@@ -198,7 +198,11 @@ def _probar_imap(io: _SocketLineIO, banner: str, username: str, password: str, t
         return "No IMAP"
     if not username:
         return "OK (banner)"
-    io.writeline(f'A1 LOGIN "{username}" "{password}"')
+    # Cadena entre comillas de IMAP (RFC 3501): «\» y «"» van escapados; sin esto una contraseña con comillas
+    # rompía el LOGIN y salía como error aunque fuera correcta.
+    def _q(s: str) -> str:
+        return s.replace("\\", "\\\\").replace('"', '\\"')
+    io.writeline(f'A1 LOGIN "{_q(username)}" "{_q(password)}"')
     resp = ""
     try:
         while not (resp.startswith("A1 OK") or resp.startswith("A1 NO") or resp.startswith("A1 BAD")):

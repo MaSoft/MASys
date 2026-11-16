@@ -3162,11 +3162,15 @@ class EmailProviderTestThread(QThread):
     finished_ok = pyqtSignal(list, object)
     finished_error = pyqtSignal(str)
 
-    def __init__(self, email: str, password: str, timeout: float = 6.0):
+    def __init__(self, email: str, password: str, timeout: float = 6.0, resto: bool = False):
         super().__init__()
         self.email = email
         self.password = password
         self.timeout = timeout
+        # La contraseña va SOLO a los proveedores del dominio de la cuenta; el resto de la lista (resto=True) solo
+        # cuando el técnico lo confirma en el diálogo — misma regla que «📧 Correo › Probar cuenta» (4.9.0). Antes se
+        # mandaba a los ~39 proveedores (Gmail, Yahoo...) aunque la cuenta no fuera de ellos.
+        self.resto = resto
         self._stop_requested = False
 
     def request_stop(self):
@@ -3226,18 +3230,15 @@ class EmailProviderTestThread(QThread):
         try:
             from msys.email_providers import PROVEEDORES, proveedores_prioritarios
             prioritarios = proveedores_prioritarios(self.email)
-            resto = [p for p in PROVEEDORES if p not in prioritarios]
-            self._total = len(prioritarios) + len(resto)
+            tanda = [p for p in PROVEEDORES if p not in prioritarios] if self.resto else prioritarios
+            self._total = len(tanda)
 
             resultados: List[Any] = []
             ya_probados: set = set()
 
-            self.progress.emit(2, "Probando proveedores más probables según el dominio...")
-            encontrado = self._probar_tanda(prioritarios, resultados, ya_probados)
-
-            if encontrado is None and not self._stop_requested:
-                self.progress.emit(20, "Probando el resto de proveedores conocidos...")
-                encontrado = self._probar_tanda(resto, resultados, ya_probados)
+            self.progress.emit(2, "Probando el resto de proveedores conocidos..." if self.resto
+                               else "Probando los proveedores del dominio de la cuenta...")
+            encontrado = self._probar_tanda(tanda, resultados, ya_probados)
 
             if self._stop_requested:
                 self.progress.emit(100, "Detección detenida por el usuario")

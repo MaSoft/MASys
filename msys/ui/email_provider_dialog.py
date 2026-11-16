@@ -63,7 +63,8 @@ class EmailProviderDetectDialog(QDialog):
 
         aviso = QLabel(
             "⚠️ Esto envía la contraseña real a los servidores de correo probados, igual que "
-            "haría el propio cliente de correo. Si la cuenta tiene verificación en dos pasos, "
+            "haría el propio cliente de correo: primero solo a los del dominio de la cuenta, y al "
+            "resto de proveedores solo si lo confirmas. Si la cuenta tiene verificación en dos pasos, "
             "usa una contraseña de aplicación en vez de la contraseña normal.")
         aviso.setWordWrap(True)
         aviso.setObjectName("hintLabel")
@@ -153,7 +154,19 @@ class EmailProviderDetectDialog(QDialog):
         self.progress.setValue(0)
         self.lbl_estado.setText("🔄 Probando proveedores...")
 
-        self._thread = EmailProviderTestThread(email, password)
+        from msys.email_providers import proveedores_prioritarios
+        if not proveedores_prioritarios(email):
+            # Dominio propio o desconocido: ningún proveedor «suyo»; la lista entera solo con confirmación.
+            if not self._confirmar_resto(email, None):
+                self._fin_sin_resultado("Ningún proveedor conocido coincide con el dominio de la cuenta.")
+                return
+            self._lanzar(email, password, resto=True)
+            return
+        self._lanzar(email, password, resto=False)
+
+    def _lanzar(self, email, password, resto):
+        self._email, self._password, self._resto = email, password, resto
+        self._thread = EmailProviderTestThread(email, password, resto=resto)
         self._thread.progress.connect(self._on_progress)
         self._thread.provider_result.connect(self._on_provider_result)
         self._thread.finished_ok.connect(self._on_finished)
@@ -185,11 +198,41 @@ class EmailProviderDetectDialog(QDialog):
             self.tabla.setItem(fila, col, item)
         self.tabla.scrollToBottom()
 
+    def _confirmar_resto(self, email, probados) -> bool:
+        from msys.email_providers import PROVEEDORES, proveedores_prioritarios
+        n = len(PROVEEDORES) - len(proveedores_prioritarios(email))
+        motivo = ("No ha funcionado con los proveedores del dominio de la cuenta." if probados
+                  else "El dominio de la cuenta no es de ningún proveedor conocido.")
+        box = QMessageBox(self)
+        box.setWindowFlags(box.windowFlags() & ~Qt.WindowContextHelpButtonHint)
+        box.setWindowTitle("Probar el resto de proveedores")
+        box.setIcon(QMessageBox.Warning)
+        box.setText(f"{motivo}\n\n¿Probar la contraseña con los otros {n} proveedores de la lista? "
+                    "Cada uno de esos servidores la recibirá.")
+        box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        box.setDefaultButton(QMessageBox.No)
+        return box.exec_() == QMessageBox.Yes
+
+    def _fin_sin_resultado(self, texto):
+        self.progress.setVisible(False)
+        self.btn_detectar.setEnabled(True)
+        self.btn_detener.setEnabled(False)
+        self.lbl_estado.setText(f"❌ {texto}")
+
     def _on_finished(self, resultados, encontrado):
         self.progress.setVisible(False)
         self.btn_detectar.setEnabled(True)
         self.btn_detener.setEnabled(False)
         self._encontrado = encontrado
+
+        detenido = self._thread is not None and self._thread._stop_requested
+        if encontrado is None and not self._resto and not detenido and self._confirmar_resto(self._email, resultados):
+            self._lanzar(self._email, self._password, resto=True)
+            self.btn_detectar.setEnabled(False)
+            self.btn_detener.setEnabled(True)
+            self.progress.setVisible(True)
+            self.lbl_estado.setText("🔄 Probando el resto de proveedores...")
+            return
 
         if encontrado is None:
             self.lbl_estado.setText(
