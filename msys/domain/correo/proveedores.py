@@ -62,23 +62,26 @@ PROVIDERS = [
 ]
 BY_NAME = {p.name: p for p in PROVIDERS}
 
-# Dominio del correo -> proveedor (los de la v4)
+# Dominio del correo -> proveedor (los de la v4). Anclados a etiquetas completas del dominio: antes eran subcadenas y
+# «acme.com» se reconocía como iCloud («me.com»), «citylive.com» como Outlook.com y «kaol.com» como AOL, así que
+# «Probar cuenta» mandaba la contraseña a un proveedor que no era el de la cuenta.
+_TLD = r"\.[a-z]{2,3}(\.[a-z]{2})?$"
 DOMAIN_PATTERNS = {
-    "Gmail": r"gmail.com",
-    "Outlook.com": r"outlook|hotmail|live",
-    "Yahoo": r"yahoo\.",
-    "iCloud": r"icloud|me\.com|mac\.com",
-    "AOL": r"aol\.",
-    "GMX": r"gmx\.",
-    "Web.de": r"web\.de",
-    "T-Online": r"t-online",
-    "Yandex": r"yandex",
-    "Mail.ru": r"mail\.ru",
-    "Zoho": r"zoho\.",
-    "Fastmail": r"fastmail\.",
-    "Movistar": r"movistar|telefonica",
-    "Orange": r"orange\.es",
-    "Jazztel": r"jazztel",
+    "Gmail": r"^(gmail|googlemail)\.com$",
+    "Outlook.com": r"(^|\.)(outlook|hotmail|live|msn)" + _TLD,
+    "Yahoo": r"(^|\.)(yahoo|ymail)" + _TLD,
+    "iCloud": r"^(icloud|me|mac)\.com$",
+    "AOL": r"(^|\.)aol" + _TLD,
+    "GMX": r"(^|\.)gmx" + _TLD,
+    "Web.de": r"^web\.de$",
+    "T-Online": r"(^|\.)t-online\.de$",
+    "Yandex": r"(^|\.)yandex" + _TLD,
+    "Mail.ru": r"^mail\.ru$",
+    "Zoho": r"(^|\.)zoho(mail)?" + _TLD,
+    "Fastmail": r"(^|\.)fastmail\.(com|fm)$",
+    "Movistar": r"(^|\.)(movistar|telefonica)\.(es|net)$",
+    "Orange": r"(^|\.)orange\.es$",
+    "Jazztel": r"(^|\.)jazztel\.(es|net)$",
 }
 
 # Servidor de correo (MX) del dominio -> proveedor: reconoce dominios propios alojados en esos servicios

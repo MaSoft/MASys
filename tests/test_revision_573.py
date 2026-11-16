@@ -163,5 +163,23 @@ class LimpiezaUnidadDatosTest(unittest.TestCase):
         self.assertTrue(existe(r"Proyectos\informe.docx"))
 
 
+class ProveedoresPorDominioTest(unittest.TestCase):
+    """La contraseña iba a iCloud con una cuenta @acme.com («me.com» dentro del dominio)."""
+
+    def test_dominio_exacto_o_subdominio(self):
+        from msys.email_providers import proveedores_prioritarios as p
+        self.assertEqual([x.nombre for x in p("ana@gmail.com")], ["Gmail"])
+        self.assertEqual([x.nombre for x in p("ana@mail.movistar.es")], ["Movistar"])
+        for ajena in ("ana@acme.com", "ana@microphone.com", "ana@citylive.com", "ana@kaol.com"):
+            self.assertEqual(p(ajena), [], ajena)
+
+    def test_correo_probar_cuenta_mismo_criterio(self):
+        from msys.domain.correo.proveedores import by_domain
+        self.assertEqual(by_domain("me.com"), ["iCloud"])
+        self.assertEqual(by_domain("live.co.uk"), ["Outlook.com"])
+        for ajeno in ("acme.com", "citylive.com", "kaol.com", "olive.es"):
+            self.assertEqual(by_domain(ajeno), [], ajeno)
+
+
 if __name__ == "__main__":
     unittest.main()

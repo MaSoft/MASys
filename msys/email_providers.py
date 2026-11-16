@@ -322,4 +322,6 @@ def proveedores_prioritarios(email: str) -> List[ProviderConfig]:
     dominio = email.rsplit("@", 1)[-1].lower() if "@" in email else ""
     if not dominio:
         return []
-    return [p for p in PROVEEDORES if any(d in dominio for d in p.dominios)]
+    # Dominio exacto o subdominio («mail.movistar.es»), nunca subcadena: con «in», «acme.com» contenía «me.com» y se
+    # tomaba por iCloud (y «microphone.com» por One.com): la contraseña iba a un proveedor que no era el de la cuenta.
+    return [p for p in PROVEEDORES if any(dominio == d or dominio.endswith("." + d) for d in p.dominios)]
