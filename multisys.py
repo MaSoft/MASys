@@ -44,7 +44,7 @@ from PyQt5.QtCore import (
     Qt, QAbstractTableModel, QModelIndex, QVariant, QSortFilterProxyModel,
     QRegExp, QThread, pyqtSignal, QSettings, QTimer, QRectF, QEvent, QObject
 )
-from PyQt5.QtGui import QFont, QColor, QPainter, QPen, QIcon, QKeySequence, QPalette
+from PyQt5.QtGui import QFont, QColor, QPainter, QPen, QIcon, QKeySequence, QPalette, QPixmap
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLineEdit, QPushButton,
     QTableView, QFileDialog, QMessageBox, QLabel, QCheckBox, QHeaderView,

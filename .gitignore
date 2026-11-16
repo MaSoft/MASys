@@ -4,18 +4,13 @@
 BACKUPS/
 ARCHIVADOS/
 INFORMES/
-claude.backups/
 __pycache__/
 *.pyc
 multisys.db
-cagada.jpg
-MULTISYS.rar
 
 # Copias de seguridad manuales sueltas (la convención pasa a ser Git)
 *.bak
 
-# Config local de Claude Code (permisos por máquina, no compartido)
-.claude/settings.local.json
 
 # Artefactos de build (PyInstaller)
 build/
@@ -34,5 +29,4 @@ SERVIDOR_RUSTDESK/fuente/
 SERVIDOR_RUSTDESK/datos/
 INSTALL/build_unico/
 
-# Instrucciones internas de desarrollo (no se publican)
-CLAUDE.md
+

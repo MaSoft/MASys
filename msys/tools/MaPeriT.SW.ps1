@@ -2,10 +2,10 @@
 #Requires -Version 5.1
 <#
 .NOTES
-    MaPeriT.SW - Herramienta de Peritacion Informatica Forense Profesional v1.7.4
+    MaPeriT.SW - Herramienta de Peritacion Informatica Forense Profesional v1.7.5
     Analisis forense digital completo para sistemas Windows
     Cumple RFC 3227 (IETF) y NIST SP 800-86
-    Compilado: 2026-07-12 18:56:36
+    Compilado: 2026-11-16 12:00:00
     NO EDITAR DIRECTAMENTE - Modifique los ficheros fuente en src\
 #>
 
@@ -168,7 +168,7 @@ if ($SkipPhases) {
 # ============================================================
 
 $Script:TOOL_NAME    = "MaPeriT.SW"
-$Script:TOOL_VERSION = "1.7.4"
+$Script:TOOL_VERSION = "1.7.5"
 $Script:TOOL_FULL    = "MaPeriT.SW - Herramienta de Peritacion Informatica Forense Profesional"
 $Script:TOOL_AUTHOR  = "MaPeriT.SW Project"
 $Script:MIN_PS_VER   = [version]"5.1"
@@ -325,7 +325,8 @@ $Script:BrowserPaths = @{
 $Script:ChromiumFiles = @(
     "History", "Downloads", "Cookies", "Login Data", "Preferences",
     "Bookmarks", "Web Data", "Top Sites", "Shortcuts", "Favicons",
-    "Network Action Predictor"
+    "Network Action Predictor",
+    "Network\Cookies"   # ubicacion de las cookies desde Chrome/Edge 96
 )
 
 # --- Ficheros de Firefox a recopilar ---
@@ -671,7 +672,10 @@ function Export-CollectionToJSON {
         return
     }
     try {
-        $Data | ConvertTo-Json -Depth 10 | Out-File -FilePath $OutputPath -Encoding UTF8
+        # -InputObject (no tuberia): con tuberia, una coleccion de UN elemento se
+        # escribia como objeto suelto en vez de array, y quien leia el JSON
+        # (p.ej. el informe con Anomalies.json) contaba 0 elementos.
+        ConvertTo-Json -InputObject $Data -Depth 10 | Out-File -FilePath $OutputPath -Encoding UTF8
         $hash = Get-ForensicHash -FilePath $OutputPath
         $size = (Get-Item $OutputPath).Length
         Add-ChainOfCustodyEntry -SourcePath "GENERATED" -DestPath $OutputPath -Hash $hash -Method "Export-JSON" -FileSize $size
@@ -852,7 +856,13 @@ function New-HashManifest {
 
     $manifestData = [System.Collections.ArrayList]::new()
 
-    $files = Get-ChildItem -Path $EvidenceRootPath -Recurse -File -ErrorAction SilentlyContinue
+    # Logs\ActionLog.csv es el registro vivo de la ejecucion: se sigue escribiendo
+    # despues de generar el manifiesto (como minimo, la propia linea
+    # MANIFIESTO_GENERADO de esta funcion). Incluido en el manifiesto, -VerifyPath
+    # daba SIEMPRE "INTEGRIDAD COMPROMETIDA" sobre una adquisicion intacta. Se
+    # excluye; cada evidencia sigue con su hash en Logs\ChainOfCustody.csv.
+    $files = @(Get-ChildItem -Path $EvidenceRootPath -Recurse -File -ErrorAction SilentlyContinue |
+        Where-Object { -not $Script:ActionLogPath -or $_.FullName -ne $Script:ActionLogPath })
     $total = $files.Count
     $current = 0
 
@@ -1717,12 +1727,33 @@ function Mount-OfflineUserHives {
             }
         }
 
+        # NUNCA se monta el NTUSER.DAT original del equipo analizado: "reg load" abre el
+        # fichero en lectura-escritura y Windows puede reescribirlo al cargarlo o al
+        # desmontarlo (aplicar sus .LOG1/.LOG2, actualizar cabeceras). Se monta una copia
+        # de trabajo en la carpeta de salida, que se borra al desmontar.
+        $workDir = Join-Path $Script:SessionInfo.OutputPath "Logs\_hives_trabajo\$($profile.Username)"
         try {
-            $result = & reg.exe load $tempKey $ntuser 2>&1
+            New-Item -ItemType Directory -Path $workDir -Force | Out-Null
+            $workHive = Join-Path $workDir "NTUSER.DAT"
+            foreach ($ext in @("", ".LOG1", ".LOG2")) {
+                if (Test-Path -LiteralPath "$ntuser$ext") {
+                    Copy-Item -LiteralPath "$ntuser$ext" -Destination "$workHive$ext" -Force -ErrorAction Stop
+                    (Get-Item -LiteralPath "$workHive$ext" -Force).Attributes = 'Normal'
+                }
+            }
+        } catch {
+            Write-ForensicLog -Phase "REGISTRY" -Action "HIVE_COPIA_TRABAJO_FALLIDA" -Target $profile.Username -Result "ERROR" -ErrorMessage $_.Exception.Message
+            Remove-Item -LiteralPath $workDir -Recurse -Force -ErrorAction SilentlyContinue
+            continue
+        }
+
+        try {
+            $result = & reg.exe load $tempKey $workHive 2>&1
             if ($LASTEXITCODE -eq 0) {
-                $Script:LoadedHives += @{ Username = $profile.Username; Key = $tempKey; SID = $sid; MountedSID = "MAPE_$($profile.Username)" }
-                Write-ForensicLog -Phase "REGISTRY" -Action "HIVE_MONTADO" -Target "$($profile.Username) -> $tempKey" -Result "OK"
+                $Script:LoadedHives += @{ Username = $profile.Username; Key = $tempKey; SID = $sid; MountedSID = "MAPE_$($profile.Username)"; WorkDir = $workDir }
+                Write-ForensicLog -Phase "REGISTRY" -Action "HIVE_MONTADO" -Target "$($profile.Username) -> $tempKey (copia de trabajo)" -Result "OK"
             } else {
+                Remove-Item -LiteralPath $workDir -Recurse -Force -ErrorAction SilentlyContinue
                 # reg.exe fallando con codigo de salida no nulo NO lanza excepcion en PowerShell,
                 # asi que sin este else el fallo pasaba totalmente desapercibido: el usuario
                 # quedaba excluido de UserAssist/MRU/RDP History/COM Hijacking sin ningun aviso.
@@ -1766,6 +1797,7 @@ function Dismount-OfflineUserHives {
 
         if ($unloaded) {
             Write-ForensicLog -Phase "REGISTRY" -Action "HIVE_DESMONTADO" -Target $hive.Key -Result "OK"
+            if ($hive.WorkDir) { Remove-Item -LiteralPath $hive.WorkDir -Recurse -Force -ErrorAction SilentlyContinue }
         } else {
             # CRITICO: sin esta comprobacion, un fallo en el reintento se registraba solo como
             # WARNING y la clave HKEY_USERS\MAPE_<usuario> podia quedar montada de forma
@@ -1775,10 +1807,15 @@ function Dismount-OfflineUserHives {
             # perfil de ese usuario cargue correctamente tras la adquisicion.
             $Script:HivesNoDesmontadas += $hive.Key
             if ($Script:SessionInfo) { $Script:SessionInfo.TotalErrors++ }
-            Write-ForensicLog -Phase "REGISTRY" -Action "HIVE_DESMONTAR_FALLO_PERMANENTE" -Target $hive.Key -Result "ERROR" -ErrorMessage "La clave $($hive.Key) sigue montada en HKEY_USERS del equipo analizado tras 3 intentos. Requiere desmontaje manual con 'reg unload $($hive.Key)' antes de devolver el equipo. Esto es una modificacion persistente del sistema objetivo."
+            Write-ForensicLog -Phase "REGISTRY" -Action "HIVE_DESMONTAR_FALLO_PERMANENTE" -Target $hive.Key -Result "ERROR" -ErrorMessage "La clave $($hive.Key) sigue montada en HKEY_USERS del equipo analizado tras 3 intentos. Requiere desmontaje manual con 'reg unload $($hive.Key)' antes de devolver el equipo. Es una copia de trabajo (el NTUSER.DAT original no se ha montado), pero la clave sigue presente en el registro del equipo."
         }
     }
     $Script:LoadedHives = @()
+    # Carpeta de copias de trabajo: se elimina si ha quedado vacia
+    $wb = Join-Path $Script:SessionInfo.OutputPath "Logs\_hives_trabajo"
+    if ((Test-Path -LiteralPath $wb) -and -not (Get-ChildItem -LiteralPath $wb -Force -ErrorAction SilentlyContinue)) {
+        Remove-Item -LiteralPath $wb -Force -ErrorAction SilentlyContinue
+    }
 }
 
 function Get-EffectiveHKUSID {
@@ -2853,7 +2890,10 @@ function Invoke-Phase2-SystemInfoCollection {
             # recoge el fragmento hasta el segundo ':', truncando/corrompiendo el nombre real
             # de la red y haciendo que la consulta posterior de detalle del perfil falle o,
             # peor, coincida con un perfil distinto de igual prefijo.
-            $profileNames = (& netsh wlan show profiles 2>$null) | Select-String "All User Profile" | ForEach-Object { ($_ -split ":\s*", 2)[1].Trim() }
+            # netsh traduce la etiqueta segun el idioma del sistema: "All User Profile"
+            # (ingles) y "Perfil de todos los usuarios" (espanol). Antes solo se buscaba
+            # la inglesa y en un Windows en espanol no se recogia ningun perfil.
+            $profileNames = (& netsh wlan show profiles 2>$null) | Select-String -Pattern "All User Profile|Perfil de todos los usuarios" | ForEach-Object { ($_ -split ":\s*", 2)[1].Trim() }
             foreach ($profile in $profileNames) {
                 $detail = & netsh wlan show profile name="$profile" key=clear 2>$null
                 $wifiProfiles += [PSCustomObject]@{
@@ -3397,7 +3437,7 @@ function Invoke-Phase4-RegistryCollection {
         "HKLM\SYSTEM"   = Join-Path $hivesPath "SYSTEM"
         "HKLM\SOFTWARE" = Join-Path $hivesPath "SOFTWARE"
         "HKLM\SECURITY" = Join-Path $hivesPath "SECURITY"
-        "HKLM\DEFAULT"  = Join-Path $hivesPath "DEFAULT"
+        "HKU\.DEFAULT"  = Join-Path $hivesPath "DEFAULT"   # el hive DEFAULT se publica en HKU\.DEFAULT (HKLM\DEFAULT no existe)
     }
 
     foreach ($entry in $systemHives.GetEnumerator()) {
@@ -3645,7 +3685,7 @@ function Invoke-Phase4-RegistryCollection {
             Add-ChainOfCustodyEntry -SourcePath $Script:RegistryPaths.AppCompatCache -DestPath $shimOutputRaw -Hash $hash -Method "Registry" -FileSize $rawBytes.Length
             $collected++
 
-            $shimEntries = Parse-ShimCache -Data $rawBytes
+            $shimEntries = @(Parse-ShimCache -Data $rawBytes)
             if ($shimEntries.Count -gt 0) {
                 Export-CollectionToCSV -Data $shimEntries -OutputPath (Join-Path $extractedPath "ShimCache.csv") -Phase "FASE_4" -Description "ShimCache"
                 $collected++
@@ -3872,55 +3912,55 @@ function Convert-ROT13 {
 }
 
 function Parse-ShimCache {
+    <#
+        Formato de AppCompatCache de Windows 10/11 (comprobado byte a byte contra
+        datos reales): cabecera de longitud variable, cuyo tamano indica el primer
+        DWORD (0x30 o 0x34), seguida de entradas consecutivas:
+          +0   firma "10ts" (4 bytes)
+          +4   valor desconocido (4)
+          +8   tamano de la entrada contado desde +12 (4)
+          +12  longitud de la ruta en bytes (2)
+          +14  ruta en UTF-16LE
+          a continuacion FILETIME de ultima modificacion (8), tamano de datos y datos
+        Corregido en v1.7.5: antes la longitud se leia en +8 y la ruta desde +12
+        (rutas corruptas) y el contador de entradas avanzaba cada 4 bytes con un
+        tope de 1024, asi que solo se recorrian los primeros ~4 KB de la cache.
+        Otros formatos (Windows 7/8) no se interpretan: queda constancia en el log
+        y el binario completo se conserva en AppCompatCache.bin.
+    #>
     param([byte[]]$Data)
 
-    $entries = @()
-    if ($Data.Length -lt 48) { return $entries }
+    $entries = [System.Collections.Generic.List[object]]::new()
+    if ($null -eq $Data -or $Data.Length -lt 52) { return $entries }
 
     try {
-        $header = [BitConverter]::ToUInt32($Data, 0)
-        $offset = 48
+        $offset = [int][BitConverter]::ToUInt32($Data, 0)
+        if (($offset -ne 0x30 -and $offset -ne 0x34) -or [BitConverter]::ToUInt32($Data, $offset) -ne 0x73743031) {
+            Write-ForensicLog -Phase "FASE_4" -Action "SHIMCACHE_FORMATO_NO_SOPORTADO" -Target ("Cabecera 0x{0:X}: solo se interpreta el formato de Windows 10/11; el binario se conserva en AppCompatCache.bin" -f $offset) -Result "WARNING"
+            return $entries
+        }
+        $indice = 0
+        while ($offset + 14 -le $Data.Length) {
+            if ([BitConverter]::ToUInt32($Data, $offset) -ne 0x73743031) { break }   # "10ts"
+            $entrySize  = [int][BitConverter]::ToUInt32($Data, $offset + 8)
+            $pathLength = [int][BitConverter]::ToUInt16($Data, $offset + 12)
+            $pathOffset = $offset + 14
+            if ($entrySize -le 0 -or $pathOffset + $pathLength + 8 -gt $Data.Length) { break }
 
-        $maxEntries = 1024
-        $count = 0
-
-        while ($offset -lt $Data.Length - 12 -and $count -lt $maxEntries) {
-            try {
-                $sig = [BitConverter]::ToUInt32($Data, $offset)
-                if ($sig -eq 0x73743031) {  # "10ts"
-                    $pathLength = [BitConverter]::ToUInt16($Data, $offset + 8)
-                    $pathOffset = $offset + 12
-
-                    if ($pathOffset + $pathLength -le $Data.Length -and $pathLength -gt 0 -and $pathLength -lt 2048) {
-                        $path = [System.Text.Encoding]::Unicode.GetString($Data, $pathOffset, $pathLength)
-                        $dataOffset = $pathOffset + $pathLength
-                        $lastMod = $null
-
-                        if ($dataOffset + 8 -le $Data.Length) {
-                            $ticks = [BitConverter]::ToInt64($Data, $dataOffset)
-                            if ($ticks -gt 0 -and $ticks -lt [DateTime]::MaxValue.Ticks) {
-                                try { $lastMod = [DateTime]::FromFileTime($ticks).ToString($Script:Defaults.DateFormat) } catch { }
-                            }
-                        }
-
-                        $entries += [PSCustomObject]@{
-                            Indice              = $count
-                            RutaEjecutable      = $path.TrimEnd("`0")
-                            UltimaModificacion  = $lastMod
-                        }
-
-                        $offset = $dataOffset + 8
-                    } else {
-                        $offset += 4
-                    }
-                } else {
-                    $offset += 4
-                }
-                $count++
-            } catch {
-                $offset += 4
-                $count++
+            $path    = [System.Text.Encoding]::Unicode.GetString($Data, $pathOffset, $pathLength)
+            $lastMod = $null
+            $ticks   = [BitConverter]::ToInt64($Data, $pathOffset + $pathLength)
+            if ($ticks -gt 0) {
+                try { $lastMod = [DateTime]::FromFileTime($ticks).ToString($Script:Defaults.DateFormat) } catch { }
             }
+
+            [void]$entries.Add([PSCustomObject]@{
+                Indice              = $indice
+                RutaEjecutable      = $path.TrimEnd("`0")
+                UltimaModificacion  = $lastMod
+            })
+            $indice++
+            $offset = $offset + 12 + $entrySize
         }
     } catch {
         Write-ForensicLog -Phase "FASE_4" -Action "SHIMCACHE_PARSE_ERROR" -Target $_.Exception.Message -Result "WARNING"
@@ -4164,7 +4204,7 @@ function Invoke-Phase5-EventLogCollection {
     # --- 5.8 Task Scheduler ---
     Write-StepHeader "5.8 Eventos del Programador de Tareas"
     try {
-        $taskIds = $Script:TaskSchedulerEventIDs.TaskRegistered + $Script:TaskSchedulerEventIDs.TaskDeleted +
+        $taskIds = $Script:TaskSchedulerEventIDs.TaskRegistered + $Script:TaskSchedulerEventIDs.TaskUpdated + $Script:TaskSchedulerEventIDs.TaskDeleted +
                    $Script:TaskSchedulerEventIDs.TaskStarted + $Script:TaskSchedulerEventIDs.TaskCompleted
         $taskEvents = @()
         $events = Get-WinEvent -FilterHashtable @{LogName='Microsoft-Windows-TaskScheduler/Operational'; Id=$taskIds} -MaxEvents 10000 -ErrorAction SilentlyContinue
@@ -4683,11 +4723,22 @@ function Invoke-Phase8-CloudStorageCollection {
                 $collected += $c2
             }
 
-            $oneDriveReg = Get-ItemProperty "HKCU:\Software\Microsoft\OneDrive\Accounts\*" -ErrorAction SilentlyContinue
-            if ($oneDriveReg) {
-                $odInfo = $oneDriveReg | Select-Object UserEmail, UserFolder, ServiceEndpointUri, Business, LastSignInTime
-                Export-CollectionToJSON -Data $odInfo -OutputPath (Join-Path $phasePath "OneDrive\$($profile.Username)\OneDriveConfig.json") -Phase "FASE_8" -Description "Config OneDrive"
-                $collected++
+            # Configuracion de OneDrive del registro DE ESE PERFIL (HKU\<SID>), no del
+            # HKCU del perito que ejecuta la herramienta: antes se leia HKCU y se
+            # atribuia la cuenta del perito a cada perfil del equipo. Solo esta
+            # disponible para perfiles con sesion iniciada (los hives offline se
+            # montan unicamente durante la Fase 4); el NTUSER.DAT completo de todos
+            # los perfiles ya se conserva en 04_Registry\Hives\Users.
+            $hkuSid = if ($profile.SID -and (Test-Path "Registry::HKU\$($profile.SID)" -ErrorAction SilentlyContinue)) { $profile.SID } else { $null }
+            if ($hkuSid) {
+                $oneDriveReg = Get-ItemProperty "Registry::HKU\$hkuSid\Software\Microsoft\OneDrive\Accounts\*" -ErrorAction SilentlyContinue
+                if ($oneDriveReg) {
+                    $odInfo = @($oneDriveReg | Select-Object UserEmail, UserFolder, ServiceEndpointUri, Business, LastSignInTime)
+                    $odDir = Join-Path $phasePath "OneDrive\$($profile.Username)"
+                    if (-not (Test-Path $odDir)) { New-Item -ItemType Directory -Path $odDir -Force | Out-Null }
+                    Export-CollectionToJSON -Data $odInfo -OutputPath (Join-Path $odDir "OneDriveConfig.json") -Phase "FASE_8" -Description "Config OneDrive"
+                    $collected++
+                }
             }
         }
     } catch {
@@ -5694,16 +5745,16 @@ function Build-ForensicTimeline {
     } catch { }
 
     # --- Ordenar y exportar ---
-    $sortedTimeline = $timeline | Sort-Object { try { [DateTime]::Parse($_.Timestamp) } catch { [DateTime]::MinValue } }
+    $sortedTimeline = @($timeline | Sort-Object { try { [DateTime]::Parse($_.Timestamp) } catch { [DateTime]::MinValue } })
 
     if ($sortedTimeline.Count -gt 0) {
         Export-CollectionToCSV -Data $sortedTimeline -OutputPath (Join-Path $analysisPath "Timeline.csv") -Phase "ANALISIS" -Description "Timeline unificada"
 
         $recentDays = 7
         $cutoff = (Get-Date).AddDays(-$recentDays).ToString($Script:Defaults.DateFormat)
-        $recentTimeline = $sortedTimeline | Where-Object {
+        $recentTimeline = @($sortedTimeline | Where-Object {
             try { [DateTime]::Parse($_.Timestamp) -ge [DateTime]::Parse($cutoff) } catch { $false }
-        }
+        })
         if ($recentTimeline.Count -gt 0) {
             Export-CollectionToCSV -Data $recentTimeline -OutputPath (Join-Path $analysisPath "Timeline_Last${recentDays}Days.csv") -Phase "ANALISIS" -Description "Timeline ultimos $recentDays dias"
         }
@@ -5905,7 +5956,7 @@ function Find-ForensicAnomalies {
     try {
         $wmiFile = Join-Path $OutputPath "$($Script:OutputDirs.Persistence)\WMIPersistence.csv"
         if (Test-Path $wmiFile) {
-            $wmiItems = Import-Csv $wmiFile -ErrorAction SilentlyContinue
+            $wmiItems = @(Import-Csv $wmiFile -ErrorAction SilentlyContinue)
             if ($wmiItems.Count -gt 0) {
                 $anomalyId++
                 [void]$anomalies.Add([PSCustomObject]@{
@@ -5986,7 +6037,7 @@ function Find-ForensicAnomalies {
     try {
         $adsFile = Join-Path $OutputPath "$($Script:OutputDirs.Persistence)\AlternateDataStreams.csv"
         if (Test-Path $adsFile) {
-            $ads = Import-Csv $adsFile -ErrorAction SilentlyContinue
+            $ads = @(Import-Csv $adsFile -ErrorAction SilentlyContinue)
             if ($ads.Count -gt 0) {
                 $anomalyId++
                 [void]$anomalies.Add([PSCustomObject]@{
@@ -6006,7 +6057,7 @@ function Find-ForensicAnomalies {
     try {
         $shutdownFile = Join-Path $OutputPath "$($Script:OutputDirs.EventLogs)\Analysis\SystemShutdowns.csv"
         if (Test-Path $shutdownFile) {
-            $unexpected = Import-Csv $shutdownFile -ErrorAction SilentlyContinue | Where-Object { $_.EventID -eq '6008' }
+            $unexpected = @(Import-Csv $shutdownFile -ErrorAction SilentlyContinue | Where-Object { $_.EventID -eq '6008' })
             if ($unexpected.Count -gt 0) {
                 $anomalyId++
                 [void]$anomalies.Add([PSCustomObject]@{
@@ -6027,14 +6078,17 @@ function Find-ForensicAnomalies {
         $avFile = Join-Path $OutputPath "$($Script:OutputDirs.SystemInfo)\AntivirusStatus.json"
         if (Test-Path $avFile) {
             $avData = Get-Content $avFile -Raw -ErrorAction SilentlyContinue | ConvertFrom-Json -ErrorAction SilentlyContinue
-            if ($avData.AmenazasDetectadas -and $avData.AmenazasDetectadas.Count -gt 0) {
+            # Una sola amenaza se serializa como objeto suelto, no como array: sin @()
+            # su .Count es $null en PowerShell 5.1 y la anomalia CRITICA se perdia.
+            $amenazas = @($avData.AmenazasDetectadas | Where-Object { $_ })
+            if ($amenazas.Count -gt 0) {
                 $anomalyId++
                 [void]$anomalies.Add([PSCustomObject]@{
                     ID          = "ANO-{0:D4}" -f $anomalyId
                     Severidad   = $Script:AnomalySeverity.Critical
                     Categoria   = "Malware detectado"
-                    Titulo      = "Windows Defender detecto $($avData.AmenazasDetectadas.Count) amenazas"
-                    Descripcion = "Windows Defender tiene registro de $($avData.AmenazasDetectadas.Count) detecciones de amenazas en este sistema. Esto confirma la presencia de software malicioso o potencialmente no deseado."
+                    Titulo      = "Windows Defender detecto $($amenazas.Count) amenazas"
+                    Descripcion = "Windows Defender tiene registro de $($amenazas.Count) detecciones de amenazas en este sistema. Esto confirma la presencia de software malicioso o potencialmente no deseado."
                     Evidencia   = $avFile
                     Recomendacion = "Analizar cada amenaza detectada, verificar si fue eliminada o puesta en cuarentena. Determinar vector de entrada."
                 })
@@ -6066,7 +6120,7 @@ function Find-ForensicAnomalies {
     try {
         $certFile = Join-Path $OutputPath "$($Script:OutputDirs.Persistence)\SuspiciousRootCerts.csv"
         if (Test-Path $certFile) {
-            $certs = Import-Csv $certFile -ErrorAction SilentlyContinue
+            $certs = @(Import-Csv $certFile -ErrorAction SilentlyContinue)
             if ($certs.Count -gt 0) {
                 $anomalyId++
                 [void]$anomalies.Add([PSCustomObject]@{
@@ -6087,7 +6141,7 @@ function Find-ForensicAnomalies {
         $comFile = Join-Path $OutputPath "$($Script:OutputDirs.Persistence)\COMHijacking.csv"
         if (Test-Path $comFile) {
             $comEntries = Import-Csv $comFile -ErrorAction SilentlyContinue
-            $highRisk = $comEntries | Where-Object { $_.Riesgo -eq 'Alta' }
+            $highRisk = @($comEntries | Where-Object { $_.Riesgo -eq 'Alta' })
             if ($highRisk.Count -gt 0) {
                 $anomalyId++
                 [void]$anomalies.Add([PSCustomObject]@{
@@ -6110,10 +6164,10 @@ function Find-ForensicAnomalies {
 
         $summary = [PSCustomObject]@{
             TotalAnomalias = $anomalies.Count
-            Criticas = ($anomalies | Where-Object { $_.Severidad -eq $Script:AnomalySeverity.Critical }).Count
-            Altas    = ($anomalies | Where-Object { $_.Severidad -eq $Script:AnomalySeverity.High }).Count
-            Medias   = ($anomalies | Where-Object { $_.Severidad -eq $Script:AnomalySeverity.Medium }).Count
-            Bajas    = ($anomalies | Where-Object { $_.Severidad -eq $Script:AnomalySeverity.Low }).Count
+            Criticas = @($anomalies | Where-Object { $_.Severidad -eq $Script:AnomalySeverity.Critical }).Count
+            Altas    = @($anomalies | Where-Object { $_.Severidad -eq $Script:AnomalySeverity.High }).Count
+            Medias   = @($anomalies | Where-Object { $_.Severidad -eq $Script:AnomalySeverity.Medium }).Count
+            Bajas    = @($anomalies | Where-Object { $_.Severidad -eq $Script:AnomalySeverity.Low }).Count
         }
 
         Write-Host ""
@@ -6162,7 +6216,7 @@ function New-ChainOfCustodyReport {
         return
     }
 
-    $custodyData = Import-Csv $custodyFile -ErrorAction SilentlyContinue
+    $custodyData = @(Import-Csv $custodyFile -ErrorAction SilentlyContinue)
     $totalEvidences = $custodyData.Count
 
     # Campos de entrada del perito (CaseNumber, ExaminerName, EvidenceDescription) o del
@@ -6402,7 +6456,7 @@ nav a{
   text-decoration:none;font-size:12.5px;
   border-left:3px solid transparent;transition:all .12s;
 }
-nav a:hover{color:#fff;border-left-color:#3b82f6;background:rgba(255,255,255,.04)}
+nav a:hover,nav a.active{color:#fff;border-left-color:#3b82f6;background:rgba(255,255,255,.04)}
 .sb-footer{
   margin-top:auto;padding:14px 18px;border-top:1px solid rgba(255,255,255,.06);
   font-size:10px;color:#334155;line-height:1.6;
@@ -6712,11 +6766,16 @@ function New-ForensicReport {
     $anomalyFile  = Join-Path $OutputPath "$($Script:OutputDirs.Analysis)\Anomalies.json"
     $anomalyCount = 0; $criticalCount = 0; $highCount = 0
     if (Test-Path $anomalyFile) {
+        # Dos pasos (no @(... | ConvertFrom-Json)): en PowerShell 5.1 ConvertFrom-Json
+        # emite un array JSON como UN objeto y @() lo anidaria. @($x) sobre la
+        # variable ya asignada si da el recuento correcto, tambien con un unico
+        # elemento (antes una sola anomalia contaba como 0).
         $aData = Get-Content $anomalyFile -Raw -ErrorAction SilentlyContinue | ConvertFrom-Json -ErrorAction SilentlyContinue
-        if ($aData) {
+        $aData = @($aData | Where-Object { $_ })
+        if ($aData.Count -gt 0) {
             $anomalyCount  = $aData.Count
-            $criticalCount = ($aData | Where-Object { $_.Severidad -eq $Script:AnomalySeverity.Critical }).Count
-            $highCount     = ($aData | Where-Object { $_.Severidad -eq $Script:AnomalySeverity.High }).Count
+            $criticalCount = @($aData | Where-Object { $_.Severidad -eq $Script:AnomalySeverity.Critical }).Count
+            $highCount     = @($aData | Where-Object { $_.Severidad -eq $Script:AnomalySeverity.High }).Count
         }
     }
 
@@ -6962,7 +7021,8 @@ Para verificar la integridad en cualquier momento: <code>.\MaPeriT.SW.ps1 -Verif
 "@)
     if (Test-Path $anomalyFile) {
         $anomalies = Get-Content $anomalyFile -Raw -ErrorAction SilentlyContinue | ConvertFrom-Json -ErrorAction SilentlyContinue
-        if ($anomalies -and $anomalies.Count -gt 0) {
+        $anomalies = @($anomalies | Where-Object { $_ })
+        if ($anomalies.Count -gt 0) {
             $sorted = $anomalies | Sort-Object { switch($_.Severidad){'CRITICA'{0}'ALTA'{1}'MEDIA'{2}'BAJA'{3}default{4}} }
             foreach ($a in $sorted) {
                 $sevClass = switch ($a.Severidad) {'CRITICA'{'sc'}'ALTA'{'sh'}'MEDIA'{'sm'}'BAJA'{'sl'}default{''}}
@@ -7092,12 +7152,12 @@ function Add-ReportSection {
         switch ($Type) {
 
             "csv" {
-                $data = Import-Csv $filePath -ErrorAction Stop | Select-Object -First $MaxRows
+                $data = @(Import-Csv $filePath -ErrorAction Stop | Select-Object -First $MaxRows)
                 if ($data.Count -eq 0) {
                     [void]$Html.AppendLine("<p><em style='color:#94a3b8'>Sin registros.</em></p>")
                 } else {
                     $cols    = $data[0].PSObject.Properties.Name
-                    $totalInFile = (Import-Csv $filePath -ErrorAction SilentlyContinue).Count
+                    $totalInFile = @(Import-Csv $filePath -ErrorAction SilentlyContinue).Count
                     $showSearch  = $totalInFile -gt 15
                     $searchId    = $safeId + "_s"
                     $tableId     = $safeId + "_tbl"
@@ -7262,7 +7322,9 @@ if (-not [string]::IsNullOrEmpty($VerifyPath)) {
     }
     Write-Host "  =============================================" -ForegroundColor Cyan
     Write-Host ""
-    exit 0
+    # Codigo de salida 0 = integridad verificada, 1 = discrepancias (antes era
+    # siempre 0, y un script de automatizacion no podia detectar el fallo).
+    if ($verifyResult.Success) { exit 0 } else { exit 1 }
 }
 
 # --- Validar parametros obligatorios para modo adquisicion ---
@@ -7277,6 +7339,15 @@ if ([string]::IsNullOrEmpty($OutputPath)) {
     $timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
     $OutputPath = Join-Path (Get-Location) "MaPeriT_${CaseNumber}_${timestamp}"
 }
+
+# Ruta de salida siempre absoluta y en forma larga. Con una ruta relativa
+# (".\Caso1") o en formato corto 8.3 ("C:\Users\NOMBRE~1\...") los ficheros
+# se enumeran con su ruta larga, que no comparte prefijo con OutputPath, y el
+# manifiesto de hashes se generaba con TODAS las rutas relativas vacias:
+# la verificacion posterior con -VerifyPath era imposible.
+$OutputPath = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine((Get-Location -PSProvider FileSystem).ProviderPath, $OutputPath))
+if (-not (Test-Path -LiteralPath $OutputPath)) { New-Item -ItemType Directory -Path $OutputPath -Force | Out-Null }
+$OutputPath = (Get-Item -LiteralPath $OutputPath).FullName.TrimEnd('\')
 
 # --- Verificacion de prerequisitos ---
 $issues = Test-Prerequisites

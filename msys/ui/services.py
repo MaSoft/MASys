@@ -512,7 +512,7 @@ class ServiciosMixin:
             ruta_escaped = escape_powershell_string(ruta)
             out = subprocess.run(
                 ["powershell", "-NoProfile", "-Command",
-                 f"(Get-FileHash -Path '{ruta_escaped}' -Algorithm SHA256 -ErrorAction SilentlyContinue).Hash"],
+                 f"(Get-FileHash -LiteralPath '{ruta_escaped}' -Algorithm SHA256 -ErrorAction SilentlyContinue).Hash"],
                 capture_output=True, text=True, timeout=15,
                 startupinfo=self._get_startupinfo()
             )

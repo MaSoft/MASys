@@ -4,7 +4,7 @@ Herramienta de técnico IT para Windows: reúne en una sola ventana las tareas d
 
 **Software libre y gratuito desarrollado por [Masoft.es](https://masoft.es)** · Licencia [MIT](LICENSE) · [Página de MASys](https://masoft.es/masys.html)
 
-Este repositorio contiene la **versión de escritorio** (5.7.2). La app Android complementaria, MASysMov, no está incluida.
+Este repositorio contiene la **versión de escritorio** (5.7.3). La app Android complementaria, MASysMov, no está incluida.
 
 ## Qué incluye
 

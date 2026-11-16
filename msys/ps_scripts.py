@@ -1758,17 +1758,19 @@ try {{
     $outlook = New-Object -ComObject Outlook.Application
     $namespace = $outlook.GetNamespace("MAPI")
 
-    if ($modo -eq 'sobrescribir' -and (Test-Path $pstPath)) {{
-        Remove-Item $pstPath -Force -ErrorAction Stop
+    # -LiteralPath: con -Path, los corchetes del nombre (p. ej. «Copia [1].pst») son
+    # comodines y el PST recién creado se daba por no creado.
+    if ($modo -eq 'sobrescribir' -and (Test-Path -LiteralPath $pstPath)) {{
+        Remove-Item -LiteralPath $pstPath -Force -ErrorAction Stop
     }}
 
     $pstDir = Split-Path $pstPath -Parent
-    if (!(Test-Path $pstDir)) {{ New-Item -ItemType Directory -Path $pstDir -Force | Out-Null }}
+    if (!(Test-Path -LiteralPath $pstDir)) {{ New-Item -ItemType Directory -Path $pstDir -Force | Out-Null }}
 
-    if (!(Test-Path $pstPath)) {{
+    if (!(Test-Path -LiteralPath $pstPath)) {{
         $namespace.AddStore($pstPath)
         Start-Sleep -Seconds 1
-        if (!(Test-Path $pstPath)) {{ Salir-Resultado $false "No se pudo crear el archivo PST." }}
+        if (!(Test-Path -LiteralPath $pstPath)) {{ Salir-Resultado $false "No se pudo crear el archivo PST." }}
     }}
 
     $pstStore = $null

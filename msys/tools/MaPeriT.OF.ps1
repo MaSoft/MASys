@@ -2,10 +2,10 @@
 #Requires -RunAsAdministrator
 <#
 .NOTES
-    MaPeriT.OF - Adquisicion Forense Offline v1.1.1
+    MaPeriT.OF - Adquisicion Forense Offline v1.1.2
     Recopila evidencias desde disco montado en otro equipo o entorno Live
     Compatible con MaPeriT.AN para analisis posterior
-    Compilado: 2026-07-12 18:56:36
+    Compilado: 2026-11-16 12:00:00
     NO EDITAR DIRECTAMENTE - Modifique los ficheros fuente en src\
 #>
 #region ===== src\Main-Params.ps1 =====
@@ -112,7 +112,6 @@ if ($SkipPhases) {
         $SkipPhases -split '[,\s]+' | Where-Object { $_ -match '^\d+$' } | ForEach-Object { [int]$_ }
     )
 }
-
 #endregion ===== src\Main-Params.ps1 =====
 
 #region ===== src\Config.ps1 =====
@@ -121,7 +120,7 @@ if ($SkipPhases) {
 # ============================================================
 
 $Script:TOOL_NAME    = "MaPeriT.OF"
-$Script:TOOL_VERSION = "1.1.1"
+$Script:TOOL_VERSION = "1.1.2"
 $Script:TOOL_FULL    = "MaPeriT.OF - Adquisicion Forense Offline Profesional"
 
 # --- Nombres de fases (Phase 1 no aplica en offline) ---
@@ -187,7 +186,8 @@ $Script:BrowserPaths = @{
 # --- Ficheros de navegadores Chromium ---
 $Script:ChromiumFiles = @(
     "History", "Downloads", "Cookies", "Login Data", "Preferences",
-    "Bookmarks", "Web Data", "Top Sites", "Shortcuts", "Favicons"
+    "Bookmarks", "Web Data", "Top Sites", "Shortcuts", "Favicons",
+    "Network\Cookies"   # ubicacion de las cookies desde Chrome/Edge 96
 )
 
 # --- Ficheros de Firefox ---
@@ -217,9 +217,11 @@ $Script:CloudPaths = @{
 }
 
 # --- Perfiles de usuario del sistema a excluir ---
+# "Administrator" ya NO se excluye (v1.1.2): es una cuenta real e investigable
+# (el administrador integrado) y antes su perfil se omitia en silencio.
 $Script:ExcludedProfiles = @(
     "Public", "Default", "Default User", "All Users",
-    "defaultuser0", "TEMP", "Administrator"
+    "defaultuser0", "TEMP"
 )
 
 # --- Defaults ---
@@ -253,6 +255,8 @@ $Script:OFSession = @{
     TotalSizeBytes    = 0
     Errors            = 0
     Warnings          = 0
+    PhasesSkipped     = @()
+    PhasesFailed      = @()
 }
 
 # --- Variable global: ruta raiz del disco objetivo (se define en Initialize) ---
@@ -260,6 +264,8 @@ $Script:TargetRoot = ""
 
 # --- Variables para hives cargados (se limpian al finalizar) ---
 $Script:LoadedHives = [System.Collections.Generic.Dictionary[string,string]]::new()
+# Carpeta temporal con la copia de trabajo de cada hive cargado (clave de registro -> carpeta)
+$Script:HiveWorkCopies = [System.Collections.Generic.Dictionary[string,string]]::new()
 
 # --- Banner ---
 $Script:Banner = @"
@@ -371,7 +377,8 @@ function Export-CollectionToJSON {
     try {
         $dir = Split-Path $OutputPath -Parent
         if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir -Force | Out-Null }
-        $Data | ConvertTo-Json -Depth 5 | Out-File -FilePath $OutputPath -Encoding UTF8 -Force
+        # -InputObject (no tuberia): una coleccion de un elemento sigue siendo un array JSON
+        ConvertTo-Json -InputObject $Data -Depth 5 | Out-File -FilePath $OutputPath -Encoding UTF8 -Force
         Write-ForensicLog -Phase $Phase -Action "EXPORTADO_JSON" -Target (Split-Path $OutputPath -Leaf) -Result "OK" -Detail $Description
     } catch {
         Write-ForensicLog -Phase $Phase -Action "ERROR_JSON" -Target $Description -Result "ERROR" -Detail $_.Exception.Message
@@ -817,7 +824,9 @@ function Copy-RobocopyDir {
     # usa para Prefetch (Phase3) y Tareas Programadas (Phase10): esa evidencia
     # quedaba fuera de HashManifest.csv, sin SHA-256 verificable - compromete
     # su validez probatoria. Se hashea y registra cada fichero copiado.
-    $copiedFileObjs = @(Get-ChildItem $DestDir -Filter $Filter -Recurse:$Recurse -File -ErrorAction SilentlyContinue)
+    # -Force: robocopy conserva los atributos Oculto/Sistema; sin -Force esos
+    # ficheros copiados no se hasheaban ni entraban en la cadena de custodia.
+    $copiedFileObjs = @(Get-ChildItem -LiteralPath $DestDir -Filter $Filter -Recurse:$Recurse -File -Force -ErrorAction SilentlyContinue)
     foreach ($cf in $copiedFileObjs) {
         $relative = $cf.FullName.Substring($DestDir.TrimEnd('\').Length + 1)
         $srcPath  = Join-Path $SourceDir $relative
@@ -861,14 +870,51 @@ function Mount-OfflineHive {
     $keyName = "OF_${Label}_${suffix}"
     $regKey  = "HKLM\$keyName"
 
-    $output  = & reg load $regKey "`"$HivePath`"" 2>&1
+    # NUNCA se monta el hive original del disco objetivo: "reg load" abre el
+    # fichero en lectura-escritura y Windows puede reescribirlo (aplicar sus
+    # .LOG1/.LOG2, actualizar cabeceras), lo que alteraria la evidencia y ademas
+    # falla con un bloqueador de escritura. Se monta una copia de trabajo
+    # temporal (con sus logs de transacciones) que se borra al desmontar.
+    $workDir = Join-Path $Script:OFSession.OutputPath "Logs\_hives_trabajo\$keyName"
+    try {
+        New-Item -ItemType Directory -Path $workDir -Force | Out-Null
+        $workHive = Join-Path $workDir (Split-Path $HivePath -Leaf)
+        foreach ($ext in @("", ".LOG1", ".LOG2")) {
+            $src = "$HivePath$ext"
+            if (Test-Path -LiteralPath $src) {
+                Copy-Item -LiteralPath $src -Destination "$workHive$ext" -Force -ErrorAction Stop
+                (Get-Item -LiteralPath "$workHive$ext" -Force).Attributes = 'Normal'
+            }
+        }
+    } catch {
+        Write-ForensicLog -Action "HIVE_ERROR_COPIA_TRABAJO" -Target $HivePath -Result "ERROR" -Detail $_.Exception.Message
+        Remove-Item -LiteralPath $workDir -Recurse -Force -ErrorAction SilentlyContinue
+        return $null
+    }
+
+    $output  = & reg load $regKey "`"$workHive`"" 2>&1
     if ($LASTEXITCODE -eq 0) {
         $Script:LoadedHives[$regKey] = $HivePath
-        Write-ForensicLog -Action "HIVE_CARGADO" -Target "$Label -> $keyName" -Result "OK"
+        $Script:HiveWorkCopies[$regKey] = $workDir
+        Write-ForensicLog -Action "HIVE_CARGADO" -Target "$Label -> $keyName (copia de trabajo)" -Result "OK"
         return "Registry::$regKey"
     }
     Write-ForensicLog -Action "HIVE_ERROR_CARGA" -Target $HivePath -Result "ERROR" -Detail ($output -join " ")
+    Remove-Item -LiteralPath $workDir -Recurse -Force -ErrorAction SilentlyContinue
     return $null
+}
+
+function Remove-OfflineHiveWorkCopy {
+    # Borra la copia de trabajo temporal de un hive ya desmontado (nunca el original)
+    param([string]$RegKey)
+    if ($Script:HiveWorkCopies.ContainsKey($RegKey)) {
+        Remove-Item -LiteralPath $Script:HiveWorkCopies[$RegKey] -Recurse -Force -ErrorAction SilentlyContinue
+        [void]$Script:HiveWorkCopies.Remove($RegKey)
+    }
+    $base = Join-Path $Script:OFSession.OutputPath "Logs\_hives_trabajo"
+    if ((Test-Path -LiteralPath $base) -and -not (Get-ChildItem -LiteralPath $base -Force -ErrorAction SilentlyContinue)) {
+        Remove-Item -LiteralPath $base -Force -ErrorAction SilentlyContinue
+    }
 }
 
 function Dismount-OfflineHive {
@@ -879,7 +925,8 @@ function Dismount-OfflineHive {
     [System.GC]::WaitForPendingFinalizers()
     $output = & reg unload $regKey 2>&1
     if ($LASTEXITCODE -eq 0) {
-        $Script:LoadedHives.Remove($regKey)
+        [void]$Script:LoadedHives.Remove($regKey)
+        Remove-OfflineHiveWorkCopy -RegKey $regKey
         Write-ForensicLog -Action "HIVE_DESCARGADO" -Target $regKey -Result "OK"
     } else {
         Write-ForensicLog -Action "HIVE_ERROR_DESCARGA" -Target $regKey -Result "WARNING" -Detail ($output -join " ")
@@ -902,7 +949,8 @@ function Dismount-AllOfflineHives {
         [System.GC]::WaitForPendingFinalizers()
         $output = & reg unload $key 2>&1
         if ($LASTEXITCODE -eq 0) {
-            $Script:LoadedHives.Remove($key)
+            [void]$Script:LoadedHives.Remove($key)
+            Remove-OfflineHiveWorkCopy -RegKey $key
         } else {
             $failed.Add($key)
             Write-ForensicLog -Action "HIVE_ERROR_DESCARGA" -Target $key -Result "WARNING" -Detail ($output -join " ")
@@ -1016,6 +1064,14 @@ function Initialize-OFSession {
         $OutputPath = Join-Path (Split-Path $Script:OFSession.ScriptPath -Parent) "MaPeriT_OF_${CaseNumber}_${ts}"
     }
 
+    # Ruta de salida absoluta y en forma larga: con una ruta relativa o en formato
+    # corto 8.3 la columna RelativePath del manifiesto quedaba vacia y -VerifyPath
+    # no podia localizar los ficheros si la carpeta se movia.
+    $OutputPath = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine((Get-Location -PSProvider FileSystem).ProviderPath, $OutputPath))
+    if (-not (Test-Path -LiteralPath $OutputPath)) { New-Item -ItemType Directory -Path $OutputPath -Force | Out-Null }
+    $OutputPath = (Get-Item -LiteralPath $OutputPath).FullName.TrimEnd('\')
+    $Script:OFSession.OutputPath = $OutputPath
+
     # --- Crear estructura de directorios de salida (identica a SW) ---
     foreach ($dir in $Script:OutputDirs.Values) {
         $full = Join-Path $OutputPath $dir
@@ -1109,8 +1165,9 @@ function Show-OFBanner {
     Write-Host "  Usuarios        : $($Script:OFSession.ProcessedUsers -join ', ')" -ForegroundColor White
     Write-Host ""
     Write-Host "  ================================================================" -ForegroundColor DarkGray
-    Write-Host "  AVISO: Operaciones de SOLO LECTURA sobre el disco objetivo."     -ForegroundColor Yellow
-    Write-Host "         La escritura se realiza unicamente en el directorio de salida." -ForegroundColor Yellow
+    Write-Host "  AVISO: OF no escribe en el disco objetivo. Los hives se copian y se"  -ForegroundColor Yellow
+    Write-Host "         carga una copia de trabajo; nunca se monta el original. Use un"  -ForegroundColor Yellow
+    Write-Host "         bloqueador de escritura para garantizar la inalterabilidad."      -ForegroundColor Yellow
     Write-Host "  ================================================================" -ForegroundColor DarkGray
     Write-Host ""
 }
@@ -1378,10 +1435,10 @@ function Invoke-Phase3-Filesystem {
     try {
         $since  = (Get-Date).AddDays(-30)
         $sysDir = Join-Path $Script:TargetRoot "Windows\System32"
-        $recent = Get-ChildItem -Path $sysDir -File -ErrorAction SilentlyContinue |
+        $recent = @(Get-ChildItem -Path $sysDir -File -ErrorAction SilentlyContinue |
             Where-Object { $_.LastWriteTime -gt $since -and $_.Extension -in @('.exe','.dll','.sys','.ps1','.bat','.cmd') } |
             Select-Object Name, FullName, Extension, Length, CreationTime, LastWriteTime, Attributes |
-            Sort-Object LastWriteTime -Descending | Select-Object -First 500
+            Sort-Object LastWriteTime -Descending | Select-Object -First 500)
         if ($recent.Count -gt 0) {
             Export-CollectionToCSV -Data $recent -OutputPath (Join-Path $phasePath "RecentSystemFiles.csv") -Phase "FASE_3" -Description "Ficheros sistema recientes"
             $collected++
@@ -1393,11 +1450,14 @@ function Invoke-Phase3-Filesystem {
     # --- 3.5 Ejecutables en ubicaciones sospechosas ---
     Write-StepHeader "3.5 Ejecutables en Ubicaciones Sospechosas"
     try {
+        # Cada Join-Path entre parentesis: sin ellos, dentro de @() la coma une los
+        # argumentos y PowerShell lo interpreta como UN solo Join-Path con un array
+        # de rutas hijas, que lanza una excepcion. Este paso no funcionaba nunca.
         $suspiciousPaths = @(
-            Join-Path $Script:TargetRoot "Users\*\AppData\Roaming",
-            Join-Path $Script:TargetRoot "Users\*\AppData\Local\Temp",
-            Join-Path $Script:TargetRoot "Windows\Temp",
-            Join-Path $Script:TargetRoot "ProgramData"
+            (Join-Path $Script:TargetRoot "Users\*\AppData\Roaming"),
+            (Join-Path $Script:TargetRoot "Users\*\AppData\Local\Temp"),
+            (Join-Path $Script:TargetRoot "Windows\Temp"),
+            (Join-Path $Script:TargetRoot "ProgramData")
         )
         $exes = @()
         foreach ($pattern in $suspiciousPaths) {
@@ -1413,20 +1473,60 @@ function Invoke-Phase3-Filesystem {
         Write-ForensicLog -Phase "FASE_3" -Action "SUSPICIOUS_EXE_ERROR" -Target $_.Exception.Message -Result "WARNING"
     }
 
+    # --- 3.5b Amcache.hve (inventario de ejecucion; MaPeriT.AN lo analiza) ---
+    Write-StepHeader "3.5b Amcache.hve"
+    try {
+        $amSrc = Join-Path $Script:TargetRoot "Windows\AppCompat\Programs\Amcache.hve"
+        if (Test-Path -LiteralPath $amSrc) {
+            foreach ($ext in @("", ".LOG1", ".LOG2")) {
+                if (Test-Path -LiteralPath "$amSrc$ext") {
+                    if (Copy-ForensicFileBackup -SourcePath "$amSrc$ext" -DestPath (Join-Path $phasePath "Amcache.hve$ext") -Phase "FASE_3") { $collected++ }
+                }
+            }
+        } else {
+            Write-ForensicLog -Phase "FASE_3" -Action "AMCACHE_NO_ENCONTRADO" -Target $amSrc -Result "WARNING"
+        }
+    } catch {
+        Write-ForensicLog -Phase "FASE_3" -Action "AMCACHE_ERROR" -Target $_.Exception.Message -Result "WARNING"
+    }
+
     # --- 3.6 Papelera de reciclaje ---
     Write-StepHeader "3.6 Papelera de Reciclaje"
     try {
         $recyclers = @()
-        $recyclePaths = Get-ChildItem -Path (Join-Path $Script:TargetRoot '$Recycle.Bin') -Directory -ErrorAction SilentlyContinue
+        # -Force: las carpetas por SID de $Recycle.Bin tienen atributos Oculto+Sistema;
+        # sin -Force Get-ChildItem no devuelve ninguna (comprobado) y la papelera
+        # quedaba siempre vacia en el resultado.
+        $recyclePaths = Get-ChildItem -LiteralPath (Join-Path $Script:TargetRoot '$Recycle.Bin') -Directory -Force -ErrorAction SilentlyContinue
         foreach ($sid in $recyclePaths) {
-            $items = Get-ChildItem $sid.FullName -File -ErrorAction SilentlyContinue
+            # Copia de la carpeta del SID ($I y $R) como evidencia, igual que MaPeriT.SW
+            $collected += Copy-RobocopyDir -SourceDir $sid.FullName -DestDir (Join-Path $phasePath "RecycleBin\$($sid.Name)") -Phase "FASE_3" -Recurse
+
+            # Solo los ficheros $I describen el borrado (nombre y ruta original, tamano
+            # y fecha de eliminacion, mismo formato que interpreta MaPeriT.SW). Antes se
+            # listaba cualquier fichero y se ponia su fecha de modificacion como "fecha
+            # de borrado", lo que no es cierto para los $R (contenido del fichero).
+            $items = Get-ChildItem $sid.FullName -File -Force -Filter '$I*' -ErrorAction SilentlyContinue
             foreach ($item in $items) {
+                $originalName = ""; $originalSize = 0; $deletedTime = ""
+                try {
+                    $b = [System.IO.File]::ReadAllBytes($item.FullName)
+                    if ($b.Length -ge 28) {
+                        $originalSize = [BitConverter]::ToInt64($b, 8)
+                        $deletedTime  = [DateTime]::FromFileTimeUtc([BitConverter]::ToInt64($b, 16)).ToString($Script:Defaults.DateFormat)
+                        $nameLength   = [BitConverter]::ToInt32($b, 24)
+                        if ($b.Length -ge 28 + $nameLength * 2) {
+                            $originalName = [System.Text.Encoding]::Unicode.GetString($b, 28, $nameLength * 2).TrimEnd("`0")
+                        }
+                    }
+                } catch {}
                 $recyclers += [PSCustomObject]@{
-                    SID        = $sid.Name
-                    FileName   = $item.Name
-                    FullPath   = $item.FullName
-                    Size       = $item.Length
-                    DeletedTime= $item.LastWriteTime
+                    SID                 = $sid.Name
+                    FicheroI            = $item.Name
+                    RutaOriginal        = $originalName
+                    TamanoOriginal      = $originalSize
+                    FechaEliminacionUTC = $deletedTime
+                    RutaEnPapelera      = $item.FullName
                 }
             }
         }
@@ -1461,6 +1561,31 @@ function Invoke-Phase4-Registry {
     $sysHivePath = Join-Path $Script:TargetRoot $Script:HiveFiles.SYSTEM
     $sftHivePath = Join-Path $Script:TargetRoot $Script:HiveFiles.SOFTWARE
 
+    # --- 4.0 Copia en bruto de los hives como evidencia (antes OF no los
+    # conservaba: solo extraia algunos valores). Misma ubicacion que MaPeriT.SW.
+    Write-StepHeader "4.0 Copia de Hives del Sistema y de Usuario"
+    $hivesDest = Join-Path $phasePath "Hives"
+    foreach ($h in @("SYSTEM", "SOFTWARE", "SAM", "SECURITY", "DEFAULT")) {
+        $src = Join-Path $Script:TargetRoot "Windows\System32\config\$h"
+        foreach ($ext in @("", ".LOG1", ".LOG2")) {
+            if (Test-Path -LiteralPath "$src$ext") {
+                if (Copy-ForensicFileBackup -SourcePath "$src$ext" -DestPath (Join-Path $hivesDest "$h$ext") -Phase "FASE_4") { $collected++ }
+            }
+        }
+    }
+    foreach ($user in Get-TargetUserPaths) {
+        $userDest = Join-Path $hivesDest "Users\$($user.Name)"
+        foreach ($rel in @($Script:HiveFiles.NTUSER, $Script:HiveFiles.UsrClass)) {
+            $src = Join-Path $user.Root $rel
+            foreach ($ext in @("", ".LOG1", ".LOG2")) {
+                if (Test-Path -LiteralPath "$src$ext") {
+                    $leaf = (Split-Path $src -Leaf) + $ext
+                    if (Copy-ForensicFileBackup -SourcePath "$src$ext" -DestPath (Join-Path $userDest $leaf) -Phase "FASE_4") { $collected++ }
+                }
+            }
+        }
+    }
+
     $sysHive = Mount-OfflineHive -HivePath $sysHivePath -Label "SYS4"
     $sftHive = Mount-OfflineHive -HivePath $sftHivePath -Label "SFT4"
 
@@ -1474,8 +1599,8 @@ function Invoke-Phase4-Registry {
                                   'Microsoft\Windows\CurrentVersion\Policies\Explorer\Run')) {
                 $vals = Get-OfflineRegProperty -HiveRoot $sftHive -SubKey $runKey
                 if ($vals) {
-                    $rows = $vals.PSObject.Properties | Where-Object { $_.Name -notlike 'PS*' } |
-                        ForEach-Object { [PSCustomObject]@{ Hive='SOFTWARE'; Key=$runKey; Name=$_.Name; Value=$_.Value } }
+                    $rows = @($vals.PSObject.Properties | Where-Object { $_.Name -notlike 'PS*' } |
+                        ForEach-Object { [PSCustomObject]@{ Hive='SOFTWARE'; Key=$runKey; Name=$_.Name; Value=$_.Value } })
                     $outFile = Join-Path $phasePath "Run_SOFTWARE_$(($runKey -split '\\')[-1]).csv"
                     $rows | Export-Csv $outFile -NoTypeInformation -Encoding UTF8 -Force
                     Write-ForensicLog -Phase "FASE_4" -Action "RUN_KEY" -Target $runKey -Result "OK" -Detail "$($rows.Count) entradas"
@@ -1591,8 +1716,8 @@ function Invoke-Phase4-Registry {
                 foreach ($runKey in @('Software\Microsoft\Windows\CurrentVersion\Run', 'Software\Microsoft\Windows\CurrentVersion\RunOnce')) {
                     $vals = Get-OfflineRegProperty -HiveRoot $ntHive -SubKey $runKey
                     if ($vals) {
-                        $rows = $vals.PSObject.Properties | Where-Object { $_.Name -notlike 'PS*' } |
-                            ForEach-Object { [PSCustomObject]@{ Usuario=$user.Name; Key=$runKey; Name=$_.Name; Value=$_.Value } }
+                        $rows = @($vals.PSObject.Properties | Where-Object { $_.Name -notlike 'PS*' } |
+                            ForEach-Object { [PSCustomObject]@{ Usuario=$user.Name; Key=$runKey; Name=$_.Name; Value=$_.Value } })
                         $rows | Export-Csv (Join-Path $userRegPath "Run_$($user.Name).csv") -NoTypeInformation -Encoding UTF8 -Force
                         Write-ForensicLog -Phase "FASE_4" -Action "USER_RUN_KEY" -Target "$($user.Name)" -Result "OK" -Detail "$($rows.Count) entradas"
                         $collected++
@@ -1750,7 +1875,9 @@ function Invoke-Phase6-Browsers {
                 $profilePath = Join-Path $profileBase $profile
                 if (-not (Test-Path $profilePath)) { continue }
 
-                $destBase = Join-Path $phasePath "$($user.Name)\$browser\$profile"
+                # Misma estructura que MaPeriT.SW (<navegador>\<usuario>\<perfil>): es la
+                # que espera MaPeriT.AN; con <usuario>\<navegador> no analizaba ninguno.
+                $destBase = Join-Path $phasePath "$browser\$($user.Name)\$profile"
 
                 foreach ($file in $Script:ChromiumFiles) {
                     $src = Join-Path $profilePath $file
@@ -1769,7 +1896,7 @@ function Invoke-Phase6-Browsers {
         if (Test-Path $ffBase) {
             $ffProfiles = Get-ChildItem $ffBase -Directory -ErrorAction SilentlyContinue
             foreach ($ffProf in $ffProfiles) {
-                $destBase = Join-Path $phasePath "$($user.Name)\Firefox\$($ffProf.Name)"
+                $destBase = Join-Path $phasePath "Firefox\$($user.Name)\$($ffProf.Name)"
                 foreach ($file in $Script:FirefoxFiles) {
                     $src = Join-Path $ffProf.FullName $file
                     if (Test-Path $src) {
@@ -1785,7 +1912,7 @@ function Invoke-Phase6-Browsers {
         # --- Internet Explorer / WebCache ---
         $ieBase = Join-Path $user.Root $Script:BrowserPaths.IE
         if (Test-Path $ieBase) {
-            $destIE = Join-Path $phasePath "$($user.Name)\IE"
+            $destIE = Join-Path $phasePath "InternetExplorer\$($user.Name)"
             $n = Copy-ForensicDirectory -SourceDir $ieBase -DestDir $destIE -Phase "FASE_6" -Filter "*.dat" -Recurse
             if ($n -gt 0) { $collected += $n }
         }
@@ -2114,11 +2241,14 @@ function Invoke-Phase10-Persistence {
                 $n = Copy-RobocopyDir -SourceDir $tasksSrc -DestDir $tasksDest -Filter "*" -Phase "FASE_10" -Recurse
                 # Parsear XMLs para resumen
                 $taskSummary = @()
-                Get-ChildItem $tasksDest -Filter "*.xml" -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
+                # Las tareas de Windows\System32\Tasks son XML SIN extension: antes se
+                # filtraba "*.xml" y este resumen no se generaba nunca.
+                Get-ChildItem $tasksDest -File -Recurse -Force -ErrorAction SilentlyContinue | ForEach-Object {
                     try {
-                        [xml]$xml = Get-Content $_.FullName -ErrorAction SilentlyContinue
+                        [xml]$xml = Get-Content -LiteralPath $_.FullName -Raw -ErrorAction Stop
+                        if (-not $xml.Task) { return }
                         $taskSummary += [PSCustomObject]@{
-                            TaskName    = $_.BaseName
+                            TaskName    = $_.FullName.Substring($tasksDest.TrimEnd('\').Length + 1)
                             Author      = $xml.Task.RegistrationInfo.Author
                             Description = $xml.Task.RegistrationInfo.Description
                             Command     = $xml.Task.Actions.Exec.Command
@@ -2385,7 +2515,7 @@ nav a{
   text-decoration:none;font-size:12.5px;
   border-left:3px solid transparent;transition:all .12s;
 }
-nav a:hover{color:#fff;border-left-color:#3b82f6;background:rgba(255,255,255,.04)}
+nav a:hover,nav a.active{color:#fff;border-left-color:#3b82f6;background:rgba(255,255,255,.04)}
 .sb-footer{
   margin-top:auto;padding:14px 18px;border-top:1px solid rgba(255,255,255,.06);
   font-size:10px;color:#334155;line-height:1.6;
@@ -2491,6 +2621,7 @@ nav a:hover{color:#fff;border-left-color:#3b82f6;background:rgba(255,255,255,.04
 .b-ok{background:#dcfce7;color:#15803d}
 .b-na{background:#f3f4f6;color:#6b7280}
 .b-info{background:#dbeafe;color:#1d4ed8}
+.b-err{background:#fee2e2;color:#b91c1c}
 
 /* ── DIR TREE ── */
 .dir-tree{
@@ -2651,7 +2782,7 @@ function New-OFReport {
   <div class="cover-grid">
     <div class="cover-item"><label>Numero de Caso</label><span>$caseNumberEnc</span></div>
     <div class="cover-item"><label>Perito Informatico</label><span>$examinerNameEnc</span></div>
-    <div class="cover-item"><label>Fecha de Adquisicion</label><span>$(Get-Date -Format 'dd/MM/yyyy')</span></div>
+    <div class="cover-item"><label>Fecha de Adquisicion</label><span>$($Script:OFSession.StartTime.ToString('dd/MM/yyyy'))</span></div>
     <div class="cover-item"><label>Tipo de Adquisicion</label><span>Offline (disco montado)</span></div>
     <div class="cover-item"><label>Disco Objetivo</label><span>$targetDiskEnc</span></div>
     <div class="cover-item"><label>Equipo Objetivo</label><span>$targetComputerEnc</span></div>
@@ -2674,7 +2805,7 @@ function New-OFReport {
 <table class="info-table">
   <tr><td>Numero de Caso</td><td><strong>$caseNumberEnc</strong></td></tr>
   <tr><td>Perito Informatico</td><td>$examinerNameEnc</td></tr>
-  <tr><td>Fecha de Adquisicion</td><td>$(Get-Date -Format 'dd/MM/yyyy HH:mm:ss')</td></tr>
+  <tr><td>Fecha de Adquisicion</td><td>$($Script:OFSession.StartTime.ToString('dd/MM/yyyy HH:mm:ss'))</td></tr>
   <tr><td>Disco Objetivo</td><td>$targetDiskEnc</td></tr>
   <tr><td>SO del Disco Objetivo</td><td>$targetOSEnc</td></tr>
   <tr><td>Nombre del Equipo Objetivo</td><td>$targetComputerEnc</td></tr>
@@ -2694,7 +2825,8 @@ function New-OFReport {
 <div class="alert alert-info">
   <strong>Adquisicion Offline:</strong> La presente adquisicion se ha realizado sobre un disco duro fisico
   montado en un equipo forense dedicado, sin arrancar el sistema operativo del disco objetivo.
-  Este procedimiento garantiza que no se modifican los datos del disco objetivo durante la adquisicion.
+  MaPeriT.OF no escribe en el disco objetivo; para garantizar su inalterabilidad frente al sistema
+  operativo del equipo forense se recomienda un bloqueador de escritura.
 </div>
 <p>El presente analisis forense se ha realizado siguiendo las directrices establecidas en la
 <strong>RFC 3227</strong> (Guidelines for Evidence Collection and Archiving) del IETF y la guia
@@ -2702,8 +2834,9 @@ function New-OFReport {
 <p>En adquisicion offline no estan disponibles los datos volatiles (Fase 1: RAM, procesos activos,
 conexiones de red). El resto de fases (2-10) se han ejecutado accediendo directamente a los ficheros
 del disco objetivo.</p>
-<p>El registro de Windows se ha accedido mediante carga offline de hives (SYSTEM, SOFTWARE, NTUSER.DAT)
-usando <code>reg load</code>, sin modificar los hives originales. Todas las evidencias han sido
+<p>Los hives del registro (SYSTEM, SOFTWARE, SAM, SECURITY, DEFAULT, NTUSER.DAT y UsrClass.dat) se han
+copiado como evidencia. Para consultar sus valores se ha cargado con <code>reg load</code> una copia de
+trabajo temporal, nunca el fichero original del disco objetivo. Todas las evidencias han sido
 verificadas mediante hash SHA-256.</p>
 
 <div class="sub-hdr">2.1 Herramienta Utilizada</div>
@@ -2725,10 +2858,15 @@ verificadas mediante hash SHA-256.</p>
 <tr><td>Fase 1</td><td>Datos Volatiles</td><td><span class="badge b-na">N/A (offline)</span></td></tr>
 "@)
 
+    # Estado REAL de cada fase (antes todas figuraban como completadas aunque se
+    # hubieran omitido con -SkipPhases o hubieran terminado con error).
     foreach ($ph in 2..10) {
         $name = $Script:PhaseNames[$ph]
         if ($name) {
-            [void]$html.AppendLine("<tr><td>Fase $ph</td><td>$([System.Web.HttpUtility]::HtmlEncode($name))</td><td><span class='badge b-ok'>&#10003; Completada</span></td></tr>")
+            $badge = if ($ph -in $Script:OFSession.PhasesSkipped) { "<span class='badge b-na'>Omitida (-SkipPhases)</span>" }
+                     elseif ($ph -in $Script:OFSession.PhasesFailed) { "<span class='badge b-err'>Error (ver log)</span>" }
+                     else { "<span class='badge b-ok'>&#10003; Completada</span>" }
+            [void]$html.AppendLine("<tr><td>Fase $ph</td><td>$([System.Web.HttpUtility]::HtmlEncode($name))</td><td>$badge</td></tr>")
         }
     }
 
@@ -2779,20 +2917,20 @@ y de los hives NTUSER.DAT. Total: <strong>$($Script:OFSession.ProcessedUsers.Cou
 "@)
 
     # ── SEC 6: ESTRUCTURA DE SALIDA ───────────────────────────────────────
-    $caseName = "MaPeriT_OF_$($Script:OFSession.CaseNumber)_$(Get-Date -Format 'yyyyMMdd_HHmmss')"
+    $caseName = [System.Web.HttpUtility]::HtmlEncode((Split-Path $OutputPath -Leaf))
     [void]$html.AppendLine(@"
 <div id="sec6" data-sec class="page-break">
 <div class="section-hdr"><div class="sec-num">6</div><h2>Estructura de Salida</h2></div>
-<p>OF genera una carpeta con la siguiente estructura, identica a la de MaPeriT.SW para garantizar
-compatibilidad con MaPeriT.AN:</p>
+<p>OF genera una carpeta con la misma organizacion por fases que MaPeriT.SW, compatible con MaPeriT.AN
+y MaPeriT.TN:</p>
 <div class="dir-tree"><span class="folder">$caseName\</span>
 &#9500;&#9472;&#9472; <span class="folder">01_Volatile\</span>         (nota: N/A en adquisicion offline)
 &#9500;&#9472;&#9472; <span class="folder">02_SystemInfo\</span>
 &#9500;&#9472;&#9472; <span class="folder">03_Filesystem\</span>
-&#9474;   &#9500;&#9472;&#9472; <span class="folder">MFT\</span>
+&#9474;   &#9500;&#9472;&#9472; <span class="file">&#36;MFT, Amcache.hve</span>
 &#9474;   &#9492;&#9472;&#9472; <span class="folder">Prefetch\</span>
 &#9500;&#9472;&#9472; <span class="folder">04_Registry\</span>
-&#9474;   &#9492;&#9472;&#9472; <span class="folder">ExtractedValues\</span>
+&#9474;   &#9492;&#9472;&#9472; <span class="folder">Hives\</span>
 &#9500;&#9472;&#9472; <span class="folder">05_EventLogs\</span>
 &#9500;&#9472;&#9472; <span class="folder">06_Browsers\</span>
 &#9500;&#9472;&#9472; <span class="folder">07_Communications\</span>
@@ -2801,11 +2939,12 @@ compatibilidad con MaPeriT.AN:</p>
 &#9500;&#9472;&#9472; <span class="folder">10_Persistence\</span>
 &#9500;&#9472;&#9472; <span class="folder">Analysis\</span>
 &#9500;&#9472;&#9472; <span class="folder">Logs\</span>
-&#9474;   &#9492;&#9472;&#9472; <span class="highlight-file">HashManifest.csv</span>
-&#9492;&#9472;&#9472; <span class="folder">Report\</span>
-    &#9492;&#9472;&#9472; <span class="highlight-file">InformePericial.html</span></div>
-<div class="alert alert-info">MaPeriT.AN puede apuntar directamente a esta carpeta; la estructura es identica
-a la generada por MaPeriT.SW. La Fase 1 incluye una nota explicativa para que AN no genere errores.</div>
+&#9474;   &#9492;&#9472;&#9472; <span class="file">ForensicLog.csv</span>
+&#9500;&#9472;&#9472; <span class="folder">Report\</span>
+&#9474;   &#9492;&#9472;&#9472; <span class="highlight-file">InformePericial.html</span>
+&#9492;&#9472;&#9472; <span class="highlight-file">HashManifest.csv</span></div>
+<div class="alert alert-info">MaPeriT.AN y MaPeriT.TN pueden apuntar directamente a esta carpeta. La Fase 1
+incluye una nota explicativa porque en una adquisicion offline no hay datos volatiles.</div>
 </div>
 "@)
 
@@ -2915,7 +3054,9 @@ if (-not [string]::IsNullOrEmpty($VerifyPath)) {
     }
     Write-Host "  =============================================" -ForegroundColor Cyan
     Write-Host ""
-    exit 0
+    # Codigo de salida 0 = integridad verificada, 1 = discrepancias (antes era
+    # siempre 0, y un script de automatizacion no podia detectar el fallo).
+    if ($verifyResult.Success) { exit 0 } else { exit 1 }
 }
 
 # --- Validar parametros obligatorios para modo adquisicion ---
@@ -2976,6 +3117,7 @@ foreach ($phase in $allPhases) {
         Write-Host "  [~] Fase $($phase.Num) omitida (-SkipPhases)" -ForegroundColor DarkGray
         Write-ForensicLog -Phase "FASE_$($phase.Num)" -Action "FASE_OMITIDA" -Target "SkipPhases" -Result "SKIP"
         $phaseResults[$phase.Num] = 0
+        $Script:OFSession.PhasesSkipped += $phase.Num
         continue
     }
     try {
@@ -2983,6 +3125,7 @@ foreach ($phase in $allPhases) {
     } catch {
         Write-ForensicLog -Phase "FASE_$($phase.Num)" -Action "FASE_EXCEPCION" -Target $_.Exception.Message -Result "ERROR"
         $phaseResults[$phase.Num] = 0
+        $Script:OFSession.PhasesFailed += $phase.Num
     }
 }
 

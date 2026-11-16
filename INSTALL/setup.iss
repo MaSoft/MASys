@@ -23,7 +23,7 @@
 ; -- Version: unico punto de verdad del instalador. build_install.bat comprueba que coincide
 ;    con msys\version.py antes de compilar.
 #define MyAppName      "MASys"
-#define MyAppVersion   "5.7.2"
+#define MyAppVersion   "5.7.3"
 #define MyAppPublisher "Masoft.es"
 #define MyAppExeName   "MASys.exe"
 
