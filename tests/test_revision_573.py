@@ -5,7 +5,7 @@ import shutil
 import tempfile
 import unittest
 
-from msys.core.utils import _existe_ejecutable
+from msys.core.utils import _existe_ejecutable, _is_eol_software, _csv_safe_cell
 
 
 class ExisteEjecutableTest(unittest.TestCase):
@@ -44,6 +44,31 @@ class ExisteEjecutableTest(unittest.TestCase):
         self.assertTrue(_existe_ejecutable("msiexec.exe /X{12345678-1234-1234-1234-123456789012}"))
         self.assertTrue(_existe_ejecutable("notepad.exe"))
         self.assertTrue(_existe_ejecutable(""))
+
+
+class SoftwareSinSoporteTest(unittest.TestCase):
+    """«Microsoft Office Professional Plus 2013» no salía como sin soporte: se buscaba «office 2013» seguido."""
+
+    def test_nombres_reales(self):
+        sin_soporte = ["Microsoft Office Professional Plus 2016", "Microsoft Office Profesional Plus 2019 - es-es",
+                       "Microsoft Office Standard 2013", "Microsoft SQL Server 2014 (64-bit)",
+                       "Microsoft SQL Server 2016 LocalDB", "Microsoft Exchange Server 2019 Cumulative Update 14",
+                       "Python 2.7.18"]
+        con_soporte = ["Microsoft 365 Apps para empresas - es-es", "Microsoft Office LTSC Professional Plus 2021 - es-es",
+                       "Microsoft Office 16 Click-to-Run Extensibility Component", "Microsoft SQL Server 2019 (64-bit)",
+                       "Microsoft Visual C++ 2013 Redistributable (x64)", "LibreOffice 7.6.4.1", "OfficeSuite 2016 Free"]
+        for n in sin_soporte:
+            self.assertTrue(_is_eol_software(n), n)
+        for n in con_soporte:
+            self.assertFalse(_is_eol_software(n), n)
+
+
+class CsvSeguroTest(unittest.TestCase):
+    def test_formulas_neutralizadas(self):
+        for v in ("=1+1", "+1", "-1", "@SUMA(A1)", "\t=1", "\r=1"):
+            self.assertTrue(_csv_safe_cell(v).startswith("'"), repr(v))
+        self.assertEqual(_csv_safe_cell("texto"), "texto")
+        self.assertEqual(_csv_safe_cell(None), "")
 
 
 if __name__ == "__main__":

@@ -1119,7 +1119,8 @@ def _csv_safe_cell(value) -> str:
     evitar 'CSV/Formula Injection': si el CSV exportado se abre en Excel,
     esos caracteres iniciales disparan la evaluación de una fórmula/DDE."""
     s = "" if value is None else str(value)
-    if s[:1] in ("=", "+", "-", "@"):
+    # Tabulador y retorno de carro también (OWASP, CSV Injection): Excel los salta y evalúa lo que sigue.
+    if s[:1] in ("=", "+", "-", "@", "\t", "\r"):
         return "'" + s
     return s
 
@@ -1153,10 +1154,21 @@ EOL_SOFTWARE_PATTERNS = [
     "python 2.7", "php 5.",
 ]
 
+# Office, SQL Server y Exchange llevan el año separado del nombre en «Programas y características»
+# («Microsoft Office Professional Plus 2016», «Microsoft SQL Server 2014 (64-bit)»), así que «office 2016» a secas no
+# los encontraba. Fin de soporte (ciclo de vida de Microsoft): Office 2016 y 2019 y Exchange 2016 y 2019 el 14/10/2025
+# (KB5002369); SQL Server 2014 el 09/07/2024 y 2016 el 14/07/2026.
+_EOL_SOFTWARE_REGEX = [
+    re.compile(r"\boffice\b.*\b(2003|2007|2010|2013|2016|2019)\b"),
+    re.compile(r"\bsql server\b.*\b(2005|2008|2012|2014|2016)\b"),
+    re.compile(r"\bexchange server\b.*\b(2007|2010|2013|2016|2019)\b"),
+]
+
+
 def _is_eol_software(nombre: str) -> bool:
     """Comprueba si un nombre de software coincide con versiones sin soporte conocidas."""
     n = (nombre or "").lower()
-    return any(p in n for p in EOL_SOFTWARE_PATTERNS)
+    return any(p in n for p in EOL_SOFTWARE_PATTERNS) or any(r.search(n) for r in _EOL_SOFTWARE_REGEX)
 
 def _get_software_blacklist() -> list:
     """Lee la lista negra de software configurada por el usuario (QSettings)."""
