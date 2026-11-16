@@ -3447,9 +3447,12 @@ try {
 }
 
 try {
-    $ports = Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue | Select-Object -First 100 | ForEach-Object {
+    # PSCustomObject y no tabla hash: Sort-Object -Property no sabe leer las claves de una tabla hash y con
+    # -Unique las daba todas por iguales (comprobado: de 35 puertos en escucha distintos quedaba UNO). Sin el tope
+    # de 100 conexiones, que cortaba la lista antes de quitar los repetidos (IPv4 + IPv6 del mismo puerto).
+    $ports = Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue | ForEach-Object {
         $proc = Get-Process -Id $_.OwningProcess -ErrorAction SilentlyContinue
-        @{ Puerto = $_.LocalPort; Direccion = $_.LocalAddress; Proceso = if ($proc) { $proc.ProcessName } else { 'N/A' } }
+        [PSCustomObject]@{ Puerto = [int]$_.LocalPort; Direccion = $_.LocalAddress; Proceso = if ($proc) { $proc.ProcessName } else { 'N/A' } }
     }
     $sec.Puertos = @($ports | Sort-Object -Property Puerto -Unique)
 } catch {
