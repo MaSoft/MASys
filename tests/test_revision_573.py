@@ -6,7 +6,7 @@ import tempfile
 import unittest
 
 from msys.core.utils import _existe_ejecutable, _is_eol_software, _csv_safe_cell
-from msys.collectors import serie_usb_visible
+from msys.collectors import serie_usb_visible, ContentCopyMoveThread
 
 
 class ExisteEjecutableTest(unittest.TestCase):
@@ -81,6 +81,56 @@ class SerieUsbTest(unittest.TestCase):
         self.assertEqual(serie_usb_visible("010193364a40369174aae5336f1a3f3c"), "010193364a40369174aae5336f1a3f3c")
         self.assertEqual(serie_usb_visible("7&2a3b4c&0"), "(sin número de serie de fábrica)")
         self.assertEqual(serie_usb_visible("6&1234abcd&0&1"), "(sin número de serie de fábrica)")
+
+
+class CopiarMoverSinPerderDatosTest(unittest.TestCase):
+    """Contenido › Copiar/Mover: con «Sobrescribir» se perdían archivos (probado)."""
+
+    def setUp(self):
+        self.base = tempfile.mkdtemp(prefix="masys copiar ")
+        for sub in ("X", "A", "B", "D"):
+            os.makedirs(os.path.join(self.base, sub))
+        self._f("X", "a.txt", "ORIGINAL")
+        self._f("A", "inf.txt", "de A")
+        self._f("B", "inf.txt", "de B")
+        self._f("D", "inf.txt", "viejo")
+
+    def tearDown(self):
+        shutil.rmtree(self.base, ignore_errors=True)
+
+    def _f(self, sub, nombre, texto):
+        with open(os.path.join(self.base, sub, nombre), "w", encoding="utf-8") as f:
+            f.write(texto)
+
+    def _leer(self, sub):
+        c = os.path.join(self.base, sub)
+        return {n: open(os.path.join(c, n), encoding="utf-8").read() for n in os.listdir(c)}
+
+    def _correr(self, items, destino, modo, decisiones):
+        t = ContentCopyMoveThread(items, os.path.join(self.base, destino), modo, decisiones)
+        res = {}
+        t.finished_ok.connect(lambda p, o, e: res.update(p=p, o=o, e=e))
+        t.run()
+        return res
+
+    def test_misma_carpeta_no_borra_el_original(self):
+        for modo in ("copiar", "mover"):
+            res = self._correr([{"nombre": "a.txt", "ruta": os.path.join(self.base, "X", "a.txt")}],
+                               "X", modo, {"a.txt": "sobrescribir"})
+            self.assertEqual(res["o"], 1)
+            self.assertEqual(self._leer("X"), {"a.txt": "ORIGINAL"})
+
+    def test_dos_con_el_mismo_nombre_no_se_pisan(self):
+        items = [{"nombre": "inf.txt", "ruta": os.path.join(self.base, "A", "inf.txt")},
+                 {"nombre": "inf.txt", "ruta": os.path.join(self.base, "B", "inf.txt")}]
+        self._correr(items, "D", "mover", {"inf.txt": "sobrescribir"})
+        self.assertEqual(sorted(self._leer("D").values()), ["de A", "de B"])
+
+    def test_carpeta_dentro_de_si_misma(self):
+        os.makedirs(os.path.join(self.base, "X", "sub"))
+        res = self._correr([{"nombre": "X", "ruta": os.path.join(self.base, "X")}], os.path.join("X", "sub"), "copiar", {})
+        self.assertEqual(res["o"], 1)
+        self.assertEqual(os.listdir(os.path.join(self.base, "X", "sub")), [])
 
 
 if __name__ == "__main__":

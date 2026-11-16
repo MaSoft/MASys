@@ -4985,6 +4985,20 @@ class ContentSearchEngine(QThread):
             self.resultado.emit(self._lote)
             self._lote = []
 
+def _mismo_o_dentro(origen: str, destino: str) -> str:
+    """'' si se puede copiar/mover origen a destino; si no, el motivo. Evita perder datos (probado):
+    - destino == origen (misma carpeta o la misma ruta con otras mayúsculas) con «Sobrescribir»: se borraba el
+      PROPIO original antes de copiarlo;
+    - destino dentro de la carpeta que se copia: copytree se copia dentro de sí misma sin fin."""
+    o = os.path.normcase(os.path.abspath(origen)).rstrip("\\/")
+    d = os.path.normcase(os.path.abspath(destino)).rstrip("\\/")
+    if o == d:
+        return "el origen y el destino son el mismo elemento"
+    if d.startswith(o + os.sep):
+        return "el destino está dentro de la carpeta que se copia o se mueve"
+    return ""
+
+
 class ContentTrashThread(QThread):
     """Envía a la papelera de reciclaje cada ruta de 'rutas', una por una,
     en su propio hilo — mismo motivo que RecycleBinMoveThread: con cientos
@@ -5050,6 +5064,7 @@ class ContentCopyMoveThread(QThread):
         procesados = 0
         omitidos = 0
         total = len(self._items)
+        escritos = set()   # destinos ya escritos en esta misma operación
 
         for idx, fila in enumerate(self._items, start=1):
             if self._stop_requested:
@@ -5074,6 +5089,16 @@ class ContentCopyMoveThread(QThread):
                 # 5.4.0: dos elementos con el MISMO nombre en la selección (p. ej. «repetido.txt» de dos
                 # carpetas): el segundo machacaba al primero sin avisar (probado). Ahora se renombra.
                 destino_final = ruta_destino_sin_colision(self._destino, fila["nombre"])
+            elif accion == "sobrescribir" and os.path.normcase(destino_final) in escritos:
+                # «Sobrescribir» es para lo que YA estaba en el destino, no para el elemento que se acaba de copiar
+                # o mover en esta misma operación (con «mover» el primero se perdía: probado).
+                destino_final = ruta_destino_sin_colision(self._destino, fila["nombre"])
+
+            motivo = _mismo_o_dentro(origen, destino_final)
+            if motivo:
+                omitidos += 1
+                errores.append(f"{fila['nombre']}: no se ha tocado, {motivo}")
+                continue
 
             try:
                 if accion == "sobrescribir" and os.path.exists(destino_final):
@@ -5088,6 +5113,7 @@ class ContentCopyMoveThread(QThread):
                     shutil.copytree(origen, destino_final)
                 else:
                     shutil.copy2(origen, destino_final)
+                escritos.add(os.path.normcase(destino_final))
                 procesados += 1
             except OSError as e:
                 errores.append(f"{fila['nombre']}: {e}")
@@ -5251,6 +5277,7 @@ class RecycleBinMoveThread(QThread):
         movidas = 0
         omitidas = 0
         total = len(self._restauradas)
+        escritos = set()
 
         for idx, fila in enumerate(self._restauradas, start=1):
             if self._stop_requested:
@@ -5276,6 +5303,14 @@ class RecycleBinMoveThread(QThread):
                 # 5.4.0: dos elementos con el MISMO nombre en la selección (p. ej. «repetido.txt» de dos
                 # carpetas): el segundo machacaba al primero sin avisar (probado). Ahora se renombra.
                 destino_final = ruta_destino_sin_colision(self._destino, fila["nombre"])
+            elif accion == "sobrescribir" and os.path.normcase(destino_final) in escritos:
+                destino_final = ruta_destino_sin_colision(self._destino, fila["nombre"])
+
+            motivo = _mismo_o_dentro(origen, destino_final)
+            if motivo:
+                omitidas += 1
+                errores.append(f"{fila['nombre']}: se queda en {fila['ubicacion_original']}, {motivo}")
+                continue
 
             try:
                 if accion == "sobrescribir" and os.path.exists(destino_final):
@@ -5284,6 +5319,7 @@ class RecycleBinMoveThread(QThread):
                     else:
                         os.remove(destino_final)
                 shutil.move(origen, destino_final)
+                escritos.add(os.path.normcase(destino_final))
                 movidas += 1
             except OSError as e:
                 errores.append(f"{fila['nombre']}: {e}")
