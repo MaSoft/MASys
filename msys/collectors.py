@@ -668,6 +668,9 @@ class ShareCollector(QThread):
 
         total_folders = len(all_folders)
         self.progress.emit(20, f"Analizando permisos de {total_folders} carpetas...")
+        # Carpetas cuyos permisos se han podido leer: «solo usuarios reales» puede dejar 0 filas sin que haya fallado
+        # nada (carpetas con solo grupos del sistema) y antes eso acababa en «No se pudieron obtener permisos».
+        leidas = len(processed_folders)
 
         # Analizar permisos de cada carpeta
         for idx, folder_path in enumerate(all_folders):
@@ -690,6 +693,7 @@ class ShareCollector(QThread):
             acl = run_powershell_json(ps_acl, timeout=10)
 
             if acl and not (isinstance(acl, dict) and acl.get('IdentityReference') == 'ERROR'):
+                leidas += 1
                 entries_acl = acl if isinstance(acl, list) else [acl]
                 for entry in entries_acl:
                     identity = entry.get("IdentityReference", "")
@@ -724,7 +728,7 @@ class ShareCollector(QThread):
                 }
                 save_checkpoint(checkpoint_data)
 
-        if not rows:
+        if not rows and not leidas:
             raise Exception(f"No se pudieron obtener permisos para la ruta: {path}")
 
         # Eliminar checkpoint al completar exitosamente
