@@ -2045,20 +2045,30 @@ try {
             $map = 'BCDFGHJKMPQRTVWXY2346789'
             $id = (Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion' -Name DigitalProductId -ErrorAction Stop).DigitalProductId
             $keyOffset = 52
-            $esWin8Mas = ([int]$id[66] / 6) -band 1
+            # 5.7.3: división ENTERA (antes «/» decimal redondeada) y, en Windows 8 o posterior, la «N» que se inserta
+            # tras el último dígito calculado. Sin ella la clave mostrada era errónea (comprobado: la de este equipo salía
+            # sin «N», imposible en una clave de Windows 8+, y con el primer carácter de más).
+            $esWin8Mas = [math]::Truncate([int]$id[66] / 6) -band 1
             $id[66] = ([int]$id[66] -band 0xF7) -bor (($esWin8Mas -band 2) * 4)
             $clave = ''
+            $ultimo = 0
             for ($i = 24; $i -ge 0; $i--) {
                 $actual = 0
                 for ($j = 14; $j -ge 0; $j--) {
-                    $actual = $actual * 256 -bxor [int]$id[$j + $keyOffset]
-                    $id[$j + $keyOffset] = [byte]([math]::Floor($actual / 24))
+                    $actual = $actual * 256 + [int]$id[$j + $keyOffset]
+                    $id[$j + $keyOffset] = [byte][math]::Truncate($actual / 24)
                     $actual = $actual % 24
                 }
                 $clave = $map[$actual] + $clave
-                if (($i % 5 -eq 0) -and ($i -ne 0)) { $clave = '-' + $clave }
+                $ultimo = $actual
             }
-            if ($clave -match '^([A-Z0-9])\1{4}-\1{5}-\1{5}-\1{5}-\1{5}$') { return $null }  # placeholder de licencia digital
+            if ($esWin8Mas -eq 1) {
+                $clave = $clave.Substring(1, $ultimo) + 'N' + $clave.Substring($ultimo + 1)
+            }
+            $clave = $clave.Substring(0, 5) + '-' + $clave.Substring(5, 5) + '-' + $clave.Substring(10, 5) + '-' +
+                     $clave.Substring(15, 5) + '-' + $clave.Substring(20, 5)
+            # Placeholder de licencia digital: todo el mismo carácter, sin contar la «N» insertada (que no es del alfabeto)
+            if ((($clave -replace '-', '') -replace 'N', '') -match '^(.)\1*$') { return $null }
             return $clave
         } catch { return $null }
     }
@@ -4092,20 +4102,30 @@ try {
             $map = 'BCDFGHJKMPQRTVWXY2346789'
             $id = (Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion' -Name DigitalProductId -ErrorAction Stop).DigitalProductId
             $keyOffset = 52
-            $esWin8Mas = ([int]$id[66] / 6) -band 1
+            # 5.7.3: división ENTERA (antes «/» decimal redondeada) y, en Windows 8 o posterior, la «N» que se inserta
+            # tras el último dígito calculado. Sin ella la clave mostrada era errónea (comprobado: la de este equipo salía
+            # sin «N», imposible en una clave de Windows 8+, y con el primer carácter de más).
+            $esWin8Mas = [math]::Truncate([int]$id[66] / 6) -band 1
             $id[66] = ([int]$id[66] -band 0xF7) -bor (($esWin8Mas -band 2) * 4)
             $clave = ''
+            $ultimo = 0
             for ($i = 24; $i -ge 0; $i--) {
                 $actual = 0
                 for ($j = 14; $j -ge 0; $j--) {
-                    $actual = $actual * 256 -bxor [int]$id[$j + $keyOffset]
-                    $id[$j + $keyOffset] = [byte]([math]::Floor($actual / 24))
+                    $actual = $actual * 256 + [int]$id[$j + $keyOffset]
+                    $id[$j + $keyOffset] = [byte][math]::Truncate($actual / 24)
                     $actual = $actual % 24
                 }
                 $clave = $map[$actual] + $clave
-                if (($i % 5 -eq 0) -and ($i -ne 0)) { $clave = '-' + $clave }
+                $ultimo = $actual
             }
-            if ($clave -match '^([A-Z0-9])\1{4}-\1{5}-\1{5}-\1{5}-\1{5}$') { return $null }  # placeholder de licencia digital
+            if ($esWin8Mas -eq 1) {
+                $clave = $clave.Substring(1, $ultimo) + 'N' + $clave.Substring($ultimo + 1)
+            }
+            $clave = $clave.Substring(0, 5) + '-' + $clave.Substring(5, 5) + '-' + $clave.Substring(10, 5) + '-' +
+                     $clave.Substring(15, 5) + '-' + $clave.Substring(20, 5)
+            # Placeholder de licencia digital: todo el mismo carácter, sin contar la «N» insertada (que no es del alfabeto)
+            if ((($clave -replace '-', '') -replace 'N', '') -match '^(.)\1*$') { return $null }
             return $clave
         } catch { return $null }
     }
