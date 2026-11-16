@@ -6,6 +6,7 @@ import tempfile
 import unittest
 
 from msys.core.utils import _existe_ejecutable, _is_eol_software, _csv_safe_cell
+from msys.collectors import serie_usb_visible
 
 
 class ExisteEjecutableTest(unittest.TestCase):
@@ -69,6 +70,17 @@ class CsvSeguroTest(unittest.TestCase):
             self.assertTrue(_csv_safe_cell(v).startswith("'"), repr(v))
         self.assertEqual(_csv_safe_cell("texto"), "texto")
         self.assertEqual(_csv_safe_cell(None), "")
+
+
+class SerieUsbTest(unittest.TestCase):
+    """Historial USB: todas las series salían «sin número de serie» porque Windows añade «&0» a todas."""
+
+    def test_series_reales_y_de_windows(self):
+        self.assertEqual(serie_usb_visible("B42E3389&0"), "B42E3389")
+        self.assertEqual(serie_usb_visible("08606E67EE63F331D704072A&0"), "08606E67EE63F331D704072A")
+        self.assertEqual(serie_usb_visible("010193364a40369174aae5336f1a3f3c"), "010193364a40369174aae5336f1a3f3c")
+        self.assertEqual(serie_usb_visible("7&2a3b4c&0"), "(sin número de serie de fábrica)")
+        self.assertEqual(serie_usb_visible("6&1234abcd&0&1"), "(sin número de serie de fábrica)")
 
 
 if __name__ == "__main__":

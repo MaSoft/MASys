@@ -3662,6 +3662,13 @@ class USBDeviceCollector(QThread):
             self.finished_error.emit(str(e))
 
 
+def serie_usb_visible(serial: str) -> str:
+    """Número de serie de una subclave de USBSTOR sin el «&<LUN>» final, o el aviso si es una serie que inventa
+    Windows para dispositivos sin número de fábrica («7&2a3b4c&0»: lleva un «&» también dentro)."""
+    serie = re.sub(r"&\d+$", "", serial)
+    return serie if "&" not in serie else "(sin número de serie de fábrica)"
+
+
 def leer_historial_usb_almacenamiento() -> List[Dict[str, str]]:
     """Dispositivos de almacenamiento USB (pendrives, discos externos) que
     se han conectado ALGUNA VEZ a este equipo, no solo los presentes ahora
@@ -3704,10 +3711,11 @@ def leer_historial_usb_almacenamiento() -> List[Dict[str, str]]:
                                         nombre_amigable, _ = winreg.QueryValueEx(clave_serial, "FriendlyName")
                                     except FileNotFoundError:
                                         nombre_amigable = nombre_clase
-                                    # Dispositivos sin número de serie real de fábrica
-                                    # reciben un pseudo-serial con '&' (p. ej. '6&2a3b...&0')
-                                    # generado por Windows — no es un identificador útil.
-                                    serial_mostrar = serial if "&" not in serial else "(sin número de serie de fábrica)"
+                                    # Windows añade «&<LUN>» al final de TODOS («B42E3389&0»): antes
+                                    # cualquier «&» se tomaba por serie inventada y salían todos «sin
+                                    # número de serie» (comprobado: 6 de 7 reales ocultos). La serie
+                                    # inventada por Windows lleva además un «&» dentro («7&2a3b4c&0»).
+                                    serial_mostrar = serie_usb_visible(serial)
                                     resultados.append({
                                         "Nombre": nombre_amigable,
                                         "Clase": nombre_clase,
