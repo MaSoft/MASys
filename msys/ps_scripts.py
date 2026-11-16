@@ -784,9 +784,7 @@ try {
     # reactivará más tarde) — se filtra en la UI con un checkbox, no se
     # oculta por defecto en el origen de datos.
     $tareas = @(Get-ScheduledTask | ForEach-Object {
-        # Por objeto, no por nombre: -TaskName admite comodines y una tarea con corchetes en el nombre recibía la
-        # última ejecución y el resultado de OTRA (o ninguno). Mismo dato y algo más rápido (comprobado).
-        $info = $_ | Get-ScheduledTaskInfo -ErrorAction SilentlyContinue
+        $info = Get-ScheduledTaskInfo -TaskName $_.TaskName -TaskPath $_.TaskPath -ErrorAction SilentlyContinue
         $proximaEjecucion = "N/A"
         if ($info.NextRunTime) {
             $proximaEjecucion = $info.NextRunTime.ToString("dd/MM/yyyy HH:mm:ss")
@@ -4650,9 +4648,11 @@ try {
     # posterior — la vista por defecto (antes de tocar ninguna cabecera)
     # mostraba eventos recientes por debajo de otros más antiguos en cuanto
     # la ventana de 30 días cruzaba un mes.
-    $resultados = $resultados | Sort-Object {
+    # @(...): con UN solo acceso, Sort-Object devuelve un objeto suelto cuyo .Count en PowerShell 5.1 es $null y se
+    # emitía «[]» (comprobado): el único acceso remoto de 30 días no salía.
+    $resultados = @($resultados | Sort-Object {
         [datetime]::ParseExact($_.Fecha, 'dd/MM/yyyy HH:mm:ss', [System.Globalization.CultureInfo]::InvariantCulture)
-    } -Descending
+    } -Descending)
     if ($resultados.Count -gt 0) {
         $resultados | ConvertTo-Json -Depth 3
     } else {
@@ -4743,6 +4743,8 @@ $fallidas = 0
 foreach ($t in (Get-ScheduledTask)) {{
     try {{
         $xml = Export-ScheduledTask -TaskName $t.TaskName -TaskPath $t.TaskPath
+        # Sin XML no hay copia: con SilentlyContinue un fallo dejaba un archivo vacío contado como copiado.
+        if (-not $xml) {{ $fallidas++; continue }}
         $carpeta = ($t.TaskPath.Trim('\')) -replace '[\\/:*?"<>|]', '_'
         $nombre = $t.TaskName -replace '[\\/:*?"<>|]', '_'
         $archivo = if ($carpeta) {{ "$carpeta`_$nombre.xml" }} else {{ "$nombre.xml" }}

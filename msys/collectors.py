@@ -2719,10 +2719,13 @@ class ScheduledTaskCollector(QThread):
             self.finished_error.emit(str(e))
 
 
-# -TaskName y -TaskPath admiten comodines (comprobado: «A[d]obe Acrobat Update Task» encuentra «Adobe Acrobat Update
-# Task»): con corchetes en el nombre se podía activar, lanzar o BORRAR otra tarea. Se busca por nombre y ruta exactos.
+# Unregister-ScheduledTask (y Get-ScheduledTask) admiten comodines en -TaskName/-TaskPath: comprobado con -WhatIf,
+# «A[d]obe Acrobat Update Task» BORRARÍA «Adobe Acrobat Update Task». Se comprueba que hay exactamente una tarea con ese
+# nombre y ruta y se pasa el nombre ESCAPADO ([WildcardPattern]::Escape). No se pasa el objeto por tubería: Windows lo
+# rechaza en 108 de las 272 tareas de un equipo real («El parámetro no es correcto»); por nombre escapado, en ninguna.
 _PS_TAREA_EXACTA = ("$t = @(Get-ScheduledTask | Where-Object {{ $_.TaskName -eq '{nombre}' -and $_.TaskPath -eq '{ruta}' }}); "
-                    "if ($t.Count -ne 1) {{ throw 'No se encuentra la tarea' }}; ")
+                    "if ($t.Count -ne 1) {{ throw 'No se encuentra la tarea' }}; "
+                    "$n = [WildcardPattern]::Escape('{nombre}'); $r = [WildcardPattern]::Escape('{ruta}'); ")
 
 
 class ScheduledTaskManager:
@@ -2735,19 +2738,19 @@ class ScheduledTaskManager:
 
     def enable(self, nombre: str, ruta: str) -> Tuple[bool, str]:
         return run_powershell_command_params(
-            _PS_TAREA_EXACTA + "$t[0] | Enable-ScheduledTask | Out-Null", nombre=nombre, ruta=ruta)
+            _PS_TAREA_EXACTA + "Enable-ScheduledTask -TaskName $n -TaskPath $r | Out-Null", nombre=nombre, ruta=ruta)
 
     def disable(self, nombre: str, ruta: str) -> Tuple[bool, str]:
         return run_powershell_command_params(
-            _PS_TAREA_EXACTA + "$t[0] | Disable-ScheduledTask | Out-Null", nombre=nombre, ruta=ruta)
+            _PS_TAREA_EXACTA + "Disable-ScheduledTask -TaskName $n -TaskPath $r | Out-Null", nombre=nombre, ruta=ruta)
 
     def run_now(self, nombre: str, ruta: str) -> Tuple[bool, str]:
         return run_powershell_command_params(
-            _PS_TAREA_EXACTA + "$t[0] | Start-ScheduledTask", nombre=nombre, ruta=ruta)
+            _PS_TAREA_EXACTA + "Start-ScheduledTask -TaskName $n -TaskPath $r", nombre=nombre, ruta=ruta)
 
     def delete(self, nombre: str, ruta: str) -> Tuple[bool, str]:
         return run_powershell_command_params(
-            _PS_TAREA_EXACTA + "$t[0] | Unregister-ScheduledTask -Confirm:$false",
+            _PS_TAREA_EXACTA + "Unregister-ScheduledTask -TaskName $n -TaskPath $r -Confirm:$false",
             nombre=nombre, ruta=ruta)
 
 
