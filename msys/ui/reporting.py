@@ -205,7 +205,8 @@ class ReportingMixin:
         if not ok or not empresa.strip():
             empresa = "Cliente"
         # Va dentro del HTML en 4 sitios (título, cabecera, resumen, pie): escapado como el resto de datos del informe
-        empresa = html_escape(empresa.strip())
+        empresa_texto = empresa.strip()
+        empresa = html_escape(empresa_texto)
 
         default_name = f"InformePermisos_{time.strftime('%Y%m%d_%H%M%S')}.html"
         path = dialogo_guardar_archivo(self, "Guardar HTML", ruta_guardado_predeterminada(default_name), "HTML (*.html)")
@@ -874,7 +875,7 @@ class ReportingMixin:
                 f.write(html)
 
             self.set_status(f"✅ Informe HTML generado: {os.path.basename(path)}")
-            self._avisar("Éxito", f"Informe HTML generado para {empresa}:\n\n{path}")
+            self._avisar("Éxito", f"Informe HTML generado para {empresa_texto}:\n\n{path}")
 
         except Exception as e:
             self._avisar("Error", f"No se pudo generar el informe HTML:\n\n{e}", QMessageBox.Critical)
