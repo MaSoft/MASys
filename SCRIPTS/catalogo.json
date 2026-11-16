@@ -1,0 +1,9 @@
+[
+  {
+    "nombre": "RDP",
+    "descripcion": "Parche para eliminar la nueva ventana de RDP donde se debe marcar siempre compartidos.",
+    "parametros": "",
+    "admin": true,
+    "archivo": "RDP.PS1"
+  }
+]

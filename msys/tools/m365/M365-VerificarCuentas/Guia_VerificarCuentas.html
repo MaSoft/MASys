@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verificar cuentas de Microsoft 365 &#8212; Guía de uso</title>
+<style>
+:root {
+  --primary: #1a3a5c;
+  --primary-light: #2c5f8a;
+  --accent: #2979FF;
+  --bg: #f7f9fc;
+  --card-bg: #ffffff;
+  --text: #1a1a2e;
+  --text-light: #555;
+  --border: #dde3ea;
+  --code-bg: #0d1117;
+  --code-text: #e6edf3;
+  --success: #16a34a;
+  --warning: #ca8a04;
+  --danger: #dc2626;
+  --info: #2563eb;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: "Segoe UI", Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+nav {
+  position: fixed; top: 0; left: 0; bottom: 0; width: 280px;
+  background: var(--primary); overflow-y: auto; padding: 24px 0;
+}
+nav .nav-title { color: #fff; font-size: 20px; font-weight: 600; padding: 0 24px 4px; }
+nav .nav-subtitle { color: #9fb3c8; font-size: 12px; padding: 0 24px 20px; }
+nav ul { list-style: none; }
+nav li.section-title {
+  color: #7d97b3; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em;
+  padding: 16px 24px 6px;
+}
+nav ul li a {
+  display: block; padding: 8px 24px; color: #d7e2ee; text-decoration: none; font-size: 14px;
+}
+nav ul li a:hover { background: rgba(255,255,255,0.08); color: #fff; }
+nav a.sub { padding-left: 40px; font-size: 13px; color: #b7c8db; }
+
+main { margin-left: 280px; padding: 40px 48px 80px; max-width: 980px; }
+
+.page-header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  color: #fff; padding: 40px 44px; border-radius: 14px; margin-bottom: 36px;
+}
+.page-header h1 { font-size: 36px; font-weight: 300; margin-bottom: 8px; }
+.page-header .version { font-size: 13px; opacity: 0.85; margin-bottom: 10px; }
+.page-header .tagline { font-size: 16px; opacity: 0.92; }
+
+h2 {
+  font-size: 24px; color: var(--primary); border-bottom: 2px solid var(--primary);
+  padding-bottom: 8px; margin: 44px 0 18px;
+}
+h3 { font-size: 18px; color: var(--primary-light); margin: 26px 0 10px; }
+p { margin-bottom: 12px; color: var(--text-light); }
+ul, ol { margin: 0 0 14px 22px; color: var(--text-light); }
+li { margin-bottom: 4px; }
+
+.card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 22px; margin-bottom: 18px; }
+.card-header { font-weight: 600; color: var(--primary); margin-bottom: 10px; font-size: 15px; }
+
+.module-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin-bottom: 20px; }
+.module-card { background: var(--card-bg); border: 1px solid var(--border); border-top: 4px solid var(--accent); border-radius: 8px; padding: 18px; }
+.module-card h4 { color: var(--primary); margin-bottom: 6px; font-size: 15px; }
+.module-card p { font-size: 13px; margin-bottom: 0; }
+
+table { width: 100%; border-collapse: collapse; margin-bottom: 20px; background: var(--card-bg); border-radius: 8px; overflow: hidden; }
+th { background: var(--primary); color: #fff; text-align: left; padding: 10px 14px; font-size: 13px; }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text); }
+tr:nth-child(even) td { background: #fafbfd; }
+tr:hover td { background: #eef3fb; }
+
+.param-name { font-family: Consolas, monospace; color: var(--accent); font-weight: 600; }
+
+.badge { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; margin-left: 6px; }
+.badge-required { background: #fde2e2; color: var(--danger); }
+.badge-optional { background: #e0e7ff; color: var(--info); }
+.badge-default { background: #e7f7ec; color: var(--success); }
+
+pre {
+  background: var(--code-bg); color: var(--code-text); padding: 16px 18px; border-radius: 8px;
+  overflow-x: auto; font-family: Consolas, monospace; font-size: 13px; margin-bottom: 18px;
+}
+pre .cmd { color: #79c0ff; }
+pre .param { color: #ffa657; }
+pre .string { color: #a5d6ff; }
+pre .comment { color: #8b949e; font-style: italic; }
+
+.alert-info, .alert-warning, .alert-danger, .alert-success {
+  padding: 14px 18px; border-radius: 8px; margin-bottom: 18px; border-left: 4px solid;
+}
+.alert-info { background: #eaf2ff; border-color: var(--info); color: #1e3a5f; }
+.alert-warning { background: #fff8e6; border-color: var(--warning); color: #6b4e00; }
+.alert-danger { background: #fdeaea; border-color: var(--danger); color: #7a1414; }
+.alert-success { background: #eafaf0; border-color: var(--success); color: #145c2c; }
+
+.flow { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-bottom: 18px; }
+.flow-step {
+  background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px;
+  padding: 8px 14px; font-size: 13px;
+}
+.flow-step::after { content: '\25B6'; margin-left: 10px; color: var(--accent); }
+.flow-step:last-child::after { content: ''; }
+
+.dir-tree { font-family: Consolas, monospace; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 16px; font-size: 13px; margin-bottom: 18px; white-space: pre; }
+.dir-tree .folder { color: var(--primary); font-weight: 600; }
+.dir-tree .file { color: var(--text-light); }
+.dir-tree .highlight-file { color: var(--accent); font-weight: 600; }
+
+.feature-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-bottom: 20px; }
+.feature-item { display: flex; gap: 12px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+.feature-icon { font-size: 22px; }
+.feature-text h4 { font-size: 14px; color: var(--primary); margin-bottom: 3px; }
+.feature-text p { font-size: 13px; margin-bottom: 0; }
+
+footer { text-align: center; padding: 30px; color: var(--text-light); font-size: 12px; border-top: 1px solid var(--border); margin-top: 50px; }
+
+@media (max-width: 900px) {
+  nav { display: none; }
+  main { margin-left: 0; padding: 24px; }
+}
+@media print {
+  nav { display: none; }
+  main { margin-left: 0; }
+  body { font-size: 10pt; }
+  .page-header { break-inside: avoid; }
+  h2 { break-after: avoid; }
+}
+code { font-family: Consolas, monospace; background: #eef2f7; padding: 1px 5px; border-radius: 4px; font-size: 12.5px; }
+
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-title">Verificar cuentas de Microsoft 365</div>
+  <div class="nav-subtitle">Verificar-CuentasM365.ps1 &#183; v1.0</div>
+  <ul>
+    <li class="section-title">Guía de uso</li>
+    <li><a href="#intro">1. Introducción</a></li><li><a href="#caracteristicas">2. Características</a></li><li><a href="#requisitos">3. Requisitos</a></li><li><a href="#instalacion">4. Instalación y lanzamiento</a></li><li><a href="#uso">5. Cómo se usa</a></li><li><a class="sub" href="#flujo">Pasos</a></li><li><a class="sub" href="#csv">Formato del CSV</a></li><li><a class="sub" href="#resultados">Resultados</a></li><li><a href="#parametros">6. Parámetros</a></li><li><a href="#ejemplos">7. Ejemplos</a></li><li><a href="#problemas">8. Resolución de problemas</a></li><li><a href="#legal">9. Aviso legal</a></li>
+    <li class="section-title">Herramientas</li>
+    <li><a href="../LEEME.html">Índice de herramientas</a></li>
+  </ul>
+</nav>
+<main>
+<div class="page-header">
+  <h1>Verificar cuentas de Microsoft 365</h1>
+  <div class="version">Microsoft 365 - Usuarios &#183; Verificar-CuentasM365.ps1 &#183; versión 1.0</div>
+  <div class="tagline">Comprobación rápida de una lista de cuentas o de todo el tenant: existen, están habilitadas, tienen licencia y buzón. Solo lee.</div>
+</div>
+
+<h2 id="intro">1. Introducción</h2>
+
+<p>Revisa las cuentas de un CSV (o todas las del tenant) y da un veredicto por cada una. Es el paso de control
+después de un alta masiva o antes de lanzar una migración de correo: una licencia asignada <strong>no</strong> significa
+que el buzón exista (Exchange tarda entre 5 y 20 minutos en crearlo).</p>
+<p>También sirve como inventario: con <span class="param-name">-Todos -ConBuzon -ConInicioSesion</span> sale la lista de cuentas
+con sus licencias, tipo de buzón y último acceso, útil para detectar licencias desperdiciadas.</p>
+<div class="alert-success">No cambia nada en el tenant.</div>
+
+
+<h2 id="caracteristicas">2. Características</h2>
+<div class="feature-list"><div class="feature-item"><div class="feature-icon">&#128269;</div><div class="feature-text"><h4>Existe y habilitada</h4><p>Busca por UPN y, si no lo encuentra, por correo (útil cuando el UPN es .onmicrosoft.com).</p></div></div><div class="feature-item"><div class="feature-icon">&#127915;</div><div class="feature-text"><h4>Licencias con su nombre</h4><p>Muestra el nombre de cada licencia asignada.</p></div></div><div class="feature-item"><div class="feature-icon">&#128231;</div><div class="feature-text"><h4>Buzón real</h4><p>Con <span class="param-name">-ConBuzon</span> comprueba en Exchange si el buzón existe y si es de usuario, compartido o sala.</p></div></div><div class="feature-item"><div class="feature-icon">&#128190;</div><div class="feature-text"><h4>Tamaño</h4><p>Con <span class="param-name">-ConTamano</span>, el tamaño de cada buzón.</p></div></div><div class="feature-item"><div class="feature-icon">&#128336;</div><div class="feature-text"><h4>Último acceso</h4><p>Con <span class="param-name">-ConInicioSesion</span> (requiere Entra ID P1/P2 o Business Premium).</p></div></div><div class="feature-item"><div class="feature-icon">&#9989;</div><div class="feature-text"><h4>Veredicto</h4><p>OK, NO EXISTE, DESHABILITADA, SIN LICENCIA, LICENCIA SIN BUZÓN…</p></div></div><div class="feature-item"><div class="feature-icon">&#127970;</div><div class="feature-text"><h4>Todo el tenant</h4><p><span class="param-name">-Todos</span> recorre todas las cuentas (con o sin invitados).</p></div></div><div class="feature-item"><div class="feature-icon">&#128203;</div><div class="feature-text"><h4>CSV para Excel</h4><p>Una fila por cuenta, con resumen por veredicto al final.</p></div></div></div>
+
+<h2 id="requisitos">3. Requisitos</h2>
+<table><tr><th style="width:30%">Requisito</th><th>Detalle</th></tr><tr><td>Sistema</td><td>Windows con PowerShell 5.1 o 7</td></tr><tr><td>Módulos</td><td><code>Microsoft.Graph.Authentication</code>, <code>Microsoft.Graph.Users</code>, <code>Identity.DirectoryManagement</code>; con -ConBuzon, <code>ExchangeOnlineManagement</code>.</td></tr><tr><td>Rol</td><td>Lector global (o cualquier administrador). Para -ConBuzon, también lectura en Exchange (Lector global vale).</td></tr><tr><td>Permisos de Graph</td><td>User.Read.All, Organization.Read.All; con -ConInicioSesion, AuditLog.Read.All.</td></tr></table>
+
+<h2 id="instalacion">4. Instalación y lanzamiento</h2>
+<p>Copia la carpeta y ejecuta. Módulos: <code>Install-Module Microsoft.Graph -Scope CurrentUser</code> y, si usas -ConBuzon, <code>Install-Module ExchangeOnlineManagement -Scope CurrentUser</code>.</p>
+<div class="dir-tree"><span class="folder">M365-VerificarCuentas\</span>
+&#9500;&#9472;&#9472; <span class="highlight-file">Verificar-CuentasM365.ps1</span>
+&#9500;&#9472;&#9472; plantilla_verificar.csv
+&#9500;&#9472;&#9472; Guia_VerificarCuentas.html
+&#9492;&#9472;&#9472; <span class="folder">Resultados\</span></div>
+
+<h2 id="uso">5. Cómo se usa</h2>
+<h3 id="flujo">Pasos</h3>
+<div class="flow"><div class="flow-step">CSV con UPN o -Todos</div><div class="flow-step">Elegir qué comprobar</div><div class="flow-step">Ejecutar</div><div class="flow-step">Revisar el veredicto</div></div>
+
+<p>Lánzalo con un CSV (columna <span class="param-name">UPN</span>; vale el mismo CSV del alta de cuentas) o con <span class="param-name">-Todos</span>.
+Cada cuenta sale en verde (OK), amarillo (algo que revisar) o rojo (no existe).</p>
+<table><tr><th>Veredicto</th><th>Qué significa</th><th>Qué hacer</th></tr>
+<tr><td>OK</td><td>Existe, habilitada, con licencia (o buzón compartido/sala, que no la necesitan).</td><td>Nada.</td></tr>
+<tr><td>NO EXISTE</td><td>No hay cuenta con ese UPN ni con ese correo.</td><td>Crearla o corregir el CSV.</td></tr>
+<tr><td>DESHABILITADA</td><td>Existe pero no puede iniciar sesión.</td><td>Habilitarla si debe usarse.</td></tr>
+<tr><td>SIN LICENCIA</td><td>Buzón de usuario sin licencia (dejará de funcionar a los 30 días).</td><td>Asignar licencia.</td></tr>
+<tr><td>LICENCIA SIN BUZÓN</td><td>Tiene licencia pero Exchange aún no ha creado el buzón.</td><td>Esperar 20 minutos y repetir; si sigue, revisar la licencia (debe incluir Exchange).</td></tr>
+<tr><td>SIN LICENCIA NI BUZÓN</td><td>Cuenta sin correo.</td><td>Asignar licencia si debe tener correo.</td></tr></table>
+
+<h3 id="csv">Formato del CSV</h3><table><tr><th>Columna</th><th></th><th>Qué es</th><th>Ejemplo</th></tr><tr><td class="param-name">UPN</td><td><span class="badge badge-required">obligatorio</span></td><td>Cuenta a revisar (UPN o correo).</td><td><code>maria.lopez@empresa.com</code></td></tr></table>
+<h3 id="resultados">Resultados</h3><p><span class="param-name">Resultados\VerificarCuentas_AAAAMMDD_HHMMSS.csv</span>: UPN, Existe, Nombre, Habilitada, Tipo, Licencias, Buzón, TamañoBuzón, ÚltimoInicioSesión, Alta, Veredicto.</p>
+
+<h2 id="parametros">6. Parámetros</h2>
+<table><tr><th style="width:20%">Parámetro</th><th style="width:11%">Tipo</th><th style="width:11%"></th><th style="width:14%">Valor por defecto</th><th>Descripción</th></tr><tr><td class="param-name">-Csv</td><td>Ruta</td><td><span class="badge badge-required">obligatorio</span></td><td>&#8212;</td><td>CSV con la columna UPN (si no se usa -Todos).</td></tr><tr><td class="param-name">-Todos</td><td>Switch</td><td><span class="badge badge-optional">opcional</span></td><td>&#8212;</td><td>Revisa todas las cuentas del tenant en lugar de un CSV.</td></tr><tr><td class="param-name">-IncluirInvitados</td><td>Switch</td><td><span class="badge badge-optional">opcional</span></td><td>No</td><td>Con -Todos, incluye también las cuentas de invitados.</td></tr><tr><td class="param-name">-TenantId</td><td>GUID</td><td><span class="badge badge-optional">opcional</span></td><td>&#8212;</td><td>Tenant esperado.</td></tr><tr><td class="param-name">-ConBuzon</td><td>Switch</td><td><span class="badge badge-optional">opcional</span></td><td>No</td><td>Comprueba en Exchange Online si el buzón existe y su tipo.</td></tr><tr><td class="param-name">-ConTamano</td><td>Switch</td><td><span class="badge badge-optional">opcional</span></td><td>No</td><td>Añade el tamaño del buzón (activa -ConBuzon; más lento).</td></tr><tr><td class="param-name">-ConInicioSesion</td><td>Switch</td><td><span class="badge badge-optional">opcional</span></td><td>No</td><td>Añade el último inicio de sesión (Entra ID P1/P2).</td></tr><tr><td class="param-name">-CarpetaResultados</td><td>Ruta</td><td><span class="badge badge-default">por defecto</span></td><td>.\Resultados</td><td>Dónde guardar el CSV.</td></tr></table>
+
+<h2 id="ejemplos">7. Ejemplos</h2>
+<h3>Control después de un alta masiva</h3><pre><span class="cmd">.\Verificar-CuentasM365.ps1</span><span class="param"> -Csv</span> ..\M365-CrearCuentas\cuentas.csv<span class="param"> -TenantId</span> <span class="string">&quot;00000000-0000-0000-0000-000000000000&quot;</span><span class="param"> -ConBuzon</span></pre><h3>Inventario de todo el tenant con último acceso</h3><p>Para ver licencias asignadas a cuentas que no se usan.</p><pre><span class="cmd">.\Verificar-CuentasM365.ps1</span><span class="param"> -Todos</span><span class="param"> -ConBuzon</span><span class="param"> -ConInicioSesion</span></pre><h3>Tamaño de los buzones antes de migrar</h3><pre><span class="cmd">.\Verificar-CuentasM365.ps1</span><span class="param"> -Csv</span> .\migrar.csv<span class="param"> -ConTamano</span></pre>
+
+<h2 id="problemas">8. Resolución de problemas</h2>
+<table><tr><th style="width:28%">Problema</th><th style="width:30%">Causa</th><th>Solución</th></tr><tr><td>Todas salen NO EXISTE</td><td>La sesión no tiene User.Read.All (todas las consultas fallan).</td><td><code>Disconnect-MgGraph</code> y relanzar aceptando los permisos.</td></tr><tr><td>Error con -ConInicioSesion</td><td>El tenant no tiene Entra ID P1/P2 o falta AuditLog.Read.All.</td><td>Quitar -ConInicioSesion o usar una cuenta con ese permiso.</td></tr><tr><td>Buzón «no comprobado»</td><td>No se usó -ConBuzon.</td><td>Añadir -ConBuzon.</td></tr><tr><td>Muy lento con -ConTamano</td><td>Hace una consulta por buzón.</td><td>Usarlo solo con CSV, no con -Todos en tenants grandes.</td></tr></table>
+
+<h2 id="legal">9. Aviso legal</h2>
+<div class="alert-warning">Esta herramienta solo lee información del tenant. Aun así, el CSV de resultados contiene datos de usuarios: trátalo según la normativa de protección de datos.</div>
+<div class="card"><div class="card-header">Limitaciones conocidas</div><p>El último inicio de sesión solo está disponible con Entra ID P1/P2 (incluido en Business Premium y E3/E5) y puede tardar horas en actualizarse. No comprueba MFA ni buzones de archivo.</p></div>
+
+<footer>Verificar cuentas de Microsoft 365 &#183; Verificar-CuentasM365.ps1 &#183; versión 1.0 &#183; Actualizado 24/10/2026 &#183; Masoft.es</footer>
+</main>
+</body>
+</html>

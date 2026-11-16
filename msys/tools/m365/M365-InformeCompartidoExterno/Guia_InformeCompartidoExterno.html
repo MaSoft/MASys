@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informe de lo compartido con externos &#8212; Guía de uso</title>
+<style>
+:root {
+  --primary: #1a3a5c;
+  --primary-light: #2c5f8a;
+  --accent: #2979FF;
+  --bg: #f7f9fc;
+  --card-bg: #ffffff;
+  --text: #1a1a2e;
+  --text-light: #555;
+  --border: #dde3ea;
+  --code-bg: #0d1117;
+  --code-text: #e6edf3;
+  --success: #16a34a;
+  --warning: #ca8a04;
+  --danger: #dc2626;
+  --info: #2563eb;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: "Segoe UI", Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+nav {
+  position: fixed; top: 0; left: 0; bottom: 0; width: 280px;
+  background: var(--primary); overflow-y: auto; padding: 24px 0;
+}
+nav .nav-title { color: #fff; font-size: 20px; font-weight: 600; padding: 0 24px 4px; }
+nav .nav-subtitle { color: #9fb3c8; font-size: 12px; padding: 0 24px 20px; }
+nav ul { list-style: none; }
+nav li.section-title {
+  color: #7d97b3; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em;
+  padding: 16px 24px 6px;
+}
+nav ul li a {
+  display: block; padding: 8px 24px; color: #d7e2ee; text-decoration: none; font-size: 14px;
+}
+nav ul li a:hover { background: rgba(255,255,255,0.08); color: #fff; }
+nav a.sub { padding-left: 40px; font-size: 13px; color: #b7c8db; }
+
+main { margin-left: 280px; padding: 40px 48px 80px; max-width: 980px; }
+
+.page-header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  color: #fff; padding: 40px 44px; border-radius: 14px; margin-bottom: 36px;
+}
+.page-header h1 { font-size: 36px; font-weight: 300; margin-bottom: 8px; }
+.page-header .version { font-size: 13px; opacity: 0.85; margin-bottom: 10px; }
+.page-header .tagline { font-size: 16px; opacity: 0.92; }
+
+h2 {
+  font-size: 24px; color: var(--primary); border-bottom: 2px solid var(--primary);
+  padding-bottom: 8px; margin: 44px 0 18px;
+}
+h3 { font-size: 18px; color: var(--primary-light); margin: 26px 0 10px; }
+p { margin-bottom: 12px; color: var(--text-light); }
+ul, ol { margin: 0 0 14px 22px; color: var(--text-light); }
+li { margin-bottom: 4px; }
+
+.card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 22px; margin-bottom: 18px; }
+.card-header { font-weight: 600; color: var(--primary); margin-bottom: 10px; font-size: 15px; }
+
+.module-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin-bottom: 20px; }
+.module-card { background: var(--card-bg); border: 1px solid var(--border); border-top: 4px solid var(--accent); border-radius: 8px; padding: 18px; }
+.module-card h4 { color: var(--primary); margin-bottom: 6px; font-size: 15px; }
+.module-card p { font-size: 13px; margin-bottom: 0; }
+
+table { width: 100%; border-collapse: collapse; margin-bottom: 20px; background: var(--card-bg); border-radius: 8px; overflow: hidden; }
+th { background: var(--primary); color: #fff; text-align: left; padding: 10px 14px; font-size: 13px; }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text); }
+tr:nth-child(even) td { background: #fafbfd; }
+tr:hover td { background: #eef3fb; }
+
+.param-name { font-family: Consolas, monospace; color: var(--accent); font-weight: 600; }
+
+.badge { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; margin-left: 6px; }
+.badge-required { background: #fde2e2; color: var(--danger); }
+.badge-optional { background: #e0e7ff; color: var(--info); }
+.badge-default { background: #e7f7ec; color: var(--success); }
+
+pre {
+  background: var(--code-bg); color: var(--code-text); padding: 16px 18px; border-radius: 8px;
+  overflow-x: auto; font-family: Consolas, monospace; font-size: 13px; margin-bottom: 18px;
+}
+pre .cmd { color: #79c0ff; }
+pre .param { color: #ffa657; }
+pre .string { color: #a5d6ff; }
+pre .comment { color: #8b949e; font-style: italic; }
+
+.alert-info, .alert-warning, .alert-danger, .alert-success {
+  padding: 14px 18px; border-radius: 8px; margin-bottom: 18px; border-left: 4px solid;
+}
+.alert-info { background: #eaf2ff; border-color: var(--info); color: #1e3a5f; }
+.alert-warning { background: #fff8e6; border-color: var(--warning); color: #6b4e00; }
+.alert-danger { background: #fdeaea; border-color: var(--danger); color: #7a1414; }
+.alert-success { background: #eafaf0; border-color: var(--success); color: #145c2c; }
+
+.flow { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-bottom: 18px; }
+.flow-step {
+  background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px;
+  padding: 8px 14px; font-size: 13px;
+}
+.flow-step::after { content: '\25B6'; margin-left: 10px; color: var(--accent); }
+.flow-step:last-child::after { content: ''; }
+
+.dir-tree { font-family: Consolas, monospace; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 16px; font-size: 13px; margin-bottom: 18px; white-space: pre; }
+.dir-tree .folder { color: var(--primary); font-weight: 600; }
+.dir-tree .file { color: var(--text-light); }
+.dir-tree .highlight-file { color: var(--accent); font-weight: 600; }
+
+.feature-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-bottom: 20px; }
+.feature-item { display: flex; gap: 12px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+.feature-icon { font-size: 22px; }
+.feature-text h4 { font-size: 14px; color: var(--primary); margin-bottom: 3px; }
+.feature-text p { font-size: 13px; margin-bottom: 0; }
+
+footer { text-align: center; padding: 30px; color: var(--text-light); font-size: 12px; border-top: 1px solid var(--border); margin-top: 50px; }
+
+@media (max-width: 900px) {
+  nav { display: none; }
+  main { margin-left: 0; padding: 24px; }
+}
+@media print {
+  nav { display: none; }
+  main { margin-left: 0; }
+  body { font-size: 10pt; }
+  .page-header { break-inside: avoid; }
+  h2 { break-after: avoid; }
+}
+code { font-family: Consolas, monospace; background: #eef2f7; padding: 1px 5px; border-radius: 4px; font-size: 12.5px; }
+
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-title">Informe de lo compartido con externos</div>
+  <div class="nav-subtitle">Informe-CompartidoExterno.ps1 &#183; v1.0</div>
+  <ul>
+    <li class="section-title">Guía de uso</li>
+    <li><a href="#intro">1. Introducción</a></li><li><a href="#caracteristicas">2. Características</a></li><li><a href="#requisitos">3. Requisitos</a></li><li><a href="#instalacion">4. Instalación y lanzamiento</a></li><li><a href="#uso">5. Cómo se usa</a></li><li><a class="sub" href="#flujo">Pasos</a></li><li><a class="sub" href="#resultados">Resultados</a></li><li><a href="#parametros">6. Parámetros</a></li><li><a href="#ejemplos">7. Ejemplos</a></li><li><a href="#problemas">8. Resolución de problemas</a></li><li><a href="#legal">9. Aviso legal</a></li>
+    <li class="section-title">Herramientas</li>
+    <li><a href="../LEEME.html">Índice de herramientas</a></li>
+  </ul>
+</nav>
+<main>
+<div class="page-header">
+  <h1>Informe de lo compartido con externos</h1>
+  <div class="version">Microsoft 365 - SharePoint y OneDrive &#183; Informe-CompartidoExterno.ps1 &#183; versión 1.0</div>
+  <div class="tagline">Qué se ha compartido fuera de la organización, desde dónde y con quién, en un Excel listo para presentar.</div>
+</div>
+
+<h2 id="intro">1. Introducción</h2>
+
+<p>Genera un Excel con los sitios de SharePoint y los OneDrive personales que tienen contenido compartido con personas
+externas. Cruza dos fuentes:</p>
+<ol>
+<li><strong>Registro de auditoría de Microsoft Purview</strong>: quién compartió con externos, con quién, qué archivo o carpeta y
+cuándo. Cubre los últimos 180 días (retención estándar de Microsoft 365).</li>
+<li><strong>Invitados externos registrados en cada sitio</strong> (<code>Get-SPOExternalUser</code>): sirve para ver sitios que compartieron
+fuera antes de esos 180 días. Es un dato complementario: puede no incluir todos los invitados de Entra ID (B2B).</li>
+</ol>
+<p>Excluye los sitios conectados a Teams y los sitios técnicos de Microsoft (búsqueda, catálogo de aplicaciones, redirecciones,
+portales antiguos, raíz de OneDrive).</p>
+<div class="alert-success">Solo lee: no registra aplicaciones, no usa Microsoft Graph, no cambia permisos ni entra en el contenido de ningún sitio.</div>
+
+
+<h2 id="caracteristicas">2. Características</h2>
+<div class="feature-list"><div class="feature-item"><div class="feature-icon">&#128202;</div><div class="feature-text"><h4>Excel listo para presentar</h4><p>Hoja de resumen y tablas con filtros, fechas y enlaces a cada sitio.</p></div></div><div class="feature-item"><div class="feature-icon">&#128373;</div><div class="feature-text"><h4>Quién, con quién, qué y cuándo</h4><p>Desde el registro de auditoría de Purview (hasta 180 días).</p></div></div><div class="feature-item"><div class="feature-icon">&#128101;</div><div class="feature-text"><h4>Personas externas</h4><p>Cada persona de fuera con el número de veces y la primera y última fecha.</p></div></div><div class="feature-item"><div class="feature-icon">&#128197;</div><div class="feature-text"><h4>Más allá de 180 días</h4><p>Invitados registrados por sitio para lo compartido antes.</p></div></div><div class="feature-item"><div class="feature-icon">&#128683;</div><div class="feature-text"><h4>Sin Teams ni sitios técnicos</h4><p>Se cuentan en el resumen pero no aparecen en las tablas.</p></div></div><div class="feature-item"><div class="feature-icon">&#128187;</div><div class="feature-text"><h4>PowerShell 5.1 y 7</h4><p>Desde 7 se relanza solo en Windows PowerShell 5.1, que es el que necesita el módulo de SharePoint.</p></div></div></div>
+
+<h2 id="requisitos">3. Requisitos</h2>
+<table><tr><th style="width:30%">Requisito</th><th>Detalle</th></tr><tr><td>Sistema</td><td>Windows con PowerShell 5.1 o 7</td></tr><tr><td>Módulos</td><td><code>Microsoft.Online.SharePoint.PowerShell</code> 16.0.27612.12000 (la 16.0.27709.12000 falla al iniciar sesión), <code>ExchangeOnlineManagement</code> e <code>ImportExcel</code>. Se instalan solos la primera vez, para el usuario actual.</td></tr><tr><td>Rol</td><td>Administrador global, o Administrador de SharePoint con permiso para consultar la auditoría (rol «View-Only Audit Logs» o «Audit Logs»).</td></tr><tr><td>Tenant</td><td>Registro de auditoría activado (lo está de serie).</td></tr><tr><td>Excel</td><td>No hace falta tenerlo instalado para generar el informe.</td></tr></table>
+
+<h2 id="instalacion">4. Instalación y lanzamiento</h2>
+<p>Copia la carpeta y ejecuta. Si Windows bloquea el script por no estar firmado: <code>Set-ExecutionPolicy -Scope Process Bypass -Force</code>.</p>
+<div class="dir-tree"><span class="folder">M365-InformeCompartidoExterno\</span>
+&#9500;&#9472;&#9472; <span class="highlight-file">Informe-CompartidoExterno.ps1</span>
+&#9500;&#9472;&#9472; Guia_InformeCompartidoExterno.html
+&#9492;&#9472;&#9472; <span class="folder">Resultados\</span></div>
+
+<h2 id="uso">5. Cómo se usa</h2>
+<h3 id="flujo">Pasos</h3>
+<div class="flow"><div class="flow-step">Indicar el tenant</div><div class="flow-step">Elegir carpeta</div><div class="flow-step">Iniciar sesión en SharePoint</div><div class="flow-step">Iniciar sesión en Exchange</div><div class="flow-step">Abrir el Excel</div></div>
+
+<p>Lánzalo con <span class="param-name">-TenantAdminUrl</span> (o te pregunta el tenant y pide confirmación). Después pregunta la carpeta
+de salida (Enter = <code>Resultados</code> junto al script).</p>
+<p>Hay que iniciar sesión <strong>dos veces</strong> con la misma cuenta:</p>
+<ol>
+<li><strong>SharePoint</strong>: se abre la ventana de inicio de sesión de Microsoft.</li>
+<li><strong>Registro de auditoría (Exchange Online)</strong>: con un código en <code>https://microsoft.com/devicelogin</code>.</li>
+</ol>
+<p>Trabaja en tres pasos (SharePoint, auditoría, Excel). Si falla la auditoría, el informe se genera igualmente solo con los invitados
+registrados por sitio y lo indica. Si falla SharePoint, no se genera informe y queda el registro.</p>
+
+
+<h3 id="resultados">Resultados</h3>
+<p>En la carpeta de salida:</p>
+<table><tr><th>Archivo / hoja</th><th>Contenido</th></tr>
+<tr><td><span class="param-name">Compartido_Externo_&lt;fecha&gt;.xlsx</span></td><td>El informe.</td></tr>
+<tr><td>&#8195;Resumen</td><td>Por SharePoint y OneDrive: revisados, con enlaces públicos, que han compartido fuera, solo con invitados de antes,
+sin nada compartido y bloqueados; recuento por tipo de acción, personas externas distintas y los 10 sitios que más comparten fuera.</td></tr>
+<tr><td>&#8195;Sitios con externos</td><td>Tipo, propietario, política para compartir, último compartido fuera, invitados registrados, estado y enlace.</td></tr>
+<tr><td>&#8195;Detalle (N días)</td><td>Cada vez que se compartió con alguien de fuera: fecha, quién, con quién y ruta.</td></tr>
+<tr><td>&#8195;Externos (N días)</td><td>Cada persona externa: veces, primera y última vez.</td></tr>
+<tr><td>&#8195;Invitados registrados</td><td>Invitados de cada sitio: nombre, correo, aceptado como, invitado por y fecha de alta.</td></tr>
+<tr><td><span class="param-name">Compartido_Externo_&lt;fecha&gt;.log</span></td><td>Registro de la ejecución.</td></tr></table>
+
+
+<h2 id="parametros">6. Parámetros</h2>
+<table><tr><th style="width:20%">Parámetro</th><th style="width:11%">Tipo</th><th style="width:11%"></th><th style="width:14%">Valor por defecto</th><th>Descripción</th></tr><tr><td class="param-name">-TenantAdminUrl</td><td>Texto</td><td><span class="badge badge-optional">opcional</span></td><td>se pregunta</td><td>Nombre del tenant (<code>contoso</code>), dominio .onmicrosoft.com o URL de SharePoint.</td></tr><tr><td class="param-name">-Dias</td><td>Número 1-180</td><td><span class="badge badge-default">por defecto</span></td><td>180</td><td>Días del registro de auditoría que se revisan.</td></tr></table>
+
+<h2 id="ejemplos">7. Ejemplos</h2>
+<h3>Informe completo (180 días)</h3><pre><span class="cmd">.\Informe-CompartidoExterno.ps1</span><span class="param"> -TenantAdminUrl</span> contoso</pre><h3>Solo los últimos 90 días</h3><pre><span class="cmd">.\Informe-CompartidoExterno.ps1</span><span class="param"> -TenantAdminUrl</span> contoso<span class="param"> -Dias</span> 90</pre>
+
+<h2 id="problemas">8. Resolución de problemas</h2>
+<table><tr><th style="width:28%">Problema</th><th style="width:30%">Causa</th><th>Solución</th></tr><tr><td>Falla el inicio de sesión de SharePoint</td><td>Versión 16.0.27709.12000 del módulo.</td><td>El script usa la 16.0.27612.12000; si hay otra cargada, cerrar PowerShell y volver a lanzar.</td></tr><tr><td>El informe no tiene detalle de comparticiones</td><td>Falló la fase de auditoría (permisos o auditoría desactivada).</td><td>Ver el .log; dar el rol «View-Only Audit Logs» y comprobar que la auditoría está activada en Purview.</td></tr><tr><td>No se genera el Excel</td><td>Falló la fase de SharePoint.</td><td>Ver el .log: URL del tenant o rol de administrador de SharePoint.</td></tr><tr><td>No aparecen sitios de Teams</td><td>Se excluyen a propósito.</td><td>Se cuentan en la hoja de resumen.</td></tr><tr><td>Tarda mucho</td><td>Muchos sitios u OneDrive, o mucha auditoría.</td><td>Reducir <span class="param-name">-Dias</span>.</td></tr></table>
+
+<h2 id="legal">9. Aviso legal</h2>
+<div class="alert-warning">Esta herramienta solo lee. El Excel contiene nombres de archivos y con quién se compartieron, incluidos OneDrive personales: trátalo como documento confidencial.</div>
+<div class="card"><div class="card-header">Limitaciones conocidas</div><p>La auditoría solo cubre los últimos 180 días (retención estándar). La lista de invitados por sitio puede no estar completa con invitados B2B de Entra ID. No incluye Teams.</p></div>
+
+<footer>Informe de lo compartido con externos &#183; Informe-CompartidoExterno.ps1 &#183; versión 1.0 &#183; Actualizado 24/10/2026 &#183; Masoft.es</footer>
+</main>
+</body>
+</html>

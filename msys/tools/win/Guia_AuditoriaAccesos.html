@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auditoría de accesos &#8212; Guía de uso</title>
+<style>
+:root {
+  --primary: #1a3a5c;
+  --primary-light: #2c5f8a;
+  --accent: #2979FF;
+  --bg: #f7f9fc;
+  --card-bg: #ffffff;
+  --text: #1a1a2e;
+  --text-light: #555;
+  --border: #dde3ea;
+  --code-bg: #0d1117;
+  --code-text: #e6edf3;
+  --success: #16a34a;
+  --warning: #ca8a04;
+  --danger: #dc2626;
+  --info: #2563eb;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: "Segoe UI", Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+nav {
+  position: fixed; top: 0; left: 0; bottom: 0; width: 280px;
+  background: var(--primary); overflow-y: auto; padding: 24px 0;
+}
+nav .nav-title { color: #fff; font-size: 20px; font-weight: 600; padding: 0 24px 4px; }
+nav .nav-subtitle { color: #9fb3c8; font-size: 12px; padding: 0 24px 20px; }
+nav ul { list-style: none; }
+nav li.section-title {
+  color: #7d97b3; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em;
+  padding: 16px 24px 6px;
+}
+nav ul li a {
+  display: block; padding: 8px 24px; color: #d7e2ee; text-decoration: none; font-size: 14px;
+}
+nav ul li a:hover { background: rgba(255,255,255,0.08); color: #fff; }
+nav a.sub { padding-left: 40px; font-size: 13px; color: #b7c8db; }
+
+main { margin-left: 280px; padding: 40px 48px 80px; max-width: 980px; }
+
+.page-header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  color: #fff; padding: 40px 44px; border-radius: 14px; margin-bottom: 36px;
+}
+.page-header h1 { font-size: 36px; font-weight: 300; margin-bottom: 8px; }
+.page-header .version { font-size: 13px; opacity: 0.85; margin-bottom: 10px; }
+.page-header .tagline { font-size: 16px; opacity: 0.92; }
+
+h2 {
+  font-size: 24px; color: var(--primary); border-bottom: 2px solid var(--primary);
+  padding-bottom: 8px; margin: 44px 0 18px;
+}
+h3 { font-size: 18px; color: var(--primary-light); margin: 26px 0 10px; }
+p { margin-bottom: 12px; color: var(--text-light); }
+ul, ol { margin: 0 0 14px 22px; color: var(--text-light); }
+li { margin-bottom: 4px; }
+
+.card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 22px; margin-bottom: 18px; }
+.card-header { font-weight: 600; color: var(--primary); margin-bottom: 10px; font-size: 15px; }
+
+.module-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin-bottom: 20px; }
+.module-card { background: var(--card-bg); border: 1px solid var(--border); border-top: 4px solid var(--accent); border-radius: 8px; padding: 18px; }
+.module-card h4 { color: var(--primary); margin-bottom: 6px; font-size: 15px; }
+.module-card p { font-size: 13px; margin-bottom: 0; }
+
+table { width: 100%; border-collapse: collapse; margin-bottom: 20px; background: var(--card-bg); border-radius: 8px; overflow: hidden; }
+th { background: var(--primary); color: #fff; text-align: left; padding: 10px 14px; font-size: 13px; }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text); }
+tr:nth-child(even) td { background: #fafbfd; }
+tr:hover td { background: #eef3fb; }
+
+.param-name { font-family: Consolas, monospace; color: var(--accent); font-weight: 600; }
+
+.badge { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; margin-left: 6px; }
+.badge-required { background: #fde2e2; color: var(--danger); }
+.badge-optional { background: #e0e7ff; color: var(--info); }
+.badge-default { background: #e7f7ec; color: var(--success); }
+
+pre {
+  background: var(--code-bg); color: var(--code-text); padding: 16px 18px; border-radius: 8px;
+  overflow-x: auto; font-family: Consolas, monospace; font-size: 13px; margin-bottom: 18px;
+}
+pre .cmd { color: #79c0ff; }
+pre .param { color: #ffa657; }
+pre .string { color: #a5d6ff; }
+pre .comment { color: #8b949e; font-style: italic; }
+
+.alert-info, .alert-warning, .alert-danger, .alert-success {
+  padding: 14px 18px; border-radius: 8px; margin-bottom: 18px; border-left: 4px solid;
+}
+.alert-info { background: #eaf2ff; border-color: var(--info); color: #1e3a5f; }
+.alert-warning { background: #fff8e6; border-color: var(--warning); color: #6b4e00; }
+.alert-danger { background: #fdeaea; border-color: var(--danger); color: #7a1414; }
+.alert-success { background: #eafaf0; border-color: var(--success); color: #145c2c; }
+
+.flow { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-bottom: 18px; }
+.flow-step {
+  background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px;
+  padding: 8px 14px; font-size: 13px;
+}
+.flow-step::after { content: '\25B6'; margin-left: 10px; color: var(--accent); }
+.flow-step:last-child::after { content: ''; }
+
+.dir-tree { font-family: Consolas, monospace; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 16px; font-size: 13px; margin-bottom: 18px; white-space: pre; }
+.dir-tree .folder { color: var(--primary); font-weight: 600; }
+.dir-tree .file { color: var(--text-light); }
+.dir-tree .highlight-file { color: var(--accent); font-weight: 600; }
+
+.feature-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-bottom: 20px; }
+.feature-item { display: flex; gap: 12px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+.feature-icon { font-size: 22px; }
+.feature-text h4 { font-size: 14px; color: var(--primary); margin-bottom: 3px; }
+.feature-text p { font-size: 13px; margin-bottom: 0; }
+
+footer { text-align: center; padding: 30px; color: var(--text-light); font-size: 12px; border-top: 1px solid var(--border); margin-top: 50px; }
+
+@media (max-width: 900px) {
+  nav { display: none; }
+  main { margin-left: 0; padding: 24px; }
+}
+@media print {
+  nav { display: none; }
+  main { margin-left: 0; }
+  body { font-size: 10pt; }
+  .page-header { break-inside: avoid; }
+  h2 { break-after: avoid; }
+}
+code { font-family: Consolas, monospace; background: #eef2f7; padding: 1px 5px; border-radius: 4px; font-size: 12.5px; }
+
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-title">Auditoría de accesos</div>
+  <div class="nav-subtitle">Auditar-Accesos.ps1 &#183; v1.0</div>
+  <ul>
+    <li class="section-title">Guía de uso</li>
+    <li><a href="#intro">1. Introducción</a></li><li><a href="#caracteristicas">2. Características</a></li><li><a href="#requisitos">3. Requisitos</a></li><li><a href="#instalacion">4. Instalación y lanzamiento</a></li><li><a href="#uso">5. Cómo se usa</a></li><li><a class="sub" href="#flujo">Pasos</a></li><li><a class="sub" href="#resultados">Resultados</a></li><li><a href="#parametros">6. Parámetros</a></li><li><a href="#ejemplos">7. Ejemplos</a></li><li><a href="#problemas">8. Resolución de problemas</a></li><li><a href="#legal">9. Aviso legal</a></li>
+    <li class="section-title">Herramientas</li>
+    <li><a href="../LEEME.html">Índice de herramientas</a></li>
+  </ul>
+</nav>
+<main>
+<div class="page-header">
+  <h1>Auditoría de accesos</h1>
+  <div class="version">Equipos Windows &#183; Auditar-Accesos.ps1 &#183; versión 1.0</div>
+  <div class="tagline">Todos los accesos de un equipo o servidor en un informe que se filtra, se resume y se exporta.</div>
+</div>
+
+<h2 id="intro">1. Introducción</h2>
+
+<p>Lee el registro de <strong>Seguridad</strong> de Windows y saca un informe de accesos:</p>
+<ul>
+<li><strong>Accesos</strong>: inicios y cierres de sesión, intentos fallidos con su motivo (contraseña incorrecta, usuario que no existe,
+cuenta bloqueada…), escritorio remoto (conexión, reconexión, desconexión), credenciales explícitas, inicios con privilegios de
+administrador y bloqueos del equipo. De cada uno: usuario, tipo de acceso, IP, si viene de dentro o de fuera, equipo de origen y proceso.</li>
+<li><strong>Gestión de cuentas</strong>: cuentas creadas, habilitadas, deshabilitadas, eliminadas, renombradas, bloqueadas y desbloqueadas,
+contraseñas restablecidas y altas o bajas en grupos locales (por ejemplo, Administradores).</li>
+<li><strong>Equipo y fechas</strong>: zona horaria y horario de verano, origen de la hora (avisa si no se sincroniza), eventos con fecha futura,
+hasta cuándo llega el registro de Seguridad, servicios de acceso remoto y sesiones abiertas.</li>
+</ul>
+<p>El informe HTML <strong>funciona sin internet</strong> (no usa librerías externas): filtros, orden por columna, registros por página,
+<em>Exportar CSV</em> de lo filtrado y <em>Generar resumen</em> (totales, tipos, usuarios y motivos de fallo de lo que se está viendo).</p>
+<p>Recoge lo que tenían las versiones anteriores (registros por página y resumen de reportv2; verificación de fechas y zona horaria) y
+corrige que los registros archivados se contaban pero no se incluían.</p>
+<div class="alert-success">Solo lee: no cambia directivas de auditoría ni borra eventos.</div>
+
+
+<h2 id="caracteristicas">2. Características</h2>
+<div class="feature-list"><div class="feature-item"><div class="feature-icon">&#128272;</div><div class="feature-text"><h4>Accesos y fallos</h4><p>Con el motivo de cada fallo en español.</p></div></div><div class="feature-item"><div class="feature-icon">&#127760;</div><div class="feature-text"><h4>De dentro o de fuera</h4><p>Interna, externa, local, y VPN o CGNAT (100.64.0.0/10, como Tailscale).</p></div></div><div class="feature-item"><div class="feature-icon">&#128101;</div><div class="feature-text"><h4>Cambios en cuentas</h4><p>Altas, bajas, bloqueos, contraseñas y grupos locales.</p></div></div><div class="feature-item"><div class="feature-icon">&#128336;</div><div class="feature-text"><h4>Fechas verificadas</h4><p>Zona horaria, sincronización de la hora y retención del registro.</p></div></div><div class="feature-item"><div class="feature-icon">&#128196;</div><div class="feature-text"><h4>Informe sin internet</h4><p>Filtros, páginas, resumen y CSV en un único HTML.</p></div></div><div class="feature-item"><div class="feature-icon">&#9889;</div><div class="feature-text"><h4>Rápido</h4><p>Lee sin componer el texto de cada evento: miles de eventos en segundos.</p></div></div></div>
+
+<h2 id="requisitos">3. Requisitos</h2>
+<table><tr><th style="width:30%">Requisito</th><th>Detalle</th></tr><tr><td>Sistema</td><td>Windows 10/11 o Windows Server, PowerShell 5.1 o 7.</td></tr><tr><td>Permisos</td><td>Administrador para leer el registro de Seguridad del equipo. Con -Evtx basta con poder leer el archivo.</td></tr><tr><td>Auditoría</td><td>Directiva «Auditar inicio de sesión» activada (lo está de serie para aciertos; los fallos dependen de la directiva).</td></tr></table>
+
+<h2 id="instalacion">4. Instalación y lanzamiento</h2>
+<p>Copia la carpeta y ejecuta desde PowerShell como administrador. Si Windows bloquea el script por no estar firmado: <code>Set-ExecutionPolicy -Scope Process Bypass -Force</code>. El .ps1 lleva dentro la plantilla del informe: se puede subir solo a LogMeIn o Intune.</p>
+<div class="dir-tree"><span class="folder">WIN-AuditoriaAccesos\</span>
+&#9500;&#9472;&#9472; <span class="highlight-file">Auditar-Accesos.ps1</span>
+&#9500;&#9472;&#9472; Guia_AuditoriaAccesos.html
+&#9492;&#9472;&#9472; <span class="folder">Resultados\</span></div>
+
+<h2 id="uso">5. Cómo se usa</h2>
+<h3 id="flujo">Pasos</h3>
+<div class="flow"><div class="flow-step">Lanzar como administrador</div><div class="flow-step">Leer el registro de Seguridad</div><div class="flow-step">Abrir el informe HTML</div><div class="flow-step">Filtrar, resumir y exportar</div></div>
+
+<p>Sin parámetros lee todo lo que tenga el registro de Seguridad y sus copias archivadas. Para un periodo concreto, usa
+<span class="param-name">-Dias</span>.</p>
+<table><tr><th>Tipo de acceso</th><th>Significa</th></tr>
+<tr><td>Consola</td><td>Delante del equipo (teclado y pantalla), también desbloqueos.</td></tr>
+<tr><td>Red (carpetas compartidas)</td><td>Acceso por red: carpetas compartidas, impresoras, herramientas de administración.</td></tr>
+<tr><td>Escritorio remoto</td><td>Conexión por RDP.</td></tr>
+<tr><td>Tarea programada / Servicio</td><td>Inicios automáticos (los servicios se excluyen salvo -IncluirSistema).</td></tr>
+<tr><td>Credenciales nuevas (runas)</td><td>Un programa lanzado con otras credenciales.</td></tr></table>
+<div class="alert-warning">Si el registro de Seguridad está en modo «archivar al llenarse», Windows guarda copias en
+<code>C:\Windows\System32\winevt\Logs\Archive-Security-*.evtx</code> y nunca las borra: pueden ocupar decenas de GB. El informe lo avisa
+con el tamaño. Con <span class="param-name">-Dias</span> solo se leen los archivados de ese periodo.</div>
+
+
+<h3 id="resultados">Resultados</h3>
+<p>En <code>Resultados</code> (o <span class="param-name">-CarpetaResultados</span>):</p>
+<table><tr><th>Archivo</th><th>Contenido</th></tr>
+<tr><td><span class="param-name">Accesos_&lt;EQUIPO&gt;_&lt;fecha&gt;.html</span></td><td>El informe: pestañas Accesos, Resumen (por usuario, IP y equipo de origen), Gestión de cuentas y Equipo y fechas.</td></tr>
+<tr><td><span class="param-name">Accesos_&lt;EQUIPO&gt;_&lt;fecha&gt;.csv</span></td><td>Fecha, Hora, Usuario, Dominio, Evento, Resultado, Acceso, IP, Ubicación, Equipo de origen, Proceso, Detalle, Id y FechaUTC.</td></tr>
+<tr><td><span class="param-name">GestionCuentas_&lt;EQUIPO&gt;_&lt;fecha&gt;.csv</span></td><td>Fecha, Hora, Operación, Cuenta, Por, Detalle e Id.</td></tr></table>
+
+
+<h2 id="parametros">6. Parámetros</h2>
+<table><tr><th style="width:20%">Parámetro</th><th style="width:11%">Tipo</th><th style="width:11%"></th><th style="width:14%">Valor por defecto</th><th>Descripción</th></tr><tr><td class="param-name">-Dias</td><td>Número</td><td><span class="badge badge-default">por defecto</span></td><td>0 (todo)</td><td>Solo los últimos N días.</td></tr><tr><td class="param-name">-IncluirSistema</td><td>Switch</td><td><span class="badge badge-optional">opcional</span></td><td>No</td><td>Incluye SYSTEM, servicios, DWM, UMFD, cuentas de equipo y cuentas virtuales.</td></tr><tr><td class="param-name">-SinCierres</td><td>Switch</td><td><span class="badge badge-optional">opcional</span></td><td>No</td><td>Sin cierres de sesión (4634 y 4647): informe más corto.</td></tr><tr><td class="param-name">-SinArchivados</td><td>Switch</td><td><span class="badge badge-optional">opcional</span></td><td>No</td><td>Solo el registro actual, sin las copias archivadas.</td></tr><tr><td class="param-name">-Evtx</td><td>Archivos</td><td><span class="badge badge-optional">opcional</span></td><td>&#8212;</td><td>Analiza archivos .evtx exportados (de otro equipo o servidor) en lugar del registro de este equipo.</td></tr><tr><td class="param-name">-MaxEventos</td><td>Número</td><td><span class="badge badge-default">por defecto</span></td><td>0 (sin límite)</td><td>Máximo de eventos por origen (los más recientes).</td></tr><tr><td class="param-name">-CarpetaResultados</td><td>Ruta</td><td><span class="badge badge-default">por defecto</span></td><td>.\Resultados</td><td>Dónde guardar el informe y los CSV.</td></tr></table>
+
+<h2 id="ejemplos">7. Ejemplos</h2>
+<h3>Todo lo disponible</h3><pre><span class="cmd">.\Auditar-Accesos.ps1</span></pre><h3>Último mes, sin cierres de sesión</h3><pre><span class="cmd">.\Auditar-Accesos.ps1</span><span class="param"> -Dias</span> 30<span class="param"> -SinCierres</span></pre><h3>Registro exportado de un servidor</h3><p>En el servidor: wevtutil epl Security C:\Temp\Security.evtx</p><pre><span class="cmd">.\Auditar-Accesos.ps1</span><span class="param"> -Evtx</span> C:\Temp\Security.evtx</pre><h3>Incluyendo cuentas del sistema</h3><pre><span class="cmd">.\Auditar-Accesos.ps1</span><span class="param"> -Dias</span> 7<span class="param"> -IncluirSistema</span></pre>
+
+<h2 id="problemas">8. Resolución de problemas</h2>
+<table><tr><th style="width:28%">Problema</th><th style="width:30%">Causa</th><th>Solución</th></tr><tr><td>«hay que ejecutarlo como administrador»</td><td>El registro de Seguridad solo lo leen los administradores.</td><td>Abrir PowerShell como administrador.</td></tr><tr><td>No hay ningún inicio de sesión</td><td>Auditoría de inicio de sesión desactivada.</td><td>Activar «Auditar inicio de sesión» (directiva local o GPO) y esperar a que haya eventos.</td></tr><tr><td>El registro cubre pocos días</td><td>Tamaño máximo pequeño y modo circular.</td><td>Visor de eventos > Seguridad > Propiedades: aumentar el tamaño máximo.</td></tr><tr><td>Tarda mucho</td><td>Muchos registros archivados (pueden ser decenas de GB).</td><td>Usar -Dias o -SinArchivados.</td></tr><tr><td>Muchos fallos de un usuario en consola</td><td>Un programa con una contraseña antigua guardada (el proceso aparece en la columna Proceso).</td><td>Revisar el programa indicado y actualizar o quitar la credencial guardada.</td></tr><tr><td>Fechas raras o en el futuro</td><td>La hora del equipo estuvo mal.</td><td>Revisar la pestaña Equipo y fechas: origen de la hora y avisos.</td></tr></table>
+
+<h2 id="legal">9. Aviso legal</h2>
+<div class="alert-warning">Esta herramienta solo lee. El informe contiene nombres de usuario, direcciones IP y horarios de trabajo: es información personal; úsalo para fines de seguridad y trátalo como confidencial.</div>
+<div class="card"><div class="card-header">Limitaciones conocidas</div><p>Solo ve lo que Windows audita y conserva. No cubre accesos a aplicaciones ni a Microsoft 365 (para eso, el registro de auditoría de Purview). La ubicación «Externa» solo indica que la IP no es privada.</p></div>
+
+<footer>Auditoría de accesos &#183; Auditar-Accesos.ps1 &#183; versión 1.0 &#183; Actualizado 24/10/2026 &#183; Masoft.es</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,5 @@
+﻿Buzon;Usuario;Permiso;Nivel;Accion
+calendario.directores@empresa.com;director1@empresa.com;Calendario;Editor;Dar
+reservas@empresa.com;ana@empresa.com;AccesoTotal;;Dar
+reservas@empresa.com;ana@empresa.com;EnviarComo;;Dar
+reservas@empresa.com;juan@empresa.com;AccesoTotal;;Quitar

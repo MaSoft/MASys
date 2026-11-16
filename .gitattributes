@@ -1,0 +1,4 @@
+*.bat text eol=crlf
+*.iss text eol=crlf
+# El parche del servidor de RustDesk se aplica con git apply: sin conversion de saltos de linea
+SERVIDOR_RUSTDESK/masys.patch -text

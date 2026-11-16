@@ -1,0 +1,26 @@
+SERVIDOR DE RUSTDESK DE MASys (hbbs.exe y hbbr.exe)
+====================================================
+
+Origen: rustdesk-server, proyecto oficial de RustDesk (licencia AGPL-3.0, ver LICENSE).
+  https://github.com/rustdesk/rustdesk-server
+  Versión 1.1.16 (etiqueta 1.1.16), commit 73523b31cfd25d77dee862e6fc9f5e1fb5e485ef
+  Submódulo libs/hbb_common: https://github.com/rustdesk/hbb_common, commit 83419b6549636ee39dacef7776c473f5802e08d6
+
+Cambios de MASys (archivo masys.patch, se aplica sobre ese commit con «git apply»):
+  1. src/common.rs, src/main.rs, src/hbbr.rs: al arrancar, el servidor usa como nombre de aplicación
+     «MASysServidorRustDesk». La configuración de hbb_common es la MISMA que la del cliente RustDesk: con el
+     nombre original, el servidor leía y reescribía la del usuario (%APPDATA%\RustDesk\config\RustDesk.toml).
+  2. src/peer.rs: la base de datos (db_v2.sqlite3) va en el directorio de trabajo, junto a la clave
+     (id_ed25519 / id_ed25519.pub), y no en la carpeta de configuración del cliente RustDesk.
+
+Compilación (compilar_servidor.bat):
+  Rust 1.90 (x86_64-pc-windows-msvc) + Visual Studio Build Tools 2022 (C++), como la compilación oficial:
+  cargo build --release --locked --all-features --target x86_64-pc-windows-msvc
+
+Huellas SHA-256 de los programas de bin\ (30/10/2026):
+  hbbs.exe  4e91d6e48151067affe29f23f9d0b7144443e671d5613f41f213054fc9e9e650
+  hbbr.exe  f1f6eb5a9bf6d3011472a7c4060488ea1b50ee4b3f29db2520483615c3cfc348
+
+Datos en tiempo de ejecución (datos\, nunca se borran al desinstalar):
+  id_ed25519 (clave PRIVADA del servidor: no se comparte), id_ed25519.pub (clave pública, la que va en el
+  programa del cliente), db_v2.sqlite3 (equipos dados de alta), hbbs.log / hbbr.log.

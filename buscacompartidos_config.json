@@ -1,0 +1,156 @@
+{
+  "tabs": [
+    {
+      "name": "📊 Dashboard",
+      "visible": true
+    },
+    {
+      "name": "💻 Sistema",
+      "visible": true
+    },
+    {
+      "name": "🌐 Variables Entorno",
+      "visible": true
+    },
+    {
+      "name": "⚙️ Procesos",
+      "visible": true
+    },
+    {
+      "name": "🚀 Programas de Inicio",
+      "visible": true
+    },
+    {
+      "name": "🛠️ Servicios",
+      "visible": true
+    },
+    {
+      "name": "🔄 Actualizaciones",
+      "visible": true
+    },
+    {
+      "name": "⚠️ Eventos Sistema",
+      "visible": true
+    },
+    {
+      "name": "🗃️ Registro de Windows",
+      "visible": true
+    },
+    {
+      "name": "📂 Carpetas Compartidas",
+      "visible": true
+    },
+    {
+      "name": "💾 Unidades Remotas",
+      "visible": true
+    },
+    {
+      "name": "📁 Contenido",
+      "visible": true
+    },
+    {
+      "name": "💽 Discos Duros",
+      "visible": true
+    },
+    {
+      "name": "📶 WiFi",
+      "visible": true
+    },
+    {
+      "name": "🌐 Conexiones Red",
+      "visible": true
+    },
+    {
+      "name": "🔥 Firewall",
+      "visible": true
+    },
+    {
+      "name": "🌐 Redes",
+      "visible": true
+    },
+    {
+      "name": "🔒 Conexiones Remotas",
+      "visible": true
+    },
+    {
+      "name": "🔍 Red Local",
+      "visible": true
+    },
+    {
+      "name": "👥 Usuarios",
+      "visible": true
+    },
+    {
+      "name": "🔑 Credenciales",
+      "visible": true
+    },
+    {
+      "name": "🔐 Certificados",
+      "visible": true
+    },
+    {
+      "name": "📧 Cuentas Correo",
+      "visible": true
+    },
+    {
+      "name": "☁️ Navegadores y Nube",
+      "visible": true
+    },
+    {
+      "name": "👤 Sesiones Activas",
+      "visible": true
+    },
+    {
+      "name": "🏢 Active Directory",
+      "visible": true
+    },
+    {
+      "name": "🏛️ Políticas de Grupo",
+      "visible": true
+    },
+    {
+      "name": "🛡️ Seguridad",
+      "visible": true
+    },
+    {
+      "name": "🖥️ Adm. Dispositivos",
+      "visible": true
+    },
+    {
+      "name": "🖨️ Impresoras",
+      "visible": true
+    },
+    {
+      "name": "🔌 Dispositivos USB",
+      "visible": true
+    },
+    {
+      "name": "🔵 Bluetooth",
+      "visible": true
+    },
+    {
+      "name": "🖥️ Gráficas y Monitores",
+      "visible": true
+    },
+    {
+      "name": "📦 Software Instalado",
+      "visible": true
+    },
+    {
+      "name": "📦 Gestor de Paquetes",
+      "visible": true
+    },
+    {
+      "name": "⏰ Tareas Programadas",
+      "visible": true
+    },
+    {
+      "name": "📜 Historial PS",
+      "visible": true
+    },
+    {
+      "name": "🔑 Licencias",
+      "visible": true
+    }
+  ]
+}

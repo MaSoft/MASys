@@ -1,0 +1,13 @@
+# MASys — versiones mínimas probadas (03/10/2026, Python 3.12 64 bits)
+PyQt5>=5.15.11
+pywin32>=312
+psutil>=7.2.2
+requests>=2.34.2
+dnspython>=2.8.0
+cryptography>=48.0.0
+qrcode>=8.2
+Send2Trash>=2.1.0
+Pillow>=12.2.0
+openpyxl>=3.1.5
+# 4.9.0 Visor PST/OST sin Outlook (LGPL-3.0-or-later; licencia en licencias\libpff)
+libpff-python>=20260926

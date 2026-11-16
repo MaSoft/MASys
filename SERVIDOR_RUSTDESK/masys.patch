@@ -1,0 +1,71 @@
+diff --git a/src/common.rs b/src/common.rs
+index 9c76f41..cf8dd9c 100644
+--- a/src/common.rs
++++ b/src/common.rs
+@@ -1,4 +1,11 @@
+ use clap::App;
++/// MASys: el servidor no debe usar NUNCA la configuración del cliente RustDesk del mismo usuario.
++pub const NOMBRE_APP_SERVIDOR: &str = "MASysServidorRustDesk";
++
++pub fn aislar_configuracion() {
++    *hbb_common::config::APP_NAME.write().unwrap() = NOMBRE_APP_SERVIDOR.to_owned();
++}
++
+ use hbb_common::{
+     allow_err, anyhow::{Context, Result}, get_version_number, log, tokio, ResultType
+ };
+diff --git a/src/hbbr.rs b/src/hbbr.rs
+index 4c8a784..5ed9952 100644
+--- a/src/hbbr.rs
++++ b/src/hbbr.rs
+@@ -7,6 +7,7 @@ use relay_server::*;
+ mod version;
+ 
+ fn main() -> ResultType<()> {
++    hbbs::common::aislar_configuracion(); // MASys: antes que cualquier otra cosa
+     let _logger = Logger::try_with_env_or_str("info")?
+         .log_to_stdout()
+         .format(opt_format)
+diff --git a/src/main.rs b/src/main.rs
+index 8a0ff24..6a8b7aa 100644
+--- a/src/main.rs
++++ b/src/main.rs
+@@ -8,6 +8,7 @@ use hbbs::{common::*, *};
+ const RMEM: usize = 0;
+ 
+ fn main() -> ResultType<()> {
++    hbbs::common::aislar_configuracion(); // MASys: antes que cualquier otra cosa
+     let _logger = Logger::try_with_env_or_str("info")?
+         .log_to_stdout()
+         .format(opt_format)
+diff --git a/src/peer.rs b/src/peer.rs
+index 4ca87cf..639dbbf 100644
+--- a/src/peer.rs
++++ b/src/peer.rs
+@@ -67,19 +67,13 @@ pub(crate) struct PeerMap {
+ 
+ impl PeerMap {
+     pub(crate) async fn new() -> ResultType<Self> {
+-        let db = std::env::var("DB_URL").unwrap_or({
+-            let mut db = "db_v2.sqlite3".to_owned();
+-            #[cfg(all(windows, not(debug_assertions)))]
+-            {
+-                if let Some(path) = hbb_common::config::Config::icon_path().parent() {
+-                    db = format!("{}\\{}", path.to_str().unwrap_or("."), db);
+-                }
+-            }
+-            #[cfg(not(windows))]
+-            {
+-                db = format!("./{db}");
+-            }
+-            db
++        // MASys: en el directorio de trabajo, junto a la clave (nunca en la configuración del cliente RustDesk)
++        let db = std::env::var("DB_URL").unwrap_or_else(|_| {
++            std::env::current_dir()
++                .ok()
++                .map(|d| d.join("db_v2.sqlite3"))
++                .and_then(|p| p.to_str().map(|s| s.to_owned()))
++                .unwrap_or_else(|| "db_v2.sqlite3".to_owned())
+         });
+         log::info!("DB_URL={}", db);
+         let pm = Self {

@@ -1,0 +1,4 @@
+sqlite3.exe — SQLite 3.54.1 (línea de órdenes), de https://www.sqlite.org/2026/sqlite-tools-win-x64-3540100.zip
+SHA3-256 del zip: e171f3993a992edf076746926dd52b5e2ebfabaee38818e74987e1d8112ab987 (coincide con la lista oficial de
+sqlite.org/download.html, comprobado el 31/10/2026). SQLite es de DOMINIO PÚBLICO (https://www.sqlite.org/copyright.html).
+Incluido por orden del usuario (31/10/2026). Lo usa Exportar-Thunderbird.ps1 para leer contactos y calendario.

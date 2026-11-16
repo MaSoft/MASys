@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Permisos de buzones &#8212; Guía de uso</title>
+<style>
+:root {
+  --primary: #1a3a5c;
+  --primary-light: #2c5f8a;
+  --accent: #2979FF;
+  --bg: #f7f9fc;
+  --card-bg: #ffffff;
+  --text: #1a1a2e;
+  --text-light: #555;
+  --border: #dde3ea;
+  --code-bg: #0d1117;
+  --code-text: #e6edf3;
+  --success: #16a34a;
+  --warning: #ca8a04;
+  --danger: #dc2626;
+  --info: #2563eb;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: "Segoe UI", Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+nav {
+  position: fixed; top: 0; left: 0; bottom: 0; width: 280px;
+  background: var(--primary); overflow-y: auto; padding: 24px 0;
+}
+nav .nav-title { color: #fff; font-size: 20px; font-weight: 600; padding: 0 24px 4px; }
+nav .nav-subtitle { color: #9fb3c8; font-size: 12px; padding: 0 24px 20px; }
+nav ul { list-style: none; }
+nav li.section-title {
+  color: #7d97b3; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em;
+  padding: 16px 24px 6px;
+}
+nav ul li a {
+  display: block; padding: 8px 24px; color: #d7e2ee; text-decoration: none; font-size: 14px;
+}
+nav ul li a:hover { background: rgba(255,255,255,0.08); color: #fff; }
+nav a.sub { padding-left: 40px; font-size: 13px; color: #b7c8db; }
+
+main { margin-left: 280px; padding: 40px 48px 80px; max-width: 980px; }
+
+.page-header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  color: #fff; padding: 40px 44px; border-radius: 14px; margin-bottom: 36px;
+}
+.page-header h1 { font-size: 36px; font-weight: 300; margin-bottom: 8px; }
+.page-header .version { font-size: 13px; opacity: 0.85; margin-bottom: 10px; }
+.page-header .tagline { font-size: 16px; opacity: 0.92; }
+
+h2 {
+  font-size: 24px; color: var(--primary); border-bottom: 2px solid var(--primary);
+  padding-bottom: 8px; margin: 44px 0 18px;
+}
+h3 { font-size: 18px; color: var(--primary-light); margin: 26px 0 10px; }
+p { margin-bottom: 12px; color: var(--text-light); }
+ul, ol { margin: 0 0 14px 22px; color: var(--text-light); }
+li { margin-bottom: 4px; }
+
+.card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 22px; margin-bottom: 18px; }
+.card-header { font-weight: 600; color: var(--primary); margin-bottom: 10px; font-size: 15px; }
+
+.module-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin-bottom: 20px; }
+.module-card { background: var(--card-bg); border: 1px solid var(--border); border-top: 4px solid var(--accent); border-radius: 8px; padding: 18px; }
+.module-card h4 { color: var(--primary); margin-bottom: 6px; font-size: 15px; }
+.module-card p { font-size: 13px; margin-bottom: 0; }
+
+table { width: 100%; border-collapse: collapse; margin-bottom: 20px; background: var(--card-bg); border-radius: 8px; overflow: hidden; }
+th { background: var(--primary); color: #fff; text-align: left; padding: 10px 14px; font-size: 13px; }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text); }
+tr:nth-child(even) td { background: #fafbfd; }
+tr:hover td { background: #eef3fb; }
+
+.param-name { font-family: Consolas, monospace; color: var(--accent); font-weight: 600; }
+
+.badge { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; margin-left: 6px; }
+.badge-required { background: #fde2e2; color: var(--danger); }
+.badge-optional { background: #e0e7ff; color: var(--info); }
+.badge-default { background: #e7f7ec; color: var(--success); }
+
+pre {
+  background: var(--code-bg); color: var(--code-text); padding: 16px 18px; border-radius: 8px;
+  overflow-x: auto; font-family: Consolas, monospace; font-size: 13px; margin-bottom: 18px;
+}
+pre .cmd { color: #79c0ff; }
+pre .param { color: #ffa657; }
+pre .string { color: #a5d6ff; }
+pre .comment { color: #8b949e; font-style: italic; }
+
+.alert-info, .alert-warning, .alert-danger, .alert-success {
+  padding: 14px 18px; border-radius: 8px; margin-bottom: 18px; border-left: 4px solid;
+}
+.alert-info { background: #eaf2ff; border-color: var(--info); color: #1e3a5f; }
+.alert-warning { background: #fff8e6; border-color: var(--warning); color: #6b4e00; }
+.alert-danger { background: #fdeaea; border-color: var(--danger); color: #7a1414; }
+.alert-success { background: #eafaf0; border-color: var(--success); color: #145c2c; }
+
+.flow { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-bottom: 18px; }
+.flow-step {
+  background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px;
+  padding: 8px 14px; font-size: 13px;
+}
+.flow-step::after { content: '\25B6'; margin-left: 10px; color: var(--accent); }
+.flow-step:last-child::after { content: ''; }
+
+.dir-tree { font-family: Consolas, monospace; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 16px; font-size: 13px; margin-bottom: 18px; white-space: pre; }
+.dir-tree .folder { color: var(--primary); font-weight: 600; }
+.dir-tree .file { color: var(--text-light); }
+.dir-tree .highlight-file { color: var(--accent); font-weight: 600; }
+
+.feature-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-bottom: 20px; }
+.feature-item { display: flex; gap: 12px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+.feature-icon { font-size: 22px; }
+.feature-text h4 { font-size: 14px; color: var(--primary); margin-bottom: 3px; }
+.feature-text p { font-size: 13px; margin-bottom: 0; }
+
+footer { text-align: center; padding: 30px; color: var(--text-light); font-size: 12px; border-top: 1px solid var(--border); margin-top: 50px; }
+
+@media (max-width: 900px) {
+  nav { display: none; }
+  main { margin-left: 0; padding: 24px; }
+}
+@media print {
+  nav { display: none; }
+  main { margin-left: 0; }
+  body { font-size: 10pt; }
+  .page-header { break-inside: avoid; }
+  h2 { break-after: avoid; }
+}
+code { font-family: Consolas, monospace; background: #eef2f7; padding: 1px 5px; border-radius: 4px; font-size: 12.5px; }
+
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-title">Permisos de buzones</div>
+  <div class="nav-subtitle">Gestionar-PermisosBuzon.ps1 &#183; v1.0</div>
+  <ul>
+    <li class="section-title">Guía de uso</li>
+    <li><a href="#intro">1. Introducción</a></li><li><a href="#caracteristicas">2. Características</a></li><li><a href="#requisitos">3. Requisitos</a></li><li><a href="#instalacion">4. Instalación y lanzamiento</a></li><li><a href="#uso">5. Cómo se usa</a></li><li><a class="sub" href="#flujo">Pasos</a></li><li><a class="sub" href="#csv">Formato del CSV</a></li><li><a class="sub" href="#resultados">Resultados</a></li><li><a href="#parametros">6. Parámetros</a></li><li><a href="#ejemplos">7. Ejemplos</a></li><li><a href="#problemas">8. Resolución de problemas</a></li><li><a href="#legal">9. Aviso legal</a></li>
+    <li class="section-title">Herramientas</li>
+    <li><a href="../LEEME.html">Índice de herramientas</a></li>
+  </ul>
+</nav>
+<main>
+<div class="page-header">
+  <h1>Permisos de buzones</h1>
+  <div class="version">Exchange Online - Buzones &#183; Gestionar-PermisosBuzon.ps1 &#183; versión 1.0</div>
+  <div class="tagline">Todos los cambios de permisos de buzones y calendarios en un CSV, y un informe de quién tiene acceso a qué.</div>
+</div>
+
+<h2 id="intro">1. Introducción</h2>
+
+<p>Aplica en lote los cambios de permisos sobre buzones de usuario, compartidos y salas: quién puede abrir un buzón,
+quién puede enviar como él o en su nombre, y quién ve o edita su calendario. Cada fila del CSV es un permiso
+que se <strong>da</strong> o se <strong>quita</strong>.</p>
+<p>Con <span class="param-name">-SoloInforme</span> no cambia nada: lista los permisos actuales de los buzones del CSV, útil antes
+de una auditoría, al dar de baja a un empleado o para revisar un calendario compartido.</p>
+<p>Los permisos de calendario se aplican sobre la carpeta de calendario buscada por su tipo, así funciona aunque el
+buzón esté en otro idioma (Calendario, Calendar, Calendrier…).</p>
+
+
+<h2 id="caracteristicas">2. Características</h2>
+<div class="feature-list"><div class="feature-item"><div class="feature-icon">&#128273;</div><div class="feature-text"><h4>Cuatro tipos de permiso</h4><p>Acceso total, Enviar como, Enviar en nombre de y Calendario.</p></div></div><div class="feature-item"><div class="feature-icon">&#10133;</div><div class="feature-text"><h4>Dar y quitar</h4><p>Columna Accion: Dar (por defecto) o Quitar.</p></div></div><div class="feature-item"><div class="feature-icon">&#128197;</div><div class="feature-text"><h4>Niveles de calendario en español</h4><p>Revisor, Autor, Editor, Propietario, Disponibilidad, Detalles.</p></div></div><div class="feature-item"><div class="feature-icon">&#128203;</div><div class="feature-text"><h4>Informe</h4><p><span class="param-name">-SoloInforme</span>: permisos actuales a CSV.</p></div></div><div class="feature-item"><div class="feature-icon">&#128737;</div><div class="feature-text"><h4>Comprueba antes</h4><p>Que existen todos los buzones y usuarios del CSV.</p></div></div><div class="feature-item"><div class="feature-icon">&#129514;</div><div class="feature-text"><h4>Simulación</h4><p>Lista cada cambio sin aplicarlo.</p></div></div></div>
+
+<h2 id="requisitos">3. Requisitos</h2>
+<table><tr><th style="width:30%">Requisito</th><th>Detalle</th></tr><tr><td>Sistema</td><td>Windows con PowerShell 5.1 o 7</td></tr><tr><td>Módulo</td><td><code>ExchangeOnlineManagement</code> 3.x</td></tr><tr><td>Rol</td><td>Administrador de Exchange (o Administrador de destinatarios). Para -SoloInforme basta Lector global.</td></tr></table>
+
+<h2 id="instalacion">4. Instalación y lanzamiento</h2>
+<p>Copia la carpeta. Módulo: <code>Install-Module ExchangeOnlineManagement -Scope CurrentUser</code>.</p>
+<div class="dir-tree"><span class="folder">EXO-PermisosBuzon\</span>
+&#9500;&#9472;&#9472; <span class="highlight-file">Gestionar-PermisosBuzon.ps1</span>
+&#9500;&#9472;&#9472; plantilla_permisos.csv
+&#9500;&#9472;&#9472; Guia_PermisosBuzon.html
+&#9492;&#9472;&#9472; <span class="folder">Resultados\</span></div>
+
+<h2 id="uso">5. Cómo se usa</h2>
+<h3 id="flujo">Pasos</h3>
+<div class="flow"><div class="flow-step">Informe de lo que hay</div><div class="flow-step">CSV de cambios</div><div class="flow-step">Simular</div><div class="flow-step">Aplicar</div><div class="flow-step">Informe de comprobación</div></div>
+
+<table><tr><th>Permiso</th><th>Qué permite</th><th>Notas</th></tr>
+<tr><td class="param-name">AccesoTotal</td><td>Abrir el buzón y gestionar su correo.</td><td>Aparece solo en el Outlook del usuario (salvo -SinMapeoAutomatico). No permite enviar.</td></tr>
+<tr><td class="param-name">EnviarComo</td><td>Enviar como si fuera el buzón.</td><td>El destinatario solo ve el buzón como remitente.</td></tr>
+<tr><td class="param-name">EnviarEnNombre</td><td>Enviar «en nombre de» el buzón.</td><td>El destinatario ve «Usuario en nombre de Buzón».</td></tr>
+<tr><td class="param-name">Calendario</td><td>Ver o editar el calendario.</td><td>Requiere Nivel.</td></tr></table>
+<table><tr><th>Nivel (calendario)</th><th>Equivale a</th><th>Permite</th></tr>
+<tr><td>Disponibilidad</td><td>AvailabilityOnly</td><td>Solo libre/ocupado.</td></tr>
+<tr><td>Detalles</td><td>LimitedDetails</td><td>Libre/ocupado, asunto y lugar.</td></tr>
+<tr><td>Revisor</td><td>Reviewer</td><td>Ver todo, sin cambiar.</td></tr>
+<tr><td>Autor</td><td>Author</td><td>Crear citas y cambiar las suyas.</td></tr>
+<tr><td>Editor</td><td>Editor</td><td>Crear y cambiar cualquier cita.</td></tr>
+<tr><td>Propietario</td><td>Owner</td><td>Todo, incluidos los permisos.</td></tr></table>
+<p>Para el informe basta un CSV con la columna <span class="param-name">Buzon</span>. Para un usuario externo (otra empresa), invítalo antes y conviértelo en Miembro (herramienta Invitados B2B).</p>
+
+<h3 id="csv">Formato del CSV</h3><table><tr><th>Columna</th><th></th><th>Qué es</th><th>Ejemplo</th></tr><tr><td class="param-name">Buzon</td><td><span class="badge badge-required">obligatorio</span></td><td>Buzón sobre el que se da el permiso.</td><td><code>calendario.directores@empresa.com</code></td></tr><tr><td class="param-name">Usuario</td><td><span class="badge badge-required">obligatorio</span></td><td>A quién (no hace falta con -SoloInforme).</td><td><code>director1@empresa.com</code></td></tr><tr><td class="param-name">Permiso</td><td><span class="badge badge-required">obligatorio</span></td><td>AccesoTotal, EnviarComo, EnviarEnNombre o Calendario (no hace falta con -SoloInforme).</td><td><code>Calendario</code></td></tr><tr><td class="param-name">Nivel</td><td><span class="badge badge-optional">opcional</span></td><td>Solo para Calendario al dar.</td><td><code>Editor</code></td></tr><tr><td class="param-name">Accion</td><td><span class="badge badge-optional">opcional</span></td><td>Dar (por defecto) o Quitar.</td><td><code>Quitar</code></td></tr></table>
+<h3 id="resultados">Resultados</h3><p><span class="param-name">Resultados\PermisosBuzon_*.csv</span> (OK, YA TENIA, NO TENIA, SIMULADO, ERROR) o <span class="param-name">InformePermisos_*.csv</span> con -SoloInforme.</p>
+
+<h2 id="parametros">6. Parámetros</h2>
+<table><tr><th style="width:20%">Parámetro</th><th style="width:11%">Tipo</th><th style="width:11%"></th><th style="width:14%">Valor por defecto</th><th>Descripción</th></tr><tr><td class="param-name">-Csv</td><td>Ruta</td><td><span class="badge badge-required">obligatorio</span></td><td>&#8212;</td><td>CSV de permisos (o solo con la columna Buzon para el informe).</td></tr><tr><td class="param-name">-SoloInforme</td><td>Switch</td><td><span class="badge badge-optional">opcional</span></td><td>No</td><td>Lista los permisos actuales y no cambia nada.</td></tr><tr><td class="param-name">-SinMapeoAutomatico</td><td>Switch</td><td><span class="badge badge-optional">opcional</span></td><td>No</td><td>Con AccesoTotal, el buzón no aparece solo en Outlook.</td></tr><tr><td class="param-name">-TenantId</td><td>GUID</td><td><span class="badge badge-optional">opcional</span></td><td>&#8212;</td><td>Tenant esperado.</td></tr><tr><td class="param-name">-Simular</td><td>Switch</td><td><span class="badge badge-optional">opcional</span></td><td>No</td><td>No cambia nada.</td></tr><tr><td class="param-name">-SinConfirmar</td><td>Switch</td><td><span class="badge badge-optional">opcional</span></td><td>No</td><td>No pregunta.</td></tr><tr><td class="param-name">-CarpetaResultados</td><td>Ruta</td><td><span class="badge badge-default">por defecto</span></td><td>.\Resultados</td><td>Dónde guardar el CSV.</td></tr></table>
+
+<h2 id="ejemplos">7. Ejemplos</h2>
+<h3>Informe de permisos de unos buzones</h3><pre><span class="cmd">.\Gestionar-PermisosBuzon.ps1</span><span class="param"> -Csv</span> .\buzones.csv<span class="param"> -SoloInforme</span></pre><h3>Simular cambios</h3><pre><span class="cmd">.\Gestionar-PermisosBuzon.ps1</span><span class="param"> -Csv</span> .\permisos.csv<span class="param"> -Simular</span></pre><h3>Baja de un empleado: quitarle todos los accesos</h3><p>CSV con una fila por buzón y Accion = Quitar.</p><pre><span class="cmd">.\Gestionar-PermisosBuzon.ps1</span><span class="param"> -Csv</span> .\baja_juan.csv</pre>
+
+<h2 id="problemas">8. Resolución de problemas</h2>
+<table><tr><th style="width:28%">Problema</th><th style="width:30%">Causa</th><th>Solución</th></tr><tr><td>«No existe en el tenant»</td><td>Buzón o usuario mal escrito, o persona externa.</td><td>Corregir; los externos deben estar invitados (y ser Miembro para algunos permisos).</td></tr><tr><td>Calendario: «No se encuentra la carpeta»</td><td>El buzón nunca se ha abierto o es de un tipo sin calendario.</td><td>Abrirlo una vez en Outlook web y repetir.</td></tr><tr><td>El permiso no se nota en Outlook</td><td>Tarda en propagarse.</td><td>Esperar hasta 60 minutos o reiniciar Outlook.</td></tr><tr><td>Quitar Acceso total no lo quita de Outlook al momento</td><td>Outlook lo mantiene en caché.</td><td>Reiniciar Outlook; puede tardar hasta una hora.</td></tr></table>
+
+<h2 id="legal">9. Aviso legal</h2>
+<div class="alert-warning">Esta herramienta hace cambios reales en el sistema o el tenant donde se ejecuta. Úsala primero con <span class="param-name">-Simular</span> cuando lo tenga, con una cuenta con los permisos justos y sabiendo qué va a cambiar. El autor no se hace responsable de un uso indebido ni de los daños derivados de su ejecución.</div>
+<div class="card"><div class="card-header">Limitaciones conocidas</div><p>No gestiona permisos de carpetas que no sean el calendario (Bandeja de entrada, Contactos…), ni de grupos de Microsoft 365. El informe no muestra los permisos heredados de grupos de seguridad expandidos.</p></div>
+
+<footer>Permisos de buzones &#183; Gestionar-PermisosBuzon.ps1 &#183; versión 1.0 &#183; Actualizado 24/10/2026 &#183; Masoft.es</footer>
+</main>
+</body>
+</html>

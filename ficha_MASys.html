@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MASys v5.3.0 &#8212; Ficha t&#233;cnica</title>
+<style>
+:root {
+  --primary: #1a3a5c; --primary-light: #2c5f8a; --accent: #2979FF;
+  --bg: #f7f9fc; --card-bg: #ffffff; --text: #1a1a2e; --text-light: #555;
+  --border: #dde3ea; --code-bg: #0d1117; --code-text: #e6edf3;
+  --success: #16a34a; --warning: #ca8a04; --danger: #dc2626; --info: #2563eb;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Segoe UI', sans-serif; font-size: 10pt; background: var(--bg); color: var(--text); max-width: 960px; margin: 0 auto; padding: 0 24px 60px; }
+.page-header { background: linear-gradient(135deg, #0d2137 0%, #1a3a5c 60%, #1e4d7a 100%); padding: 40px 36px 32px; margin: 0 -24px 36px; border-radius: 0 0 10px 10px; }
+.header-row { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.page-header h1 { font-size: 32px; font-weight: 300; color: #fff; letter-spacing: -1px; }
+.page-header .meta { text-align: right; }
+.page-header .version { display: inline-block; background: var(--accent); color: #fff; font-size: 8pt; font-weight: 700; padding: 3px 10px; border-radius: 12px; margin-bottom: 4px; }
+.page-header .tagline { font-size: 10pt; color: #90b4d4; font-weight: 300; }
+.header-badge { display: inline-block; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); color: #c8dff0; font-size: 8pt; padding: 3px 10px; border-radius: 12px; margin-top: 4px; }
+h2 { font-size: 13pt; color: var(--primary); font-weight: 700; border-bottom: 2px solid var(--primary); padding-bottom: 6px; margin: 32px 0 16px; }
+h3 { font-size: 10.5pt; color: var(--primary-light); font-weight: 600; margin: 20px 0 10px; }
+p  { line-height: 1.7; color: var(--text-light); margin-bottom: 10px; font-size: 9.5pt; }
+ul { margin: 0 0 14px 20px; color: var(--text-light); line-height: 1.7; font-size: 9.5pt; }
+code { font-family: Consolas, monospace; font-size: 8.5pt; background: #eef2f7; padding: 1px 5px; border-radius: 4px; color: var(--primary); }
+.summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; margin-bottom: 28px; }
+.summary-card { background: var(--card-bg); border: 1px solid var(--border); border-top: 3px solid var(--accent); border-radius: 8px; padding: 16px; }
+.summary-card .label { font-size: 7.5pt; color: var(--text-light); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 4px; }
+.summary-card .value { font-size: 13pt; font-weight: 700; color: var(--primary); }
+.summary-card .sub   { font-size: 8pt; color: var(--text-light); margin-top: 2px; }
+table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 9pt; }
+th { background: var(--primary); color: #fff; padding: 9px 12px; text-align: left; font-weight: 600; }
+td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-light); vertical-align: top; }
+tr:nth-child(even) td { background: var(--bg); }
+.param-name { font-family: 'Consolas', monospace; color: var(--accent); font-weight: 600; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 7.5pt; font-weight: 700; }
+.badge-ok { background: #f0fdf4; color: var(--success); border: 1px solid #bbf7d0; }
+.badge-warn { background: #fffbeb; color: var(--warning); border: 1px solid #fde68a; }
+.badge-no { background: #fef2f2; color: var(--danger); border: 1px solid #fecaca; }
+.badge-neutral { background: #eff6ff; color: var(--info); border: 1px solid #bfdbfe; }
+.dir-tree { background: #f8fafc; border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; font-family: 'Consolas', monospace; font-size: 8.5pt; line-height: 1.8; margin-bottom: 20px; white-space: pre; overflow-x: auto; }
+.dir-tree .folder { color: var(--accent); font-weight: 700; }
+.dir-tree .file { color: var(--text-light); }
+footer { text-align: center; padding: 20px 0 0; margin-top: 40px; border-top: 1px solid var(--border); font-size: 8pt; color: var(--text-light); }
+.card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 16px; overflow: hidden; }
+.card-header { background: var(--bg); border-bottom: 1px solid var(--border); padding: 9px 16px; font-weight: 700; font-size: 9pt; color: var(--primary); }
+.card-body { padding: 16px; }
+@media (max-width: 640px) { .header-row { flex-direction: column; align-items: flex-start; } .page-header .meta { text-align: left; } .summary-grid { grid-template-columns: 1fr 1fr; } table { display: block; overflow-x: auto; } }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="header-row">
+    <div>
+      <h1>MASys</h1>
+      <p class="tagline">Herramienta de t&#233;cnico IT para Windows: 44 secciones en un &#225;rbol lateral por categor&#237;as</p>
+    </div>
+    <div class="meta">
+      <span class="version">v5.3.0</span><br>
+      <span class="header-badge">Python &#183; PyQt5 &#183; pywin32 &#183; PowerShell</span><br>
+      <span class="header-badge">Aplicaci&#243;n de escritorio (Windows)</span>
+    </div>
+  </div>
+</div>
+
+<div class="summary-grid">
+  <div class="summary-card"><div class="label">Versi&#243;n</div><div class="value">5.3.0</div><div class="sub">31/10/2026 &#183; &#128241; M&#243;viles Android pasa de secci&#243;n del &#225;rbol a bot&#243;n con ventana propia: &#225;rbol Empresa &#8250; Usuario &#8250; Terminal (acorde&#243;n, Sin asignar), lista de informes debajo del árbol, pesta&#241;as nuevas Hardware, Red (SIM, wifi, cercanas, guardadas, Bluetooth, velocidad), Consumo de datos, Pruebas y Datos personales (nada / recuentos / completo, lo elige el t&#233;cnico), salud de la bater&#237;a y alertas en Cambios, copias de Datos .msysdatos; &#128682; Puertos desde fuera de todos los m&#243;viles (el primero que env&#237;e con datos m&#243;viles; sin datos o sin respuesta en 10 min vuelve a la espera); necesita MASysMov 1.3.2 para lo nuevo; 5.2.0: Ver en MASys: el informe del agente en las secciones de siempre (modo equipo remoto con acciones bloqueadas); 5.1.0: Correo a los clientes: cuentas SMTP, Gmail y Microsoft 365 (Graph, OAuth), plantillas con variables e historial; enviar desde la ficha, Enviar al cliente y Programa para el cliente; 5.0.0: Empresas y usuarios (cat&#225;logo com&#250;n), agenda de Acceso remoto por empresa con usuario, correo y tel&#233;fono, aviso de equipo nuevo en el servidor propio; 4.12.0: Servidor de RustDesk dentro de MASys: hbbs/hbbr compilados desde rustdesk-server 1.1.16 con parche propio (no tocan el RustDesk del usuario), arrancar/parar, arrancar con Windows (tareas SYSTEM), firewall y equipos dados de alta; 4.11.0: &#128752;&#65039; Servidor propio de RustDesk en Acceso remoto: direcci&#243;n y clave del servidor (hbbs/hbbr), comprobaci&#243;n de puertos, programa para el cliente con el servidor en el nombre y conexi&#243;n por ID@servidor; 4.10.1: M&#243;vil &#8250; Copias &#8250; Carpeta&#8230; con el di&#225;logo propio de MASys (era el &#250;ltimo explorador nativo; prueba que lo impide); 4.10.0: &#128218; Base de conocimiento con 170 fichas en 18 temas, todas con la soluci&#243;n dentro de MASys (117 con Comprobar ahora); 4.9.0: &#128231; Cuentas Correo con pesta&#241;as: la operativa de MACorreo adaptada (Probar cuenta solo en los servidores de su proveedor y alta en Outlook con PRF, Comprobar direcciones una o en lista, Dominio de correo tipo MXToolbox con informe HTML, Configuraci&#243;n de Outlook por elementos, Visor PST/OST sin Outlook con libpff); 4.8.2: &#9881;&#65039; Conexi&#243;n&#8230;: puerto y nombre de DNS din&#225;mico juntos, con &#128270; Comprobar (el nombre lleva a tu IP p&#250;blica); 4.8.1: puerto de recepci&#243;n configurable (regla de firewall por puerto); 4.8.0: &#128270; Comprobar ahora en las fichas de la Base de conocimiento (avisos de Soporte de sus secciones, en este equipo); 4.7.1: Env&#237;o directo del agente: c&#243;digo de env&#237;o MSE1 de un solo uso (ticket HMAC, caduca), recepci&#243;n por Internet en el puerto 47885 sin servidor propio; 4.7.0: &#128229; Agente de an&#225;lisis remoto: MASys_Agente_vX.exe lee el equipo del cliente con los 33 recolectores de Sincronizar Todo, quita secretos y genera un .msysinf cifrado (X25519 + AES-256-GCM) que se abre, se ve en HTML y se compara en MASys; 4.6.0: &#128421;&#65039; Acceso remoto: agenda de equipos de clientes, conexi&#243;n con RustDesk, Asistencia r&#225;pida, Escritorio remoto, ver sesi&#243;n y ofrecer asistencia, contrase&#241;as con DPAPI e historial; 4.5.0: &#128218; Base de conocimiento: 170 problemas habituales con los pasos en MASys y &#171;Ir a&#187; la secci&#243;n y pesta&#241;a, fichas propias en multisys.db; 4.4.0: Carpetas Compartidas: permisos de carpetas (leer local o en red, editar, propietario, quitar una cuenta de una rama), an&#225;lisis, acceso de una cuenta y copias con restauraci&#243;n en el mismo servidor o en otro dominio (equivalencias de cuentas, permisos de red); 4.3.1: Navegadores: Gestor de favoritos (editar, comprobar enlaces rotos, reorganizar, exportar/importar HTML est&#225;ndar y sustituir en Chrome/Edge con copia previa) y Auditor&#237;a de contrase&#241;as (fortaleza, reutilizaci&#243;n y exposici&#243;n en Have I Been Pwned por k-anonimato); 4.3.0: Copias de MASysMov 1.2.6/1.2.7 en un archivo (.apk o .apks); 4.2.8: M&#243;vil Android: copias en carpeta con .apk (MASysMov 1.2.4, una fila por copia) y pesta&#241;as Espacio, Bater&#237;a, Rastreadores y Procesos, ficha, hallazgos e informe HTML ampliados; 4.2.7: M&#243;vil Android &#8250; Copias (copias de apps de MASysMov 1.2.3); 4.2.1-4.2.6: Dashboard de fichas, migraci&#243;n e informes por m&#243;dulos; 4.2.0: estabilidad, salud, visitas e informes HTML</div></div>
+  <div class="summary-card"><div class="label">Autor</div><div class="value">Masoft.es</div><div class="sub">Uso de t&#233;cnico, equipos propios o con autorizaci&#243;n</div></div>
+  <div class="summary-card"><div class="label">Secciones</div><div class="value">44</div><div class="sub">Dashboard + 43 en 6 categor&#237;as</div></div>
+  <div class="summary-card"><div class="label">Interfaz</div><div class="value">PyQt5</div><div class="sub">PyQt6 al partir multisys.py en m&#243;dulos (pendiente)</div></div>
+  <div class="summary-card"><div class="label">Bases de datos</div><div class="value">2 SQLite</div><div class="sub">multisys.db (17 tablas) &#183; movil.db (5 tablas)</div></div>
+  <div class="summary-card"><div class="label">Pruebas</div><div class="value">156/156</div><div class="sub">unittest + capturas con auditor&#237;a de textos recortados</div></div>
+</div>
+
+<h2>Descripci&#243;n</h2>
+<p>MASys re&#250;ne en una sola ventana las tareas de soporte de un equipo Windows: inventario de hardware y sistema, servicios, procesos, red, usuarios, credenciales, seguridad, software, copias de seguridad y reparaciones. Cada secci&#243;n muestra datos reales del equipo en tablas ordenables y ofrece las acciones de soporte de esa secci&#243;n desde el bot&#243;n <strong>&#128736;&#65039; Soporte</strong> de la barra inferior.</p>
+<p><code>multisys.py</code> es solo la ventana (&#225;rbol, navegaci&#243;n, cabecera, barra inferior, bandeja). Cada secci&#243;n es un <em>mixin</em> en <code>msys/ui/</code> con su <code>crear_tab_xxx</code>, registrado con <code>_add_section</code> y con su categor&#237;a en <code>msys/config.py</code> (<code>SECTION_CATEGORY</code> + <code>DEFAULT_TAB_CONFIG</code>). Los recolectores antiguos viven en <code>msys/collectors.py</code> y <code>msys/ps_scripts.py</code>; las secciones de la versi&#243;n 4.1 tienen su motor sin Qt en <code>msys/domain/</code> (o paquete propio) y no tocan esos m&#243;dulos grandes.</p>
+<p>Hasta la versi&#243;n 4.1.6 la aplicaci&#243;n se llamaba <strong>MultiSYS</strong>. En 4.1.7 se renombr&#243; a MASys en todos los textos, informes y documentos; ver &#171;Cambio de nombre&#187; m&#225;s abajo.</p>
+
+<h2>Stack t&#233;cnico</h2>
+<table>
+<tr><th>Capa</th><th>Tecnolog&#237;a</th><th>Notas</th></tr>
+<tr><td>Interfaz</td><td>PyQt5 &#8805; 5.15.11</td><td>&#193;rbol lateral por categor&#237;as, tablas QAbstractTableModel + proxies de filtro/orden, piezas comunes en <code>msys/ui/piezas.py</code></td></tr>
+<tr><td>Windows</td><td>pywin32 &#8805; 312 &#183; ctypes &#183; winreg &#183; PowerShell &#183; WMI/CIM &#183; DISM &#183; netsh &#183; pnputil</td><td>PowerShell embebido en <code>msys/ps_scripts.py</code>; m&#233;tricas en vivo por GetSystemTimes/GlobalMemoryStatusEx</td></tr>
+<tr><td>Sistema</td><td>psutil &#8805; 7.2.2</td><td>Procesos, conexiones, m&#233;tricas</td></tr>
+<tr><td>Red</td><td>dnspython &#8805; 2.8.0 &#183; requests &#8805; 2.34.2 &#183; ssl/socket</td><td>Motor de diagn&#243;stico por capas copiado de MAOSI en <code>msys/osi/</code></td></tr>
+<tr><td>Cifrado</td><td>cryptography &#8805; 48.0.0 &#183; DPAPI (win32crypt)</td><td>Enlace con el m&#243;vil: AES-256-GCM, PBKDF2-HMAC-SHA256 (210.000 iteraciones)</td></tr>
+<tr><td>Datos</td><td>SQLite (sqlite3)</td><td><code>multisys.db</code> y <code>movil.db</code> junto a la aplicaci&#243;n</td></tr>
+<tr><td>Correo</td><td>libpff-python &#8805; 20260926 (LGPL) &#183; imaplib/poplib/smtplib &#183; dnspython</td><td>Visor PST/OST sin Outlook; motor copiado de MACorreo en <code>msys/domain/correo/</code> (copia propia, sin propagar)</td></tr>
+<tr><td>Otros</td><td>qrcode &#8805; 8.2 &#183; Send2Trash &#8805; 2.1.0 &#183; Pillow &#8805; 12.2.0</td><td>QR de Wi-Fi y de emparejado; lo que se borra va a la Papelera</td></tr>
+</table>
+
+<h2>M&#243;dulos principales</h2>
+<h3>N&#250;cleo</h3>
+<table>
+<tr><th>Fichero</th><th>Responsabilidad</th></tr>
+<tr><td><span class="param-name">multisys.py</span></td><td>Ventana principal: &#225;rbol lateral, navegaci&#243;n, cabecera, perfil de navegaci&#243;n activo, barra inferior (exportar, &#128736;&#65039; Soporte), bot&#243;n de copias de seguridad, icono en la bandeja</td></tr>
+<tr><td><span class="param-name">msys/version.py</span></td><td>Nombre y versi&#243;n: &#250;nico punto de verdad (cabecera, bandeja e informes)</td></tr>
+<tr><td><span class="param-name">msys/config.py</span></td><td>Constantes, carpeta base de la aplicaci&#243;n, secciones visibles y su orden, categor&#237;as del men&#250; lateral</td></tr>
+<tr><td><span class="param-name">msys/collectors.py</span></td><td>Recolectores en segundo plano (QThread), uno por secci&#243;n antigua, y las clases de las tablas de <code>multisys.db</code> (notas, listas aceptadas, perfiles de navegaci&#243;n)</td></tr>
+<tr><td><span class="param-name">msys/ps_scripts.py</span></td><td>Scripts de PowerShell embebidos que usan los recolectores</td></tr>
+<tr><td><span class="param-name">msys/core/utils.py</span></td><td>PowerShell, registro, traducci&#243;n de permisos, exportaci&#243;n CSV segura, detecci&#243;n de software sin soporte y lista negra</td></tr>
+<tr><td><span class="param-name">msys/core/backup.py</span></td><td>Copia gen&#233;rica previa a una reparaci&#243;n</td></tr>
+<tr><td><span class="param-name">msys/core/tareas.py</span></td><td>Hilo gen&#233;rico de las secciones nuevas (ok / error / progreso)</td></tr>
+<tr><td><span class="param-name">msys/core/informe_html.py</span></td><td>Plantilla com&#250;n de TODOS los informes HTML (4.2.0): cabecera, &#237;ndice, buscador, filtro por nivel, filtros por columna, orden por fecha/n&#250;mero/tama&#241;o, secciones plegables, CSV de la tabla visible e imprimir. Escapa todo salvo <code>Html(...)</code></td></tr>
+<tr><td><span class="param-name">msys/models/rows.py</span>, <span class="param-name">table_models.py</span>, <span class="param-name">tabla_simple.py</span></td><td>Filas de datos por tipo, modelos de tabla con filtro y orden, modelo gen&#233;rico de las secciones nuevas</td></tr>
+<tr><td><span class="param-name">msys/widgets/*</span>, <span class="param-name">msys/win/structs.py</span></td><td>Delegado de celda y ajuste de columnas, indicador circular, minigr&#225;fico, estructuras ctypes de rendimiento</td></tr>
+<tr><td><span class="param-name">msys/domain/repair_audit.py</span></td><td>Historial &#250;nico de reparaciones de todas las secciones</td></tr>
+</table>
+
+<h3>Transversales</h3>
+<table>
+<tr><th>Fichero</th><th>Responsabilidad</th></tr>
+<tr><td><span class="param-name">msys/ui/reporting.py</span></td><td>Exportaci&#243;n CSV/HTML/PDF/Excel por secci&#243;n o varias, informe completo, b&#250;squeda global. Los HTML salen de <code>core/informe_html.py</code>; al terminar Sincronizar Todo llama a la visita</td></tr>
+<tr><td><span class="param-name">msys/ui/visitas.py</span> + <span class="param-name">domain/visitas.py</span></td><td>&#171;Cambios desde la &#250;ltima visita&#187; (panel del Dashboard): foto del equipo al terminar Sincronizar Todo en <code>INFORMES\Visitas\&lt;equipo&gt;\</code> (60 &#250;ltimas) y comparaci&#243;n con la anterior; &#171;Otra visita&#8230;&#187;</td></tr>
+<tr><td><span class="param-name">msys/ui/soporte.py</span></td><td>Bot&#243;n &#128736;&#65039; Soporte: reparaciones de la secci&#243;n activa (SFC/DISM, CHKDSK, limpiezas, duplicados, papelera, calendario de tareas...) y avisos validados</td></tr>
+<tr><td><span class="param-name">msys/ui/backups.py</span> + <span class="param-name">backup_generators.py</span></td><td>&#128192; Copias de seguridad: sistema, registro, correo, credenciales y accesos, navegadores, nube, perfil de usuario, configuraci&#243;n de MASys, forense (MaPeriT)</td></tr>
+<tr><td><span class="param-name">msys/ui/backup_*_dialog.py</span></td><td>Di&#225;logos gen&#233;ricos de generar, restaurar e historial de copias</td></tr>
+<tr><td><span class="param-name">msys/ui/config_dialog.py</span></td><td>Mostrar, ocultar y reordenar secciones; perfiles de navegaci&#243;n</td></tr>
+<tr><td><span class="param-name">msys/tools/MaPeriT.SW.ps1</span>, <span class="param-name">MaPeriT.OF.ps1</span></td><td>Captura forense en caliente y desde un disco sin arrancar</td></tr>
+</table>
+
+<h3>Secciones (interfaz en <code>msys/ui/</code>)</h3>
+<table>
+<tr><th>Fichero</th><th>Responsabilidad</th></tr>
+<tr><td><span class="param-name">dashboard.py</span> + <span class="param-name">domain/salud.py</span></td><td>Tarjetas resumen, alertas, refresco global; puntuaci&#243;n de seguridad y, desde 4.1.9, de SALUD (estabilidad + detectores de Soporte de salud + espacio libre, con &#171;Ver motivos&#187;)</td></tr>
+<tr><td><span class="param-name">estabilidad.py</span> + <span class="param-name">domain/estabilidad.py</span></td><td>&#129658; Estabilidad: pantallazos azules (41/1001 de System, c&#243;digo traducido, causa habitual, an&#225;lisis del volcado con kd.exe si est&#225;), apagados inesperados (41 sin c&#243;digo, 6008), apps que fallan (1000/1002 de Application) e &#237;ndice de Windows</td></tr>
+<tr><td><span class="param-name">system_info.py</span></td><td>Fichas de equipo, SO, procesador, RAM, placa y BIOS; reinicio en BIOS/UEFI</td></tr>
+<tr><td><span class="param-name">registro_windows.py</span></td><td>B&#250;squeda en el registro, entradas hu&#233;rfanas, copia de ramas, borrado seguro</td></tr>
+<tr><td><span class="param-name">iconos.py</span>, <span class="param-name">iconos_config.py</span> + <span class="param-name">domain/iconos.py</span></td><td>Bibliotecas de iconos con extracci&#243;n ICO/PNG, cach&#233;s, accesos directos rotos, escritorio, espaciado, posiciones, iconos superpuestos, iconos de unidades</td></tr>
+<tr><td><span class="param-name">asociaciones.py</span> + <span class="param-name">domain/asociaciones.py</span></td><td>Extensiones, protocolos y por programa; estado de cada asociaci&#243;n; Abrir con, Restablecer, XML de DISM</td></tr>
+<tr><td><span class="param-name">caracteristicas.py</span> + <span class="param-name">domain/caracteristicas.py</span></td><td>Caracter&#237;sticas y capacidades de Windows, perfiles, .NET 3.5 sin internet</td></tr>
+<tr><td><span class="param-name">processes.py</span>, <span class="param-name">services.py</span>, <span class="param-name">startup_programs.py</span></td><td>Procesos (prioridad, finalizar, suspender, notas), servicios (tipo de inicio, acciones, notas), programas de inicio (activar/desactivar como el Administrador de tareas)</td></tr>
+<tr><td><span class="param-name">windows_updates.py</span>, <span class="param-name">environment_vars.py</span>, <span class="param-name">system_events.py</span></td><td>Actualizaciones (instalar KB), variables de entorno (problemas, PATH, notas, copia), eventos del sistema</td></tr>
+<tr><td><span class="param-name">shares.py</span>, <span class="param-name">network_drives.py</span>, <span class="param-name">content.py</span>, <span class="param-name">disk_health.py</span></td><td>Carpetas compartidas y permisos, unidades remotas, b&#250;squeda de archivos, salud de discos. Desde 4.4.0 la pesta&#241;a de siempre es la primera de <code>compartidas_tabs</code></td></tr>
+<tr><td><span class="param-name">conocimiento_dialog.py</span> + <span class="param-name">domain/conocimiento.py</span></td><td>&#128218; Base de conocimiento (4.5.0): ventana NO modal y &#250;nica (<code>ConocimientoMixin.abrir_base_conocimiento</code>), bot&#243;n bajo el &#225;rbol encima de Configuraci&#243;n. &#193;rbol Tema &#8250; Problema con b&#250;squeda sin tildes; ficha con s&#237;ntomas, causas y pasos; &#171;Ir a&#187; usa <code>seleccionar_seccion</code> y elige la pesta&#241;a (tambi&#233;n anidada o si la secci&#243;n ES la QTabWidget). Fichas fijas en <code>FICHAS_FIJAS</code> (cada paso con id estable para &#171;Comprobar ahora&#187;); propias en la tabla <code>conocimiento_fichas</code>; editor en el panel derecho. <code>tests/test_conocimiento.py</code> comprueba que cada texto entre &#171;&#187;, secci&#243;n y pesta&#241;a citado existe en el c&#243;digo</td></tr>
+<tr><td><span class="param-name">domain/comprobar.py</span> + <span class="param-name">ui/comprobar_ficha.py</span></td><td>&#128270; Comprobar ahora (4.8.0). <code>secciones_de(ficha)</code> = secciones de sus pasos con detector en <code>_registro_soporte_por_seccion</code> (soporte.py) y m&#233;todo en <code>RECARGA</code> (los mismos refresh_* que <code>buscar_todo</code>). <code>Comprobador</code> (QObject, sin hilos propios ni bucles anidados): por secci&#243;n espera a <code>self.worker</code> libre, llama al refresh_*, espera a que acabe (+250 ms para las se&#241;ales en cola) y pasa el detector, quitando los avisos validados (<code>_get_avisos_soporte_validados</code>). &#171;Revisar&#8230;&#187; usa <code>_ejecutar_aviso_soporte</code> (mismo &#10004; Validar). Una comprobaci&#243;n a la vez; sigue aunque se cambie de ficha. <code>tests/test_comprobar.py</code> exige que RECARGA cite secciones y m&#233;todos reales</td></tr>
+<tr><td><span class="param-name">acceso_remoto_dialog.py</span> + <span class="param-name">domain/acceso_remoto.py</span></td><td>&#128421;&#65039; Acceso remoto (4.6.0): ventana NO modal y &#250;nica (<code>AccesoRemotoMixin</code>), bot&#243;n bajo Base de conocimiento. &#193;rbol Cliente &#8250; Equipo, ficha y editor en el panel derecho, historial con CSV/HTML. &#211;rdenes como listas de argumentos (nunca int&#233;rprete) y destinos validados: <code>rustdesk.exe --connect &lt;ID&gt; [--password]</code> (comprobado en src/core_main.rs oficial), <code>mstsc /v:</code>, <code>mstsc /shadow:&lt;id&gt; /v: /control</code> (sin /noconsentprompt; sesiones con <code>quser</code>), <code>msra /offerRA</code>; Asistencia r&#225;pida por AppID de <code>Get-StartApps</code> o Tienda (9P7BP5VNWKX5). RustDesk no se incluye. <strong>4.11.0 Servidor propio</strong> (<code>ServidorPropioDialog</code>, comprobado en el c&#243;digo de RustDesk 1.5.0 y rustdesk-server): el cliente es el RustDesk oficial descargado renombrado a <code>rustdesk--&lt;cadena&gt;.exe</code>, cadena = JSON <code>{"host","key"[,"relay"]}</code> en base64 URL sin relleno y del rev&#233;s (<code>src/custom_server.rs</code>; la prueba usa su mismo caso; sin &#171;--&#187; dentro: se reintenta con espacios en el JSON), le&#237;do por RustDesk de la ruta de su .exe (<code>get_license_from_exe_name</code>); el t&#233;cnico conecta con <code>--connect &lt;ID&gt;@&lt;servidor&gt;?key=&lt;clave&gt;</code> (<code>src/client.rs</code>, sin tocar su configuraci&#243;n); comprobaci&#243;n TCP de 21115/21116/21117 en segundo plano; clave p&#250;blica de <code>id_ed25519.pub</code> (32 bytes base64; el privado se rechaza)</td></tr>
+<tr><td><span class="param-name">domain/equipo_remoto.py</span> + <span class="param-name">ui/equipo_remoto.py</span></td><td>&#128752;&#65039; Modo equipo remoto (5.2.0, <code>EquipoRemotoMixin</code> de la ventana principal). Cada apartado del agente es el recolector que usa su secci&#243;n: <code>SECCIONES</code> (clave &#8594; m&#243;dulo de msys/ui que lo crea + refresh_*; cada recolector se crea en un &#250;nico m&#243;dulo, comprobado en prueba) y <code>apartados()</code> (reconstruir, sin <code>preparar</code>). Al entrar: en cada m&#243;dulo, la clase del recolector se sustituye por una subclase cuyo <code>run()</code> emite los datos (hereda todas sus se&#241;ales); <code>DeviceEnrichmentThread</code> de Red local, por uno mudo (sondear&#237;a IP desde este PC); <code>informe_html.EQUIPO_FORZADO</code> y <code>_nombre_equipo()</code> (lo usa reporting) = equipo del cliente; las etiquetas &#171;&#128421;&#65039; &lt;este PC&gt;&#187; de las barras pasan a &#171;&#128752;&#65039; &lt;cliente&gt;&#187;; &#225;rbol solo con sus secciones (<code>seleccionar_seccion</code> no abre otras); franja &#225;mbar; se pulsan los refresh_* en orden. <code>BloqueoAcciones</code> (filtro de eventos de la aplicaci&#243;n): dentro de las secciones solo &#171;&#128260; Actualizar&#187;, exportar, buscar/filtrar, copiar y casillas; men&#250;s contextuales y doble clic en filas, bloqueados; fuera, todo salvo <code>PROHIBIDOS_FUERA</code> (Sincronizar Todo, Copias, Seguridad, Soporte, Snapshots, Guardar Resultados). <code>buscar_todo</code> no corre en modo remoto. Al salir se deshace todo y se lanza Sincronizar Todo. Entradas: &#171;&#128421;&#65039; Ver en MASys&#187; en Informes del agente y <code>InformeRecibidoDialog</code> al recibir por Internet. Probado con la ventana REAL y un informe real (10 apartados: filas iguales al informe, 44 etiquetas cambiadas y restauradas)</td></tr>
+<tr><td><span class="param-name">domain/envio_correo.py</span> + <span class="param-name">correo_envio_dialog.py</span></td><td>&#9993;&#65039; Correo a los clientes (5.1.0). <code>CorreoDB</code>: cuentas (<code>Perfil</code>: smtp / gmail / m365; secreto con DPAPI; una predeterminada siempre), plantillas (3 de serie insertadas solo la primera vez, marca <code>correo_ajustes.plantillas_iniciales</code>; <code>enlace</code> = &#250;ltimo usado) e historial. <code>enviar</code>: SMTP con <code>ssl.create_default_context</code>, STARTTLS obligatorio si se pide (sin STARTTLS no hay <code>login</code>), SSL directo o sin cifrar (rel&#233;); Gmail = preajuste smtp.gmail.com:587; Microsoft 365 = token <code>client_credentials</code> en login.microsoftonline.com y <code>POST /v1.0/users/{remitente}/sendMail</code> (202), errores de Entra/Graph traducidos. <code>rellenar</code> sustituye <code>{variable}</code>; con el enlace o el c&#243;digo vac&#237;os quedan visibles y no se env&#237;a. <code>detectar_smtp</code> usa la detecci&#243;n de MACorreo (proveedores conocidos, SRV, Thunderbird). Ventanas: <code>CorreoDialog</code> (Cuentas con formulario desplazable y botones fijos, Plantillas, Enviados con el motivo del error) y <code>RedactarDialog</code> (destinatario del cat&#225;logo de Empresas, c&#243;digo del agente con <code>AgenteDB(ruta).publica_activa()</code>, env&#237;o en segundo plano). Sin adjuntos: los .exe van por enlace</td></tr>
+<tr><td><span class="param-name">domain/clientes.py</span> + <span class="param-name">clientes_dialog.py</span></td><td>&#128101; Empresas y usuarios (5.0.0): cat&#225;logo com&#250;n <code>ClientesDB</code> (empresas 1-N usuarios con correo, tel&#233;fono y notas) para elegir en la agenda y en otros apartados. Unicidad y b&#250;squedas por la columna <code>clave</code> = <code>casefold()</code> de Python (el NOCASE de SQLite no pliega tildes). Cada equipo guarda su COPIA (cliente = empresa, contacto, correo, tel&#233;fono): lo escrito a mano no se pierde y quitar del cat&#225;logo no toca la agenda. <code>_sincronizar_catalogo</code> pregunta si a&#241;ade empresa/usuario o actualiza correo/tel&#233;fono. Agenda: columnas Equipo, Usuario, Correo, Tel&#233;fono, M&#233;todo, &#218;ltima conexi&#243;n; si no caben se ocultan M&#233;todo y Correo (<code>_COLUMNAS_OPCIONALES</code>). Aviso de equipo nuevo: <code>AccesoRemotoMixin.iniciar_aviso_equipos_nuevos</code> (multisys.py, a los 5 s; cada 15 s) lee la tabla peer del servidor de este PC (sin servidor o sin equipos no abre multisys.db), <code>equipos_sin_avisar</code> excluye los de la agenda y los ya avisados (<code>acceso_ajustes.servidor_avisados</code>); bandeja + <code>EquipoNuevoDialog</code> (a&#241;adir a la agenda / conectar sin contrase&#241;a por el servidor / m&#225;s tarde)</td></tr>
+<tr><td><span class="param-name">domain/servidor_rustdesk.py</span> + <span class="param-name">SERVIDOR_RUSTDESK\</span></td><td>&#128421;&#65039; Servidor en este PC (4.12.0), pestaña de <code>ServidorPropioDialog</code>. <code>ServidorLocal</code>: programas en <code>bin\</code> (hbbs/hbbr de rustdesk-server 1.1.16, commit 73523b3, hbb_common 83419b6, compilados con Rust 1.90 msvc y <code>masys.patch</code>), datos en <code>datos\</code> (directorio de trabajo: id_ed25519/.pub, db_v2.sqlite3, registros). El parche: <code>aislar_configuracion()</code> pone APP_NAME «MASysServidorRustDesk» al inicio de hbbs y hbbr (la configuraci&#243;n de hbb_common es la del cliente: con «RustDesk» reescrib&#237;a la del usuario, comprobado) y <code>peer.rs</code> guarda la BD en el directorio de trabajo (<code>unwrap_or</code> evaluaba siempre la ruta del cliente). Procesos propios por ruta del .exe (psutil); arrancar sin ventana con cwd = datos, o las tareas si existen; puertos ocupados por otros, aviso; tareas programadas AtStartup como SYSTEM (una por programa, PowerShell Register-ScheduledTask con WorkingDirectory); reglas netsh por programa, privada/dominio; equipos de la tabla <code>peer</code> en solo lectura (created_at UTC a hora local, IP de <code>info</code>). Acciones lentas en segundo plano; tareas y firewall con confirmaci&#243;n y en el historial de reparaciones. <code>compilar_servidor.bat</code> reproduce la compilaci&#243;n (clona la etiqueta, comprueba el commit, aplica el parche). Instalador/portable: bin + LICENSE + FUENTE.txt + masys.patch; el instalador avisa si hbbs/hbbr bloquean sus archivos</td></tr>
+<tr><td><span class="param-name">agente.py</span> + <span class="param-name">msys/agente/</span> + <span class="param-name">domain/agente.py</span> + <span class="param-name">informes_agente_dialog.py</span></td><td>&#128229; Agente de an&#225;lisis (4.7.0). <code>agente.py</code> (ra&#237;z) = punto de entrada de <code>MASys_Agente_vX.Y.Z.exe</code> (PyInstaller onefile, <code>INSTALL\MASys_Agente.spec</code>, uac_admin): carpeta TEMP propia que se borra al salir y sin abrir la ventana de MASys. <code>recolector.py</code> ejecuta los recolectores de <code>LECTORES</code> (los mismos 33 de <code>buscar_todo</code>, comprobado en pruebas) con QEventLoop y tope de 240 s. <code>domain/agente.py</code>: c&#243;digo del t&#233;cnico MSA1 (clave p&#250;blica X25519 + control, base32), cifrado (efímera X25519 + HKDF-SHA256 + AES-256-GCM, datos asociados = MAGIA + huella), <code>sanear</code> (campos de contrase&#241;a, claves de producto, BitLocker, contrase&#241;as en &#243;rdenes), serializar/reconstruir filas (<code>__clase</code>) y pintado con el MISMO modelo de tabla de MASys (anotaci&#243;n de <code>setRows</code>), <code>preparar</code> (misma conversi&#243;n que las ventanas de Actualizaciones y Paquetes) y foto para <code>visitas.comparar</code>. Lado del t&#233;cnico: <code>AgenteDB</code> (claves y informes con DPAPI) y ventana &#128229; Informes del agente (desde Acceso remoto)</td></tr>
+<tr><td><span class="param-name">domain/agente_envio.py</span> + <span class="param-name">ui/recepcion_agente.py</span></td><td>Env&#237;o directo (4.7.1). C&#243;digo MSE1 = clave p&#250;blica + ticket de 16 bytes + puerto + direcci&#243;n (IP o DNS din&#225;mico) + control, solo forma exacta. El agente hace POST <code>/api/agente/informe</code> con <code>X-MASys-Ticket</code> (huella) y <code>X-MASys-Firma</code> = HMAC-SHA256(ticket, archivo); si falla, deja el archivo. <code>ServidorAgente</code> (ThreadingHTTPServer, puerto 47885, 64 MB m&#225;x., timeout 60 s, un env&#237;o a la vez): 401 firma o ticket desconocido, 410 usado/caducado/anulado, 409 archivo de otra clave, 413 grande. <code>TicketsDB</code> (agente_envios, ticket con DPAPI; marcar_usado at&#243;mico). Puerto (4.8.1): ajuste <code>puerto</code> en agente_ajustes, <code>validar_puerto</code> (1024-65535, no 47880), <code>RecepcionAgente.cambiar_puerto</code> (si el nuevo falla vuelve al anterior), <code>ConexionDialog</code> (4.8.2: puerto + ajuste <code>direccion</code>; <code>comprobar_direccion</code> resuelve el nombre con getaddrinfo y lo compara con <code>ip_publica</code>), regla <code>nombre_regla(puerto)</code> (la del 47885 conserva el nombre de 4.7.1). <code>RecepcionAgente</code> &#250;nica por MASys, se reactiva al arrancar (<code>arrancar_si_toca</code>, aviso en bandeja); regla de firewall solo privada/dominio con confirmaci&#243;n e historial</td></tr>
+<tr><td><span class="param-name">ui/correo.py</span> + <span class="param-name">ui/correo_outlook.py</span> + <span class="param-name">domain/correo/*</span></td><td>&#128231; Correo (4.9.0), cinco pesta&#241;as tras &#171;&#128231; Cuentas&#187; (<code>correo_tabs</code>, <code>CorreoMixin.crear_pestanas_correo</code>). <code>servidores</code> + <code>proveedores</code>: 40 proveedores, reconocimiento por dominio, MX, SRV (RFC 6186) e ISPDB de Thunderbird (solo el dominio), prueba IMAP/POP3/SMTP con certificado comprobado y la contrase&#241;a SOLO al proveedor reconocido (&#171;Probar toda la lista&#187; pide confirmar). <code>direcciones</code>: forma, MX (MX nulo), RCPT TO sin DATA, &#171;acepta todo&#187; con una direcci&#243;n inventada, lista gris, puerto 25 cerrado, pausas por dominio. <code>dominio</code> + <code>informe</code>: DNS, MX, SPF (10 consultas, redirect), DMARC, DKIM (30 selectores, comod&#237;n, bits), MTA-STS, TLS-RPT, BIMI, PTR, SMTP/STARTTLS/certificado y listas negras (127.255.255.x = no responde). <code>outlook_cfg</code>: perfiles, reglas, firmas a .reg/.zip por elemento, cierre de Outlook pidi&#233;ndolo, PRF en %TEMP%\MASys_correo. <code>pst</code>: libpff con cerrojo, HTML sin scripts ni im&#225;genes remotas, .eml, b&#250;squeda. <code>ajustes.CorreoDB</code>: correo_ajustes y correo_historial en multisys.db. La exportaci&#243;n de la barra inferior usa la pesta&#241;a visible (en &#171;&#128231; Cuentas&#187;, su tabla de siempre)</td></tr>
+<tr><td><span class="param-name">permisos.py</span> + <span class="param-name">domain/permisos.py</span></td><td>&#128194; Permisos de carpetas (4.4.0), cuatro pesta&#241;as dentro de Carpetas Compartidas. Lectura con pywin32 (GetNamedSecurityInfo, prefijo <code>\\?\</code>, 16 hilos; recorrido primero y lectura despu&#233;s), SDDL completo por elemento; carpetas sin acceso con los privilegios SeBackup/SeRestore/SeTakeOwnership. Permisos de red con NetShareEnum/NetShareSetInfo nivel 502 (sin WinRM). An&#225;lisis por reglas (Todos con escritura, cuentas eliminadas, denegar, herencia cortada, sin acceso&#8230;). Acceso efectivo de una cuenta (grupos locales indirectos, tokenGroups de AD con alternativa NetUserGetGroups; orden can&#243;nico, denegar gana, cruce con el permiso de red). Copias <code>.msysperm</code> (JSON comprimido, rutas relativas), comparaci&#243;n y restauraci&#243;n de propietario + herencia + entradas propias con SetNamedSecurityInfo de arriba abajo (Windows recalcula lo heredado); equivalencias de SID por nombre entre servidores o dominios; copia previa autom&#225;tica de lo que se cambia; propietario de una rama y &#171;que todo lo de dentro herede&#187; con icacls</td></tr>
+<tr><td><span class="param-name">wifi.py</span>, <span class="param-name">network_connections.py</span>, <span class="param-name">firewall.py</span>, <span class="param-name">remote_connections.py</span>, <span class="param-name">network_adapters.py</span>, <span class="param-name">local_network.py</span></td><td>Wi-Fi (QR, redes cercanas), conexiones, reglas de firewall, conexiones remotas, adaptadores, dispositivos de la red local</td></tr>
+<tr><td><span class="param-name">herramientas_red.py</span> + <span class="param-name">msys/osi/*</span> + <span class="param-name">domain/consultas_red.py</span></td><td>Diagn&#243;stico por capas con investigaci&#243;n de puertos e informe t&#233;cnico/cliente; DNS, RDAP, cabeceras web, certificado, IP p&#250;blica</td></tr>
+<tr><td><span class="param-name">users.py</span>, <span class="param-name">credentials.py</span>, <span class="param-name">certificates.py</span>, <span class="param-name">email_accounts.py</span>, <span class="param-name">navegadores_nube.py</span></td><td>Usuarios, credenciales de Windows, certificados, cuentas de correo (detecci&#243;n de proveedor, exportar a PST), navegadores y nube</td></tr>
+<tr><td><span class="param-name">domain/favoritos.py</span> + <span class="param-name">ui/favoritos_dialog.py</span></td><td>&#128278; Gestor de favoritos: cargar, editar, comprobar enlaces rotos, reorganizar, exportar/importar HTML Netscape y reescribir el archivo <code>Bookmarks</code> de Chrome/Edge (checksum de Chromium, copia previa)</td></tr>
+<tr><td><span class="param-name">domain/passwords_auditoria.py</span> + <span class="param-name">ui/passwords_auditoria_dialog.py</span></td><td>&#128737;&#65039; Auditor&#237;a de contrase&#241;as guardadas: fortaleza y reutilizaci&#243;n (local) y exposici&#243;n por k-anonimato (Have I Been Pwned). Solo audita</td></tr>
+<tr><td><span class="param-name">ad_info.py</span>, <span class="param-name">group_policy.py</span>, <span class="param-name">active_sessions.py</span>, <span class="param-name">security.py</span></td><td>Active Directory, pol&#237;ticas de grupo y uni&#243;n a dominio/Entra ID/Intune, sesiones activas, fichas de seguridad</td></tr>
+<tr><td><span class="param-name">drivers.py</span>, <span class="param-name">printers.py</span>, <span class="param-name">usb_devices.py</span>, <span class="param-name">monitors.py</span>, <span class="param-name">bluetooth.py</span></td><td>Dispositivos y controladores (ocultos, copia completa), impresoras y colas, USB (historial, sospechosos), gr&#225;ficas y resoluci&#243;n, Bluetooth</td></tr>
+<tr><td><span class="param-name">movil.py</span> + <span class="param-name">msys/movil/*</span></td><td>Enlace con MASysMov: cifrado, servidor (puerto 47880), almac&#233;n <code>movil.db</code>, an&#225;lisis de informes, copias de apps por trozos (<code>copias.py</code>: /api/copias/lista y /api/copias/trozo, AAD con id y posici&#243;n, 409 fuera de orden, SHA-256, nombres validados; desde 5.3.0 tambi&#233;n <code>.msysdatos</code>). 5.3.0: <code>MovilMixin.iniciar_moviles</code> (servidor activo con la ventana cerrada), <code>MovilesDialog</code> (ventana &#250;nica no modal, &#225;rbol Empresa &#8250; Usuario &#8250; Terminal con acorde&#243;n), <code>AsignarDialog</code> (cat&#225;logo de 5.0.0; se guarda el NOMBRE en <code>dispositivos.empresa/usuario</code>, como la agenda), <code>PuertosDialog</code> (pedidos de todos). <code>almacen.py</code>: pedidos de puertos con <code>dispositivo = ''</code>, asignaci&#243;n at&#243;mica al primer m&#243;vil que env&#237;a (<code>_coger_puertos</code>), vuelta a pendiente si responde red &#171;ninguna&#187; (intentos anotados, sin repetir el mismo m&#243;vil en 30 min) o si no contesta en 10 min (<code>liberar_caducados</code>); tabla <code>datos_personales</code> (DPAPI) y ajuste de nivel; el servidor a&#241;ade en cada env&#237;o el encargo &#171;datos-&#8230;&#187; sin guardarlo. <code>analisis.py</code>: tablas nuevas en <code>EXTRA</code>, <code>alertas()</code>, <code>datos_personales()</code> y hallazgos de bater&#237;a, pruebas y canal wifi</td></tr>
+<tr><td><span class="param-name">installed_software.py</span>, <span class="param-name">scheduled_tasks.py</span>, <span class="param-name">ps_history.py</span>, <span class="param-name">licenses.py</span>, <span class="param-name">package_manager.py</span>, <span class="param-name">sql_server.py</span></td><td>Software instalado (lista negra, desinstalar), tareas programadas, historial de PowerShell (lanzador de scripts), licencias de Windows y Office, winget, instancias de SQL Server</td></tr>
+<tr><td><span class="param-name">migracion.py</span> + <span class="param-name">domain/migracion.py</span>, <span class="param-name">migracion_ps.py</span></td><td>Inventario de migraci&#243;n en 18 categor&#237;as, archivo <code>.msysinv</code>, comparaci&#243;n, reinstalaci&#243;n con winget, lista HTML</td></tr>
+</table>
+
+<h2>Estructura de ficheros</h2>
+<div class="dir-tree"><span class="folder">MASYS\</span>
+&#9500;&#9472;&#9472; <span class="file">multisys.py               ventana principal (lo arranca el LAUNCHER)</span>
+&#9500;&#9472;&#9472; <span class="file">CLAUDE.md  requirements.txt  manual_MASys.html  ficha_MASys.html</span>
+&#9500;&#9472;&#9472; <span class="file">multisys.db               datos de la aplicaci&#243;n (fuera de Git)</span>
+&#9500;&#9472;&#9472; <span class="file">movil.db                  m&#243;viles enlazados (fuera de Git)</span>
+&#9500;&#9472;&#9472; <span class="file">buscacompartidos_config.json   secciones visibles y su orden</span>
+&#9500;&#9472;&#9472; <span class="folder">msys\</span>
+&#9474;   &#9500;&#9472;&#9472; <span class="folder">core\</span>        <span class="file">utils.py  backup.py  tareas.py</span>
+&#9474;   &#9500;&#9472;&#9472; <span class="folder">domain\</span>      <span class="file">motores sin Qt de las secciones nuevas + repair_audit.py; correo\ (4.9.0)</span>
+&#9474;   &#9500;&#9472;&#9472; <span class="folder">models\</span>      <span class="file">rows.py  table_models.py  tabla_simple.py</span>
+&#9474;   &#9500;&#9472;&#9472; <span class="folder">movil\</span>       <span class="file">cripto.py  servidor.py  almacen.py  analisis.py</span>
+&#9474;   &#9500;&#9472;&#9472; <span class="folder">osi\</span>         <span class="file">motor de diagn&#243;stico por capas (copia de MAOSI)</span>
+&#9474;   &#9500;&#9472;&#9472; <span class="folder">ui\</span>          <span class="file">un mixin por secci&#243;n + di&#225;logos</span>
+&#9474;   &#9500;&#9472;&#9472; <span class="folder">widgets\</span>     <span class="file">delegates.py  gauge.py  sparkline.py</span>
+&#9474;   &#9500;&#9472;&#9472; <span class="folder">win\</span>         <span class="file">structs.py</span>
+&#9474;   &#9500;&#9472;&#9472; <span class="folder">tools\</span>       <span class="file">MaPeriT.SW.ps1  MaPeriT.OF.ps1</span>
+&#9474;   &#9492;&#9472;&#9472; <span class="file">version.py  config.py  collectors.py  ps_scripts.py  backup_generators.py  browser_data.py  email_providers.py</span>
+&#9500;&#9472;&#9472; <span class="folder">licencias\libpff\</span> <span class="file">COPYING  COPYING.LESSER (va con el programa)</span>
+&#9500;&#9472;&#9472; <span class="folder">SERVIDOR_RUSTDESK\</span> <span class="file">bin\ (hbbs/hbbr, fuera de Git)  datos\ (clave y equipos, fuera de Git)  masys.patch  compilar_servidor.bat  FUENTE.txt  LICENSE</span>
+&#9500;&#9472;&#9472; <span class="folder">INSTALL\</span>         <span class="file">build_install.bat  setup.iss  MASys.spec  create_icon.py  build_portable.py</span>
+&#9500;&#9472;&#9472; <span class="folder">tests\</span>           <span class="file">test_nuevos.py  test_permisos.py  test_conocimiento.py  test_acceso_remoto.py  test_servidor_propio.py  test_clientes.py  test_correo_envio.py  test_equipo_remoto.py  test_agente.py  test_agente_envio.py  test_comprobar.py  capturas_nuevas.py  capturas_permisos.py  capturas_conocimiento.py  capturas_acceso_remoto.py  capturas_agente.py  auditoria_ui.py  datos\</span>
+&#9500;&#9472;&#9472; <span class="folder">BACKUPS\</span>         <span class="file">copias por categor&#237;a\fecha_hora</span>
+&#9500;&#9472;&#9472; <span class="folder">INFORMES\</span>        <span class="file">destino por defecto de las exportaciones; PERMISOS\ = copias .msysperm</span>
+&#9492;&#9472;&#9472; <span class="folder">SCRIPTS\</span>         <span class="file">scripts .ps1 propios del t&#233;cnico</span></div>
+
+<h2>Esquema de base de datos</h2>
+<h3>multisys.db</h3>
+<table>
+<tr><th>Tabla</th><th>Columnas</th><th>Uso</th></tr>
+<tr><td><span class="param-name">historial_reparaciones</span></td><td>id, timestamp, seccion, accion, objetivo, exito, detalle, backup_realizado, backup_ruta, usuario, tipo_operacion</td><td>Historial &#250;nico de acciones que cambian el sistema</td></tr>
+<tr><td><span class="param-name">service_notes</span> &#183; <span class="param-name">process_notes</span> &#183; <span class="param-name">env_var_notes</span></td><td>nombre, note_text, updated_at</td><td>Notas libres del t&#233;cnico</td></tr>
+<tr><td><span class="param-name">env_var_log</span></td><td>id, var_name, scope, action, valor_anterior, valor_nuevo, timestamp</td><td>Cambios en variables de entorno</td></tr>
+<tr><td><span class="param-name">process_whitelist</span> &#183; <span class="param-name">service_whitelist</span> &#183; <span class="param-name">firewall_rule_whitelist</span> &#183; <span class="param-name">port_whitelist</span> &#183; <span class="param-name">blank_password_whitelist</span> &#183; <span class="param-name">suspicious_cert_whitelist</span></td><td>identificador, datos, motivo, added_at</td><td>Elementos aceptados que dejan de marcarse como sospechosos</td></tr>
+<tr><td><span class="param-name">suspicious_devices</span></td><td>mac, ip_visto, motivo, marcado_el</td><td>Dispositivos de la red local marcados</td></tr>
+<tr><td><span class="param-name">package_block_notes</span></td><td>id_paquete, motivo, usuario, updated_at</td><td>Por qu&#233; se bloque&#243; un paquete de winget</td></tr>
+<tr><td><span class="param-name">conocimiento_fichas</span></td><td>id, datos (JSON: tema, titulo, sintomas, causas, origen, pasos[id, texto, seccion, pestana]), creado, modificado</td><td>Fichas propias de la Base de conocimiento (4.5.0); las fijas no se guardan aqu&#237;</td></tr>
+<tr><td><span class="param-name">acceso_equipos</span></td><td>id, cliente, nombre, metodo, rustdesk_id, direccion, usuario, clave (BLOB DPAPI), notas, ultima, creado, modificado, servidor_propio, contacto, correo, telefono</td><td>Agenda del Acceso remoto (4.6.0); <code>cliente</code> = empresa; <code>servidor_propio</code> a&#241;adida en 4.11.0 y <code>contacto</code>, <code>correo</code>, <code>telefono</code> en 5.0.0, con ALTER TABLE</td></tr>
+<tr><td><span class="param-name">empresas</span> &#183; <span class="param-name">empresa_usuarios</span></td><td>id, nombre, clave (casefold, UNIQUE), notas, creado, modificado &#183; id, empresa_id, nombre, clave, correo, telefono, notas, creado, modificado (UNIQUE empresa_id + clave)</td><td>Cat&#225;logo de empresas y usuarios de los clientes (5.0.0)</td></tr>
+<tr><td><span class="param-name">correo_cuentas</span> &#183; <span class="param-name">correo_plantillas</span> &#183; <span class="param-name">correo_enviados</span> &#183; <span class="param-name">correo_ajustes</span></td><td>id, nombre, tipo, remitente, nombre_remitente, servidor, puerto, seguridad, usuario, tenant, cliente_id, secreto (DPAPI), predeterminado &#183; id, nombre, asunto, cuerpo, enlace &#183; id, fecha, cuenta, para, asunto, empresa, usuario, resultado &#183; clave, valor</td><td>Correo a los clientes (5.1.0)</td></tr>
+<tr><td><span class="param-name">acceso_historial</span> &#183; <span class="param-name">acceso_ajustes</span></td><td>id, fecha, equipo_id, cliente, equipo, metodo, usuario, resultado &#183; clave, valor</td><td>Conexiones lanzadas (se conservan al quitar el equipo) &#183; ruta de RustDesk; 4.11.0: servidor_host, servidor_clave (p&#250;blica, no secreta), servidor_relay, origen_cliente, carpeta_cliente, carpeta_servidor; 5.0.0: servidor_avisados (JSON de los ID ya avisados)</td></tr>
+<tr><td><span class="param-name">agente_claves</span> &#183; <span class="param-name">agente_informes</span></td><td>huella, publica, privada (DPAPI), creada, activa &#183; id, cliente, equipo, fecha, usuario, apartados, recibido, datos (JSON gzip con DPAPI)</td><td>Agente de an&#225;lisis (4.7.0): claves del t&#233;cnico (la activa y las anteriores, para abrir archivos viejos) e informes recibidos</td></tr>
+<tr><td><span class="param-name">agente_envios</span> &#183; <span class="param-name">agente_ajustes</span></td><td>huella, ticket (DPAPI), cliente, creado, caduca, usado, informe &#183; clave, valor (recibir, direccion)</td><td>C&#243;digos de env&#237;o de un solo uso y ajustes de la recepci&#243;n (4.7.1)</td></tr>
+<tr><td><span class="param-name">correo_ajustes</span> &#183; <span class="param-name">correo_historial</span></td><td>clave, valor &#183; id, tipo (direccion/dominio), objetivo, resumen, datos (JSON), ts</td><td>&#128231; Correo: pausa, espera, EHLO, remitente, dominios temporales, Thunderbird, carpetas usadas; &#250;ltimas comprobaciones (500 por tipo). Nunca contrase&#241;as</td></tr>
+<tr><td><span class="param-name">nav_profiles</span></td><td>nombre, config_json, updated_at</td><td>Perfiles de navegaci&#243;n; &#171;MASys&#187; es el predeterminado y no se borra</td></tr>
+</table>
+<h3>movil.db</h3>
+<table>
+<tr><th>Tabla</th><th>Columnas</th><th>Uso</th></tr>
+<tr><td><span class="param-name">dispositivos</span></td><td>id, nombre, modelo, clave, origen, alta, ultimo, version_app, ip, copias_auto (4.2.7, migraci&#243;n aditiva)</td><td>M&#243;viles enlazados (clave protegida con DPAPI)</td></tr>
+<tr><td><span class="param-name">informes</span></td><td>id, dispositivo, recibido, generado, origen, datos</td><td>Hist&#243;rico de informes (contenido protegido con DPAPI)</td></tr>
+<tr><td><span class="param-name">encargos</span></td><td>id, dispositivo, creado, tipo, datos, estado, enviado, hecho, resultado</td><td>Encargos que el PC deja al m&#243;vil (comprobar un puerto desde fuera, pedir copias)</td></tr>
+<tr><td><span class="param-name">copias</span></td><td>dispositivo, id (SHA-256), nombre, tamano, pkg, app, version, creada, contenido, recibidos, completa, ruta, anunciada</td><td>Copias de apps anunciadas por el m&#243;vil y lo recibido de cada una</td></tr>
+<tr><td><span class="param-name">ajustes</span></td><td>clave, valor</td><td>Carpeta de las copias (<code>copias_carpeta</code>)</td></tr>
+</table>
+
+<h2>Comportamientos clave</h2>
+<ul>
+  <li>Toda acci&#243;n que cambia el sistema pide confirmaci&#243;n, queda en <code>historial_reparaciones</code> y, si toca el registro de la m&#225;quina, hace antes una copia <code>.reg</code> en <code>BACKUPS\</code>.</li>
+  <li>Exportaci&#243;n: cada secci&#243;n registra <code>registrar_export(nombre, proveedor)</code>; la barra inferior y el informe completo lo usan.</li>
+  <li>Las secciones nuevas aparecen solas en la configuraci&#243;n del usuario aunque venga de una versi&#243;n anterior.</li>
+  <li>Programa predeterminado: no se escribe UserChoice (Windows lo protege con una firma); se usa el di&#225;logo &#171;Abrir con&#187; de Windows. Nombres de apps de la Tienda: si el registro apunta a una versi&#243;n antigua del paquete, se reintenta con la instalada.</li>
+  <li>Caracter&#237;sticas de Windows: siempre <code>-NoRestart</code>; los perfiles ense&#241;an antes exactamente qu&#233; cambia.</li>
+  <li>Destinos de red validados (nada que empiece por &#171;-&#187;); subprocesos sin ventana de consola.</li>
+  <li>Migraci&#243;n: solo inventario, nunca contrase&#241;as ni datos; el winget de reinstalaci&#243;n se abre en consola visible.</li>
+  <li>M&#243;vil: QR con clave nueva y c&#243;digo de un solo uso (10 minutos); cada mensaje sellado con AAD <code>masys-v1|dispositivo|ruta</code>; regla de firewall solo en redes privadas y de dominio; el PC solo atiende encargos conocidos.</li>
+  <li>Permisos (4.4.0): antes de escribir se guarda una copia &#171;Antes_&#8230;&#187; con el estado actual de lo que se cambia (la rama entera si el cambio llega a todo lo de dentro), en <code>INFORMES\PERMISOS</code>, y la ruta queda en el historial. Restaurar compara antes y no toca lo que est&#225; igual ni lo que no estaba en la copia. Si la carpeta niega el acceso a los administradores, se escribe por manejador con el privilegio de restauraci&#243;n (sin propagar) y se avisa. No se tocan las SACL.</li>
+  <li>Base de conocimiento (4.5.0): solo consulta y navega, no cambia nada del sistema. Las fichas fijas no se editan ni se borran (se duplican); una fila da&#241;ada de <code>conocimiento_fichas</code> se ignora sin romper la ventana; cerrar o cancelar con cambios sin guardar pregunta antes.</li>
+  <li>Acceso remoto (4.6.0): la contrase&#241;a nunca se guarda ni se muestra en claro (DPAPI; solo se copia o se pasa a RustDesk, que solo la admite por argumento); cada conexi&#243;n lanzada o fallida queda en <code>acceso_historial</code>; ning&#250;n m&#233;todo salta el consentimiento del usuario remoto.</li>
+  <li>Agente (4.7.0): solo lee; los secretos se quitan ANTES de cifrar; el archivo solo lo abre la clave privada del t&#233;cnico (DPAPI) y un cambio de un solo byte lo invalida; nada se escribe en el equipo del cliente salvo el .msysinf.</li>
+  <li>Lo que se borra va a la Papelera (Send2Trash), no se elimina directamente.</li>
+  <li>Restaurar la configuraci&#243;n de MASys no sobrescribe <code>multisys.db</code> mientras la aplicaci&#243;n la tiene abierta: se indica c&#243;mo hacerlo a mano.</li>
+</ul>
+
+<h2>Dependencias</h2>
+<table>
+<tr><th>Dependencia</th><th>Obligatoria</th><th>Para qu&#233;</th></tr>
+<tr><td>Windows 10 / 11</td><td><span class="badge badge-no">S&#237;</span></td><td>Todo</td></tr>
+<tr><td>Python 3.12 (64 bits) con <code>requirements.txt</code></td><td><span class="badge badge-no">Solo con multisys.py</span></td><td>Todo; el instalador y la versi&#243;n portable ya lo llevan dentro. <code>openpyxl</code> es el de las exportaciones a Excel</td></tr>
+<tr><td>Administrador</td><td><span class="badge badge-warn">Para cambios</span></td><td>Servicios, caracter&#237;sticas, firewall, controladores, iconos superpuestos y de unidades, importar XML de asociaciones, regla del enlace con el m&#243;vil, cambiar propietarios y leer/escribir carpetas sin acceso para los administradores (y ser administrador del servidor para sus permisos de red)</td></tr>
+<tr><td>Internet</td><td><span class="badge badge-neutral">Opcional</span></td><td>Consultas de red, diagn&#243;stico externo, capacidades de Windows, winget, pruebas de correo (puerto 25 de salida para preguntar por un buz&#243;n)</td></tr>
+<tr><td>winget</td><td><span class="badge badge-neutral">Opcional</span></td><td>Gestor de paquetes y reinstalaci&#243;n en la migraci&#243;n</td></tr>
+<tr><td>Outlook (escritorio)</td><td><span class="badge badge-neutral">Opcional</span></td><td>Exportar cuentas a PST y a&#241;adir cuentas con PRF (Outlook cl&#225;sico); el visor PST/OST no lo necesita</td></tr>
+<tr><td>MASysMov 1.0.2+</td><td><span class="badge badge-neutral">Opcional</span></td><td>Secci&#243;n M&#243;vil Android</td></tr>
+</table>
+
+<h2>Par&#225;metros de configuraci&#243;n</h2>
+<table>
+<tr><th>D&#243;nde</th><th>Qu&#233; guarda</th></tr>
+<tr><td><span class="param-name">buscacompartidos_config.json</span></td><td>Secciones visibles y su orden (configuraci&#243;n de uso: no se sube a Git)</td></tr>
+<tr><td><span class="param-name">HKCU\Software\Masoft\MASys</span></td><td>Ajustes de la aplicaci&#243;n: perfil de navegaci&#243;n activo, lista negra de software, enlaces de winget, avisos de soporte validados, enlace con el m&#243;vil</td></tr>
+<tr><td><span class="param-name">nav_profiles</span> (multisys.db)</td><td>Perfiles de navegaci&#243;n con nombre</td></tr>
+<tr><td><span class="param-name">msys/version.py</span></td><td><code>APP_NAME</code> y <code>APP_VERSION</code></td></tr>
+<tr><td><span class="param-name">msys/movil/servidor.py</span></td><td>Puerto del enlace con el m&#243;vil (47880) y nombre de la regla de firewall</td></tr>
+</table>
+
+<h2>Secciones por categor&#237;a</h2>
+<table>
+<tr><th>Categor&#237;a</th><th>Secciones</th></tr>
+<tr><td>(fija arriba)</td><td>&#128202; Dashboard</td></tr>
+<tr><td>&#128187; Sistema</td><td>Sistema &#183; Registro de Windows &#183; Iconos &#183; Extensiones y programas &#183; Caracter&#237;sticas de Windows &#183; Procesos &#183; Programas de Inicio &#183; Servicios &#183; Actualizaciones &#183; Variables Entorno &#183; Eventos Sistema</td></tr>
+<tr><td>&#128190; Disco y Archivos</td><td>Carpetas Compartidas &#183; Unidades Remotas &#183; Contenido &#183; Discos Duros</td></tr>
+<tr><td>&#127760; Red</td><td>WiFi &#183; Conexiones Red &#183; Firewall &#183; Conexiones Remotas &#183; Redes &#183; Red Local &#183; Herramientas de red</td></tr>
+<tr><td>&#128101; Usuarios y Seguridad</td><td>Usuarios &#183; Credenciales &#183; Certificados &#183; Cuentas Correo &#183; Navegadores y Nube &#183; Active Directory &#183; Pol&#237;ticas de Grupo &#183; Sesiones Activas &#183; Seguridad</td></tr>
+<tr><td>&#128424;&#65039; Hardware y Perif&#233;ricos</td><td>Adm. Dispositivos &#183; Impresoras &#183; Dispositivos USB &#183; Gr&#225;ficas y Monitores &#183; Bluetooth &#183; M&#243;vil Android</td></tr>
+<tr><td>&#128736;&#65039; Administraci&#243;n</td><td>Software Instalado &#183; Tareas Programadas &#183; Historial PS &#183; Licencias &#183; Gestor de Paquetes &#183; SQL Server &#183; Inventario de migraci&#243;n</td></tr>
+</table>
+<p>Fuera del &#225;rbol: <strong>&#128192; Copias de seguridad</strong> (bot&#243;n bajo el &#225;rbol) y <strong>&#128736;&#65039; Soporte</strong> (barra inferior, cambia seg&#250;n la secci&#243;n activa).</p>
+
+<h2>Cambio de nombre (4.1.7)</h2>
+<p>MultiSYS pasa a llamarse MASys en la ventana, la bandeja, los informes, las copias, los documentos y el c&#243;digo. Se mantienen a prop&#243;sito, porque guardan datos o los usa el LAUNCHER:</p>
+<ul>
+  <li><code>multisys.py</code>: es la ruta que tiene registrada el LAUNCHER.</li>
+  <li><code>multisys.db</code>: base de datos con el historial, las notas y las listas aceptadas.</li>
+</ul>
+<p>Lo que ya exist&#237;a con el nombre antiguo sigue funcionando:</p>
+<ul>
+  <li>El perfil de navegaci&#243;n &#171;MultiSYS&#187; se renombra solo a &#171;MASys&#187; al arrancar, con su configuraci&#243;n.</li>
+  <li>Las copias de <code>BACKUPS\ConfiguracionMultiSYS</code> siguen apareciendo en &#171;Restaurar&#187;, y su <code>Ajustes_MultiSYS.reg</code> se restaura.</li>
+  <li>La regla de firewall &#171;MultiSYS - enlace con el movil&#187; ya creada se sigue reconociendo.</li>
+</ul>
+
+<h2>Distribuci&#243;n</h2>
+<p><code>INSTALL\build_install.bat</code> genera las dos versiones a partir de una sola compilaci&#243;n de PyInstaller (onedir, <code>MASys.exe</code> + <code>_internal\</code>), en <code>INSTALL\dist\</code>:</p>
+<table>
+<tr><th>Fichero</th><th>Qu&#233; es</th></tr>
+<tr><td><code>MASys_Setup_v5.3.0.exe</code></td><td>Instalador Inno Setup por usuario, sin administrador, en <code>%LOCALAPPDATA%\Programs\MASys</code>. Al actualizar sustituye <code>_internal\</code> y no toca los datos ni <code>SCRIPTS\</code>. Al desinstalar los datos se quedan. Admite <code>/SILENT</code> y <code>/VERYSILENT /SUPPRESSMSGBOXES</code></td></tr>
+<tr><td><code>MASys_Portable_v5.3.0.zip</code></td><td>La misma compilaci&#243;n con <code>SCRIPTS\</code>, manual, ficha, licencia de libpff y <code>LEEME_PORTABLE.txt</code>. Todo se guarda dentro de su carpeta</td></tr>
+</table>
+<ul>
+  <li><code>MASys.exe</code> pide administrador al abrirse, como el .spec anterior de MultiSYS. Por eso el instalador lo abre con <code>shellexec</code> y, si sigue abierto como administrador, pide cerrarlo en vez de saltarse ficheros.</li>
+  <li>El icono (<code>INSTALL\masys.ico</code>) se genera en cada build desde <code>msys\ui\icono_app.py</code>, el mismo dibujo que la ventana y la bandeja.</li>
+  <li>Los scripts de MaPeriT van dentro de <code>_internal\msys\tools\</code>; <code>config.ruta_recurso()</code> los busca all&#237; primero.</li>
+  <li>El build comprueba que la versi&#243;n de <code>setup.iss</code> coincide con <code>msys\version.py</code> y nunca usa el Python de la Microsoft Store.</li>
+  <li>El LAUNCHER sigue arrancando <code>multisys.py</code>: el ejecutable no cambia eso.</li>
+</ul>
+
+<h2>Mejoras pendientes</h2>
+<ul>
+  <li>Consultar otro equipo de la red (secciones de solo lectura con WinRM/CIM): pedido para m&#225;s adelante.</li>
+  <li>Permisos (4.4.0): probar en un dominio real (grupos anidados por tokenGroups, equivalencias entre dominios) y contra un servidor remoto (permisos de red con NetShareSetInfo y crear recursos compartidos); en el equipo de desarrollo, en grupo de trabajo, solo se han probado carpetas locales y <code>\\localhost</code>.</li>
+  <li>Acceso remoto: probar con un RustDesk real, Escritorio remoto, ver sesi&#243;n en un servidor de terminales y Ofrecer asistencia en un dominio (en el equipo de desarrollo solo se han probado las &#243;rdenes, sin lanzarlas).</li>
+  <li>Agente: probar el .exe compilado en un equipo de cliente real (con y sin administrador, con antivirus). Env&#237;o directo (4.7.1): probarlo de verdad cuando el puerto (47885 o el elegido en &#9881;&#65039; Conexi&#243;n&#8230;) est&#233; redirigido en el router y el DNS din&#225;mico configurado (en desarrollo solo se ha probado dentro del propio equipo, 127.0.0.1).</li>
+  <li>Correo (4.9.0): probar con Outlook cl&#225;sico real (alta por PRF, configuraci&#243;n por elementos), con cuentas reales en Probar cuenta y Comprobar direcciones desde una red con el puerto 25 abierto; en desarrollo, servidores falsos locales y PST/OST p&#250;blicos.</li>
+  <li>Comprobar ahora (4.8.0): probarlo en el MASys real (en desarrollo, con un MASys simulado; los detectores y lecturas son los ya existentes).</li>
+  <li>Probar el an&#225;lisis de volcados con kd.exe en un equipo con pantallazos reales.</li>
+  <li>Servidor propio: PROBADO de verdad el 31/10/2026 en la red local (servidor compilado en el PC del t&#233;cnico, programa generado abierto en otro PC, conexi&#243;n vista por el usuario). Falta: desde Internet (puertos en el router), la retransmisi&#243;n (hbbr; en la red local la conexi&#243;n fue directa) y la pesta&#241;a En este PC de la 4.12.0 en el MASys real (tareas programadas y firewall solo probados con &#243;rdenes simuladas).</li>
+  <li>Numeraci&#243;n: tras la 4.9 tocaba la 5.0.0 (ning&#250;n d&#237;gito pasa de 9); 4.10&#8211;4.12 ya compiladas se quedan con su n&#250;mero.</li>
+  <li>Compiladas (en INSTALL\dist): 4.6.0, 4.7.1, 4.8.2, 4.10.1, 4.12.0, 5.0.0, 5.1.0 y 5.2.0; sin compilar: 4.9.0, 4.10.0, 4.11.0 y 5.3.0 (el usuario lanza el build); nada probado todav&#237;a por el usuario desde la 4.6.0.</li>
+  <li>Que el usuario pruebe las secciones nuevas de 4.1 en su equipo, sobre todo las que hacen cambios reales: caracter&#237;sticas, iconos superpuestos e iconos de unidades.</li>
+  <li>Probar el enlace con un m&#243;vil real: emparejado por QR, env&#237;o diario y comprobaci&#243;n de puerto desde fuera con datos m&#243;viles.</li>
+  <li>Partir <code>multisys.py</code> en m&#243;dulos y plantear entonces el paso a PyQt6.</li>
+  <li>Manual de las secciones antiguas: hoy el manual cubre solo las de la versi&#243;n 4.1.</li>
+</ul>
+
+<h2>Aviso legal</h2>
+<div class="card">
+  <div class="card-header">Limitaciones y uso previsto</div>
+  <div class="card-body">
+    <p>Herramienta para t&#233;cnicos, en equipos propios o con autorizaci&#243;n de su titular. Varias acciones cambian la configuraci&#243;n de Windows; se confirman y se registran, pero el t&#233;cnico es responsable de aplicarlas. Las copias de credenciales, los inventarios, las capturas forenses y los informes del m&#243;vil contienen datos personales y deben tratarse conforme al RGPD. El diagn&#243;stico de red y la comprobaci&#243;n de puertos son solo para redes propias o autorizadas.</p>
+  </div>
+</div>
+
+<footer>
+  MASys &nbsp;|&nbsp; v5.3.0 &nbsp;|&nbsp; Masoft.es &nbsp;|&nbsp; 31/10/2026<br>Aplicaci&#243;n desarrollada por Masoft.es
+</footer>
+
+</body>
+</html>
