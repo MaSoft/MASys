@@ -784,7 +784,9 @@ try {
     # reactivará más tarde) — se filtra en la UI con un checkbox, no se
     # oculta por defecto en el origen de datos.
     $tareas = @(Get-ScheduledTask | ForEach-Object {
-        $info = Get-ScheduledTaskInfo -TaskName $_.TaskName -TaskPath $_.TaskPath -ErrorAction SilentlyContinue
+        # Por objeto, no por nombre: -TaskName admite comodines y una tarea con corchetes en el nombre recibía la
+        # última ejecución y el resultado de OTRA (o ninguno). Mismo dato y algo más rápido (comprobado).
+        $info = $_ | Get-ScheduledTaskInfo -ErrorAction SilentlyContinue
         $proximaEjecucion = "N/A"
         if ($info.NextRunTime) {
             $proximaEjecucion = $info.NextRunTime.ToString("dd/MM/yyyy HH:mm:ss")
