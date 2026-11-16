@@ -2114,9 +2114,16 @@ class SoporteMixin:
         servicios = ["wuauserv", "BITS", "CryptSvc"]
 
         avisos = []
+        # Los que dependen de estos y están en marcha (con CryptSvc: AppIDSvc —AppLocker—, entre otros): stop_service
+        # los detiene también y antes no se volvían a arrancar.
+        dependientes = []
+        for nombre in servicios:
+            for dep in self.service_manager._dependientes_activos(nombre):
+                if dep not in dependientes and dep not in servicios:
+                    dependientes.append(dep)
         for nombre in servicios:
             ok, msg = self.service_manager.stop_service(nombre)
-            if not ok:
+            if not ok and "1062" not in msg:   # 1062 = ya estaba detenido: no es un aviso
                 avisos.append(f"detener {nombre}: {msg}")
 
         for carpeta in carpetas:
@@ -2132,9 +2139,9 @@ class SoporteMixin:
             except Exception as e:
                 avisos.append(f"renombrar {carpeta}: {e}")
 
-        for nombre in servicios:
+        for nombre in servicios + dependientes:
             ok, msg = self.service_manager.start_service(nombre)
-            if not ok:
+            if not ok and "1056" not in msg:   # 1056 = ya estaba en marcha
                 avisos.append(f"iniciar {nombre}: {msg}")
 
         exito = not avisos
