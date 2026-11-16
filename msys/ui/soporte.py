@@ -3510,9 +3510,10 @@ class SoporteMixin:
                 f"Vaciar la papelera de reciclaje de {letra}",
                 "Archivos basura: *.tmp, Thumbs.db/.DS_Store, bloqueos de Office "
                 "huérfanos (~$*.doc/xls/ppt), restos de macOS (._*)",
-                "Cachés regenerables de macOS/Synology completas: .Spotlight-V100, "
-                ".fseventsd, .TemporaryItems, @eaDir",
-                "Papeleras residuales de otros sistemas: .Trashes, #recycle, RECYCLER",
+                "Cachés regenerables completas: de macOS en la raíz de la unidad (.Spotlight-V100, "
+                ".fseventsd, .TemporaryItems) y de Synology en cualquier carpeta (@eaDir)",
+                "Papeleras residuales de otros sistemas en la raíz de la unidad: .Trashes, #recycle, RECYCLER "
+                "(una carpeta tuya con ese nombre dentro de otra no se toca)",
                 "Historial de GoodSync (_gsdata_\\_saved_ y _history_) — el estado de "
                 "sincronización activo NUNCA se toca",
             ],
