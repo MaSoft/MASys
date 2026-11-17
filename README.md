@@ -1,10 +1,10 @@
 # MASys
 
-Herramienta de técnico IT para Windows: reúne en una sola ventana las tareas de soporte de un equipo (inventario de hardware y sistema, servicios, procesos, red, usuarios, credenciales, seguridad, software, copias de seguridad y reparaciones). 45 secciones en un árbol lateral por categorías, con datos reales del equipo en tablas ordenables y las acciones de soporte de cada sección.
+Herramienta de técnico IT para Windows: reúne en una sola ventana las tareas de soporte de un equipo (inventario de hardware y sistema, servicios, procesos, red, usuarios, credenciales, seguridad, software, copias de seguridad y reparaciones). 44 secciones en seis categorías y el Dashboard, en un árbol lateral, con datos reales del equipo en tablas ordenables y las acciones de soporte de cada sección.
 
 **Software libre y gratuito desarrollado por [Masoft.es](https://masoft.es)** · Licencia [MIT](LICENSE) · [Página de MASys](https://masoft.es/masys.html)
 
-Este repositorio contiene la **versión de escritorio** (5.7.3). La app Android complementaria, MASysMov, no está incluida.
+Este repositorio contiene la **versión de escritorio** (5.7.3). La app Android complementaria, MASysMov, se publica aparte en [github.com/MaSoft/MASysMov](https://github.com/MaSoft/MASysMov) (APK y manual).
 
 ## Qué incluye
 
