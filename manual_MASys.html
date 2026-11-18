@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MASys &#8212; Manual de las secciones nuevas</title>
+<title>MASys &#8212; Manual de usuario</title>
 <style>
 :root {
   --primary: #1a3a5c;
@@ -91,18 +91,29 @@ footer { text-align: center; padding: 32px; color: var(--text-light); font-size:
 
 <nav>
   <div class="nav-title">MASys</div>
-  <div class="nav-subtitle">Manual de las secciones nuevas &middot; v5.7.3</div>
+  <div class="nav-subtitle">Manual de usuario &middot; v5.7.3</div>
   <ul>
-    <li class="section-title">Inicio</li>
+    <li class="section-title">Empezar</li>
     <li><a href="#intro">Introducción y propósito</a></li>
     <li><a href="#caracteristicas">Características principales</a></li>
     <li><a href="#requisitos">Requisitos del sistema</a></li>
-    <li><a href="#lanzamiento">Lanzamiento</a></li>
-    <li class="section-title">Secciones</li>
+    <li><a href="#lanzamiento">Instalación y lanzamiento</a></li>
     <li><a href="#interfaz">Elementos comunes</a></li>
+    <li><a href="#ventana">La ventana</a></li>
+    <li><a href="#comunes" class="sub">Funciones comunes</a></li>
+    <li class="section-title">Secciones</li>
+    <li><a href="#dashboard">&#128202; Dashboard: salud, visitas y módulos</a></li>
+    <li><a href="#cat-sistema">&#128187; Sistema</a></li>
+    <li><a href="#cat-disco">&#128190; Disco y Archivos</a></li>
+    <li><a href="#cat-red">&#127760; Red</a></li>
+    <li><a href="#cat-usuarios">&#128101; Usuarios y Seguridad</a></li>
+    <li><a href="#cat-hardware">&#128421;&#65039; Hardware y Periféricos</a></li>
+    <li><a href="#cat-admin">&#128230; Administración</a></li>
+    <li class="section-title">Fuera de las secciones</li>
+    <li><a href="#fuera">&#129520; Fuera de las secciones</a></li>
     <li><a href="#kb">&#128218; Base de conocimiento</a></li>
-    <li><a href="#kb-fichas" class="sub">Fichas incluidas</a></li>
-    <li><a href="#kb-comprobar" class="sub">Comprobar ahora</a></li>
+    <li><a href="#kb-fichas" class="sub">Fichas incluidas (170)</a></li>
+    <li><a href="#kb-comprobar" class="sub">&#128270; Comprobar ahora</a></li>
     <li><a href="#kb-propias" class="sub">Fichas propias</a></li>
     <li><a href="#ar">&#128421;&#65039; Acceso remoto</a></li>
     <li><a href="#ar-metodos" class="sub">Métodos</a></li>
@@ -111,51 +122,55 @@ footer { text-align: center; padding: 32px; color: var(--text-light); font-size:
     <li><a href="#ar-nuevo" class="sub">Aviso de equipo nuevo</a></li>
     <li><a href="#ar-correo" class="sub">Correo a los clientes</a></li>
     <li><a href="#ar-historial" class="sub">Historial</a></li>
-    <li><a href="#ar-servidor" class="sub">Servidor propio</a></li>
+    <li><a href="#ar-servidor" class="sub">Servidor propio de RustDesk</a></li>
+    <li><a href="#ar-servidor-pc" class="sub">Servidor en este PC</a></li>
     <li><a href="#agente">&#128229; Agente de análisis remoto</a></li>
     <li><a href="#agente-cliente" class="sub">En el equipo del cliente</a></li>
-    <li><a href="#agente-secretos" class="sub">Qué no sale del equipo</a></li>
-    <li><a href="#agente-cifrado" class="sub">Código y cifrado</a></li>
+    <li><a href="#agente-secretos" class="sub">Qué NO sale del equipo</a></li>
+    <li><a href="#agente-cifrado" class="sub">Código del técnico y cifrado</a></li>
     <li><a href="#agente-informes" class="sub">Informes del agente</a></li>
     <li><a href="#agente-envio" class="sub">Envío directo por Internet</a></li>
-    <li><a href="#agente-masys" class="sub">Ver en MASys (equipo remoto)</a></li>
+    <li><a href="#agente-masys" class="sub">Ver en MASys: el equipo del cliente como si estuvieras allí</a></li>
+    <li><a href="#herr-diag">&#129658; Herramientas de diagn&oacute;stico de Windows</a></li>
+    <li><a href="#m365">&#9729;&#65039; Herramientas de Microsoft 365, Exchange Online y SharePoint</a></li>
+    <li><a href="#copias">&#128191; Copias de seguridad</a></li>
+    <li class="section-title">Secciones en detalle</li>
     <li><a href="#correo">&#128231; Correo</a></li>
-    <li><a href="#correo-cuenta" class="sub">Probar cuenta</a></li>
-    <li><a href="#correo-direcciones" class="sub">Comprobar direcciones</a></li>
-    <li><a href="#correo-dominio" class="sub">Dominio de correo</a></li>
-    <li><a href="#correo-outlook" class="sub">Configuración de Outlook</a></li>
-    <li><a href="#correo-visor" class="sub">Visor PST/OST</a></li>
-    <li><a href="#rev54">&#128270; Revisión 5.4: qué cambia</a></li>
-    <li><a href="#dashboard">&#128202; Dashboard: salud, visitas y módulos</a></li>
-    <li><a href="#informes">&#127760; Informes HTML</a></li>
+    <li><a href="#correo-cuenta" class="sub">&#128273; Probar cuenta</a></li>
+    <li><a href="#correo-direcciones" class="sub">&#9993;&#65039; Comprobar direcciones</a></li>
+    <li><a href="#correo-dominio" class="sub">&#127760; Dominio de correo</a></li>
+    <li><a href="#correo-outlook" class="sub">&#128450;&#65039; Configuración de Outlook</a></li>
+    <li><a href="#correo-visor" class="sub">&#128236; Visor PST/OST</a></li>
     <li><a href="#estab">&#129658; Estabilidad</a></li>
     <li><a href="#iconos">&#127912; Iconos</a></li>
-    <li><a href="#iconos-bib" class="sub">Bibliotecas</a></li>
-    <li><a href="#iconos-apps" class="sub">Iconos de aplicaciones</a></li>
-    <li><a href="#iconos-rep" class="sub">Reparación</a></li>
-    <li><a href="#iconos-conf" class="sub">Configuración</a></li>
+    <li><a href="#iconos-bib" class="sub">&#128218; Bibliotecas</a></li>
+    <li><a href="#iconos-apps" class="sub">&#128444;&#65039; Iconos de aplicaciones</a></li>
+    <li><a href="#iconos-rep" class="sub">&#129658; Reparación</a></li>
+    <li><a href="#iconos-conf" class="sub">&#9881;&#65039; Configuración</a></li>
     <li><a href="#asoc">&#128279; Extensiones y programas</a></li>
     <li><a href="#carac">&#129513; Características de Windows</a></li>
     <li><a href="#red">&#129514; Herramientas de red</a></li>
-    <li><a href="#red-diag" class="sub">Diagnóstico por capas</a></li>
-    <li><a href="#red-cons" class="sub">Consultas</a></li>
+    <li><a href="#red-diag" class="sub">&#128300; Diagnóstico por capas</a></li>
+    <li><a href="#red-cons" class="sub">&#128270; Consultas</a></li>
     <li><a href="#mig">&#129523; Inventario de migración</a></li>
     <li><a href="#movil">&#128241; Móviles Android</a></li>
     <li><a href="#movil-arbol" class="sub">Empresa, usuario y terminal</a></li>
     <li><a href="#movil-pest" class="sub">Pestañas del móvil</a></li>
-    <li><a href="#movil-datos" class="sub">Datos personales</a></li>
-    <li><a href="#movil-copias" class="sub">Copias de apps y de Datos</a></li>
-    <li><a href="#movil-puerto" class="sub">Puertos desde fuera</a></li>
+    <li><a href="#movil-datos" class="sub">&#128101; Datos personales</a></li>
+    <li><a href="#movil-copias" class="sub">&#128190; Copias de apps y de Datos</a></li>
+    <li><a href="#movil-puerto" class="sub">&#128682; Puertos desde fuera</a></li>
     <li><a href="#navegadores">&#128278; Navegadores: favoritos y contraseñas</a></li>
-    <li><a href="#fav" class="sub">Gestor de favoritos</a></li>
-    <li><a href="#audit-pass" class="sub">Auditoría de contraseñas</a></li>
+    <li><a href="#fav" class="sub">&#128278; Gestor de favoritos</a></li>
+    <li><a href="#audit-pass" class="sub">&#128737;&#65039; Auditoría de contraseñas</a></li>
     <li><a href="#permisos">&#128194; Permisos de carpetas</a></li>
-    <li><a href="#perm-leer" class="sub">Leer y ver</a></li>
-    <li><a href="#perm-editar" class="sub">Editar y propietario</a></li>
-    <li><a href="#perm-analisis" class="sub">Análisis</a></li>
-    <li><a href="#perm-acceso" class="sub">Acceso de una cuenta</a></li>
-    <li><a href="#perm-copias" class="sub">Copias y restauración</a></li>
+    <li><a href="#perm-leer" class="sub">&#128193; Leer y ver</a></li>
+    <li><a href="#perm-editar" class="sub">&#9999;&#65039; Editar permisos, propietario y quitar una cuenta</a></li>
+    <li><a href="#perm-analisis" class="sub">&#9888;&#65039; Análisis de permisos</a></li>
+    <li><a href="#perm-acceso" class="sub">&#129517; Acceso de una cuenta</a></li>
+    <li><a href="#perm-copias" class="sub">&#128190; Copias y restauración</a></li>
+    <li><a href="#informes">&#127760; Informes HTML</a></li>
     <li class="section-title">Referencia</li>
+    <li><a href="#rev54">&#128337; Novedades por versión (5.4 – 5.7.3)</a></li>
     <li><a href="#opciones">Opciones y valores</a></li>
     <li><a href="#archivos">Archivos que genera</a></li>
     <li><a href="#ejemplos">Ejemplos de uso</a></li>
@@ -168,31 +183,26 @@ footer { text-align: center; padding: 32px; color: var(--text-light); font-size:
 <div class="page-header">
   <span class="version">Versión 5.7.3 &middot; Windows 10 y 11</span>
   <h1>MASys</h1>
-  <div class="tagline">Herramienta de técnico IT para Windows. Este manual cubre las seis secciones añadidas en la versión 4.1: iconos, extensiones y programas, características de Windows, herramientas de red, inventario de migración y móvil Android.</div>
+  <div class="tagline">Herramienta de técnico IT para Windows: 44 secciones en seis categorías y el Dashboard para revisar, reparar y documentar un equipo, más acceso remoto, agente de análisis, base de conocimiento, Microsoft 365 y móviles Android.</div>
 </div>
 
 <!-- ================================================================== -->
 <section id="intro">
 <h2>Introducción y propósito</h2>
-<p>MASys reúne en una sola ventana, con un árbol lateral por categorías, las tareas habituales de soporte de un equipo Windows. La versión 4.1 añadió seis secciones y la 4.2 una séptima (Estabilidad), que resuelven tareas que en Windows están repartidas, escondidas o solo se pueden hacer por línea de comandos:</p>
+<p>MASys reúne en una sola ventana las tareas de soporte de un equipo Windows que en Windows están repartidas, escondidas o solo se pueden hacer por línea de comandos: ver cómo está el equipo, encontrar la causa de un problema, arreglarlo con copia previa y dejarlo documentado en un informe. Está pensado para técnicos de soporte y administradores de sistemas.</p>
 <div class="module-grid">
-  <div class="module-card"><h4>&#128218; Base de conocimiento <small>(botón abajo a la izquierda)</small></h4><ul><li>Problemas habituales de equipos y redes</li><li>Qué herramienta de MASys usar y en qué orden</li><li>&#10140; Ir a la sección y la pestaña de cada paso</li><li>&#128270; Comprobar ahora: avisos de Soporte de esas secciones en este equipo</li><li>Fichas propias del técnico</li></ul></div>
-  <div class="module-card"><h4>&#128421;&#65039; Acceso remoto <small>(botón abajo a la izquierda)</small></h4><ul><li>Agenda de equipos por cliente</li><li>RustDesk, Asistencia rápida, Escritorio remoto, ver sesión, ofrecer asistencia</li><li>Contraseñas cifradas</li><li>Historial de conexiones</li><li>Agente de análisis: informe cifrado del equipo del cliente</li></ul></div>
-  <div class="module-card"><h4>&#128231; Correo <small>(en Cuentas Correo)</small></h4><ul><li>Probar una cuenta solo en los servidores de su proveedor y añadirla a Outlook</li><li>¿Existe esta dirección? Una o una lista</li><li>Salud del correo de un dominio (SPF, DKIM, DMARC, listas negras…) con informe</li><li>Guardar perfiles, reglas y firmas de Outlook</li><li>Abrir PST y OST sin Outlook</li></ul></div>
-  <div class="module-card"><h4>&#127912; Iconos <small>(Sistema)</small></h4><ul><li>Ver y extraer iconos de cualquier biblioteca</li><li>Iconos de cada aplicación</li><li>Cachés, accesos directos rotos</li><li>Escritorio, iconos superpuestos y de unidades</li></ul></div>
-  <div class="module-card"><h4>&#128279; Extensiones y programas <small>(Sistema)</small></h4><ul><li>Qué programa abre cada extensión y protocolo</li><li>Elecciones rotas</li><li>Abrir con, restablecer</li><li>XML de asociaciones (DISM)</li></ul></div>
-  <div class="module-card"><h4>&#129513; Características de Windows <small>(Sistema)</small></h4><ul><li>Características y capacidades juntas, en español</li><li>Avisos de seguridad</li><li>Perfiles de varias a la vez</li><li>.NET 3.5 sin internet</li></ul></div>
-  <div class="module-card"><h4>&#129514; Herramientas de red <small>(Red)</small></h4><ul><li>Diagnóstico por capas (motor de MAOSI)</li><li>Investigar un puerto que falla</li><li>Informe técnico y para el cliente</li><li>DNS, WHOIS, cabeceras web, certificado, IP pública</li></ul></div>
-  <div class="module-card"><h4>&#129523; Inventario de migración <small>(Administración)</small></h4><ul><li>18 categorías con qué hacer en el equipo nuevo</li><li>Comparar equipo viejo y nuevo</li><li>Reinstalar programas con winget</li><li>Lista de comprobación con casillas e informe igual que el de MIGRACION.PS1</li></ul></div>
-  <div class="module-card"><h4>&#129658; Estabilidad <small>(Sistema)</small></h4><ul><li>Pantallazos azules explicados</li><li>Apagados inesperados</li><li>Apps que se cierran o se cuelgan</li><li>Índice de estabilidad de Windows</li></ul></div>
-  <div class="module-card"><h4>&#128194; Permisos de carpetas <small>(en Carpetas Compartidas)</small></h4><ul><li>Propietario, herencia y permisos de un árbol local o de red</li><li>Editar permisos y cambiar el propietario</li><li>Análisis: Todos con escritura, cuentas eliminadas…</li><li>Dónde entra una cuenta y con qué permiso</li><li>Copia y restauración, también en otro servidor</li></ul></div>
-  <div class="module-card"><h4>&#128241; Móviles Android <small>(botón bajo el árbol)</small></h4><ul><li>Informes de MASysMov por Wi-Fi o archivo cifrado</li><li>Árbol Empresa › Usuario › Terminal, con histórico por móvil</li><li>Seguridad, apps, rastreadores, evolución, cambios y alertas</li><li>Espacio, batería (salud real), procesos, hardware, red, SIM, consumo de datos y pruebas</li><li>Contactos, llamadas y SMS según elija el técnico</li><li>Copias de apps y de Datos del móvil, cifradas por la Wi-Fi</li><li>Puertos desde fuera de todos los móviles</li></ul></div>
+<div class="module-card"><h4>&#128202; Dashboard</h4><ul><li>Salud del equipo de 0 a 100 con sus motivos</li><li>Cambios desde la última visita</li><li>Resumen de cada módulo</li></ul></div>
+<div class="module-card"><h4>&#128187; Sistema (12)</h4><ul><li>Hardware, Windows, registro, iconos, extensiones y características</li><li>Estabilidad, procesos, inicio, servicios, actualizaciones, variables y eventos</li></ul></div>
+<div class="module-card"><h4>&#128190; Disco y Archivos (4)</h4><ul><li>Carpetas compartidas y sus permisos</li><li>Unidades de red, búsqueda de archivos y salud de los discos</li></ul></div>
+<div class="module-card"><h4>&#127760; Red (7)</h4><ul><li>WiFi, conexiones, firewall, escritorio remoto, adaptadores y red local</li><li>Diagnóstico por capas y consultas</li></ul></div>
+<div class="module-card"><h4>&#128101; Usuarios y Seguridad (9)</h4><ul><li>Usuarios, credenciales, certificados, correo y navegadores</li><li>Active Directory, directivas, sesiones y seguridad</li></ul></div>
+<div class="module-card"><h4>&#128421;&#65039; Hardware y Periféricos (5)</h4><ul><li>Controladores, impresoras, USB, gráficas y monitores, Bluetooth</li></ul></div>
+<div class="module-card"><h4>&#128230; Administración (7)</h4><ul><li>Software, tareas, PowerShell, licencias, winget, SQL Server</li><li>Inventario de migración</li></ul></div>
+<div class="module-card"><h4>&#129520; Fuera de las secciones</h4><ul><li>Base de conocimiento, acceso remoto y agente de análisis</li><li>Microsoft 365, móviles Android, herramientas de diagnóstico y copias de seguridad</li></ul></div>
 </div>
-<p>Además, el <strong>Dashboard</strong> tiene ahora la <em>salud del equipo</em> y los <em>cambios desde la última visita</em>, y todos los <strong>informes HTML</strong> comparten un diseño con buscador, filtros por columna y apartados plegables.</p>
 <div class="alert-info"><strong>Todo cambio se confirma y queda registrado.</strong> Cualquier acción que modifica el sistema pide confirmación antes, se apunta en el historial de reparaciones de MASys y, si toca el registro de la máquina, deja antes una copia <code>.reg</code> en <code>BACKUPS\</code>.</div>
 </section>
 
-<!-- ================================================================== -->
 <section id="caracteristicas">
 <h2>Características principales</h2>
 <div class="feature-list">
@@ -219,7 +229,6 @@ footer { text-align: center; padding: 32px; color: var(--text-light); font-size:
 </div>
 </section>
 
-<!-- ================================================================== -->
 <section id="requisitos">
 <h2>Requisitos del sistema</h2>
 <div class="table-wrap"><table>
@@ -235,9 +244,8 @@ footer { text-align: center; padding: 32px; color: var(--text-light); font-size:
 </tbody></table></div>
 </section>
 
-<!-- ================================================================== -->
 <section id="lanzamiento">
-<h2>Lanzamiento</h2>
+<h2>Instalación y lanzamiento</h2>
 <div class="flow">
   <div class="flow-step">Abrir MASys (menú Inicio, <code>MASys.exe</code> portable, el LAUNCHER o <code>multisys.py</code>)</div>
   <div class="flow-step">Elegir la sección en el árbol lateral</div>
@@ -249,10 +257,13 @@ footer { text-align: center; padding: 32px; color: var(--text-light); font-size:
 <p><strong>Ejecutable único:</strong> <code>MASys_v5.7.3.exe</code> es MASys en un solo archivo; los datos se guardan en la carpeta donde esté.</p>
 <pre><span class="comment">:: Despliegue sin ventanas (GPO o scripts de administración)</span>
 <span class="cmd">MASys_Setup_v5.7.3.exe</span> <span class="param">/VERYSILENT /SUPPRESSMSGBOXES /TASKS=</span><span class="string">"desktopicon"</span></pre>
-<p>Las secciones nuevas aparecen solas en el árbol, en su categoría, aunque la configuración del usuario sea de una versión anterior. Se pueden ocultar o reordenar igual que las demás.</p>
+<p><strong>Permisos:</strong> <code>MASys.exe</code> pide administrador al abrirse (Windows muestra el aviso de Control de cuentas). Para mirar basta un usuario normal; ver <a href="#requisitos">Requisitos</a>.</p>
+<div class="desde-codigo"><p><strong>Desde el código</strong> (repositorio de GitHub): Python 3.12 o superior.</p>
+<pre><span class="cmd">py</span> -3.12 -m pip install -r <span class="string">requirements.txt</span>
+<span class="cmd">py</span> -3.12 <span class="string">multisys.py</span></pre></div>
+<p>Las secciones se pueden ocultar, reordenar y guardar en perfiles con nombre desde <strong>&#9881;&#65039; Configuración y perfiles</strong>.</p>
 </section>
 
-<!-- ================================================================== -->
 <section id="interfaz">
 <h2>Elementos comunes</h2>
 <div class="table-wrap"><table>
@@ -268,7 +279,183 @@ footer { text-align: center; padding: 32px; color: var(--text-light); font-size:
 </tbody></table></div>
 </section>
 
-<!-- ================================================================== -->
+<section id="ventana">
+<h2>La ventana</h2>
+<div class="module-grid">
+<div class="module-card"><h4>Cabecera</h4><ul>
+<li><strong>&#128260; Sincronizar Todo</strong>: carga a la vez los datos de todas las secciones.</li>
+<li><strong>&#128257; Auto</strong>: repite Sincronizar Todo cada 30 s, 1, 2 o 5 minutos (Off de serie).</li>
+<li><strong>&#128270; B&uacute;squeda Global</strong>: busca un t&eacute;rmino en todos los datos ya cargados.</li>
+<li><strong>&#127769; Oscuro / &#9728;&#65039; Claro</strong>: cambia el tema; se recuerda.</li>
+</ul></div>
+<div class="module-card"><h4>&Aacute;rbol lateral</h4><ul>
+<li><strong>&#128269; Buscar secci&oacute;n&hellip;</strong>: filtra el &aacute;rbol por nombre.</li>
+<li>El Dashboard y las 44 secciones en seis categor&iacute;as. Cada secci&oacute;n carga sus datos la primera vez que se abre.</li>
+<li>Debajo: <strong>&#128218; Base de conocimiento</strong>, <strong>&#128421;&#65039; Acceso remoto</strong>, <strong>&#128241; M&oacute;viles Android</strong>, <strong>&#9881;&#65039; Configuraci&oacute;n y perfiles</strong> y <strong>&#128191; Copias de Seguridad</strong>.</li>
+</ul></div>
+<div class="module-card"><h4>Barra inferior</h4><ul>
+<li><strong>&#128737;&#65039; Seguridad</strong>: an&aacute;lisis de seguridad b&aacute;sico del equipo.</li>
+<li><strong>&#128736;&#65039; Soporte</strong>: reparaciones de la secci&oacute;n abierta y problemas detectados en sus datos.</li>
+<li><strong>&#128196; CSV</strong>, <strong>&#127760; Informe HTML</strong> y <strong>&#128213; PDF</strong>: exportar (el HTML y el PDF, todo lo cargado).</li>
+<li><strong>&#128248; Snapshots</strong>: guardar el estado del equipo y compararlo despu&eacute;s.</li>
+<li><strong>&#128190; Guardar Resultados</strong>.</li>
+</ul></div>
+<div class="module-card"><h4>Bandeja del sistema</h4><ul>
+<li>Icono junto al reloj con <strong>&#128270; Mostrar MASys</strong> y <strong>&#10060; Salir</strong>.</li>
+</ul></div>
+</div>
+<h3 id="comunes">Funciones comunes</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Funci&oacute;n</th><th>Descripci&oacute;n</th></tr></thead>
+<tbody>
+<tr><td><strong><strong>Soporte contextual</strong></strong></td><td>Un bot&#243;n por secci&#243;n que re&#250;ne las reparaciones habituales (SFC/DISM, punto de restauraci&#243;n, an&#225;lisis de memoria, reinicio del Explorador, restablecer Windows Update, vaciar DNS&#8230;) y, adem&#225;s, los problemas detectados sobre los datos que ya tienes cargados: servicios o tareas sospechosos, PATH inseguro, discos con avisos&#8230; Cada aviso se puede validar para dejar de mostrarlo.</td></tr>
+<tr><td><strong><strong>Credenciales alternativas</strong></strong></td><td>Ejecuta los an&#225;lisis con otro usuario (DOMINIO\\Usuario o usuario@dominio) sin cerrar la aplicaci&#243;n &#8212; pensado para inspeccionar recursos y equipos remotos a los que tu sesi&#243;n actual no llega.</td></tr>
+<tr><td><strong><strong>B&#250;squeda global</strong></strong></td><td>Busca un t&#233;rmino en los datos de todas las secciones cargadas a la vez, sin ir pesta&#241;a por pesta&#241;a.</td></tr>
+<tr><td><strong><strong>Snapshots del sistema</strong></strong></td><td>Guarda el estado completo del equipo en un fichero y comp&#225;ralo con otro momento posterior para ver exactamente qu&#233; ha cambiado.</td></tr>
+<tr><td><strong><strong>Perfiles de navegaci&#243;n</strong></strong></td><td>Muestra, oculta y reordena las secciones, y guarda configuraciones con nombre para cada tipo de intervenci&#243;n. El perfil &#171;MASys&#187; es el predeterminado y queda protegido.</td></tr>
+<tr><td><strong><strong>Tema e integraci&#243;n</strong></strong></td><td>Tema claro y oscuro, icono en la bandeja del sistema y ventana de trabajo amplia. Aplicaci&#243;n de escritorio sin servicio en segundo plano ni conexi&#243;n a la nube; el agente de an&#225;lisis remoto es opcional.</td></tr>
+<tr><td><strong><strong>Exportaci&#243;n e informes</strong></strong></td><td>CSV, HTML, PDF y Excel de la secci&#243;n activa o de todo el equipo, y an&#225;lisis de seguridad b&#225;sico con informe PDF.</td></tr>
+<tr><td><strong><strong>Historial de acciones</strong></strong></td><td>Las operaciones sensibles crean una copia de seguridad previa cuando es posible y quedan registradas.</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="dashboard">
+<h2>&#128202; Dashboard: salud, visitas y módulos</h2>
+<h3>Salud del equipo</h3>
+<p>Al lado de la puntuación de <strong>SEGURIDAD</strong> (que ya existía y no cambia) está <strong>SALUD DEL EQUIPO</strong>: de 0 a 100, en verde desde 90, en amarillo desde 70 y en rojo por debajo. Mide lo que hace que el equipo vaya mal o falle, no lo que lo hace vulnerable. Sale sola al abrir MASys (lee la estabilidad de los últimos 30 días y el espacio libre) y se completa con lo que cargue <strong>&#128260; Sincronizar Todo</strong>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Motivo</th><th>Resta</th></tr></thead>
+<tbody>
+<tr><td>Pantallazo azul en el periodo</td><td>10 cada uno (máximo 30)</td></tr>
+<tr><td>Apagado inesperado</td><td>3 cada uno (máximo 12)</td></tr>
+<tr><td>Cierres o bloqueos de apps</td><td>3 con 5 o más; 6 con 20 o más</td></tr>
+<tr><td>Avisos de Soporte de salud: discos y espacio, dispositivos, impresoras, actualizaciones, servicios atascados, Bluetooth, eventos críticos, unidades de red, Wi-Fi, red y PATH</td><td>5 cada uno (máximo 15 por sección). Los avisos que has validado no cuentan.</td></tr>
+<tr><td>Espacio libre en la unidad del sistema (si no se ha cargado la sección Discos)</td><td>15 por debajo del 10 %; 5 por debajo del 20 %</td></tr>
+</tbody></table></div>
+<p><strong>Ver motivos</strong> abre la lista (Motivo · Sección · Puntos). Doble clic en un motivo, o <strong>&#10145;&#65039; Ir a la sección</strong>, lleva a la sección donde se arregla.</p>
+<h3>Cambios desde la última visita</h3>
+<p>Cada vez que termina <strong>&#128260; Sincronizar Todo</strong>, MASys guarda una foto del equipo (una «visita») y la compara sola con la anterior <strong>del mismo equipo</strong>. El panel bajo las puntuaciones resume lo que ha cambiado, por ejemplo: «Desde el 20/09/2026 10:15: Programas: +1 −1 1 cambiados · Servicios: +1».</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Control</th><th>Qué hace</th></tr></thead>
+<tbody>
+<tr><td>&#128269; Ver cambios</td><td>Lista completa: Módulo · Cambio (&#128994; Nuevo, &#128308; Ya no está, &#128993; Cambiado) · Elemento · Antes · Ahora. Desplegable para ver un solo módulo y buscador.</td></tr>
+<tr><td>&#128344; Otra visita…</td><td>Elegir cualquier visita guardada de este equipo (fecha, elementos y secciones) y compararla con la más reciente.</td></tr>
+</tbody></table></div>
+<p>Se comparan: programas (y su versión), servicios (tipo de inicio), programas de inicio, tareas programadas, usuarios (estado y grupos), controladores (versión), reglas de firewall, actualizaciones instaladas y pendientes, certificados, impresoras, variables de entorno y dispositivos USB. <strong>No</strong> cuentan los procesos, las conexiones ni si un servicio está en marcha o parado, porque cambian solos a cada momento. Solo se comparan las secciones cargadas en las dos visitas: si una no se cargó, sus elementos no se dan por quitados. Si no ha cambiado nada, no se guarda otra visita igual.</p>
+<div class="alert-info">Las visitas se guardan en <code>INFORMES\Visitas\&lt;equipo&gt;\</code> (las 60 últimas de cada equipo). Con MASys en un USB, cada equipo tiene las suyas. Solo nombres, versiones y estados: ninguna contraseña ni dato personal.</div>
+<h3>Resumen por módulo</h3>
+<p>Bajo las puntuaciones, <strong>5 módulos a la vista</strong>, cada uno en una ficha grande del mismo alto: franja superior de su color, <strong>círculo grande</strong> (medidor con el porcentaje o la cifra), el valor, el nombre, todo su detalle (por ejemplo, en Procesos la memoria total, los dos programas que más gastan y cuántos usuarios) y abajo una etiqueta de estado en color: verde (bien), ámbar (aviso) o rojo (problema), como «2 sin firma», «1 casi llena» o «Críticas». A la derecha, <strong>&#9650;</strong> pasa a los 5 anteriores, la posición («6–10 de 27») y <strong>&#9660;</strong> a los 5 siguientes. Sin barra de desplazamiento.</p>
+<p>Módulos que aparecen (los que tengan datos cargados): Estabilidad, Extensiones y programas, Características de Windows, Procesos, Servicios, Programas de inicio, Tareas programadas, Software instalado, Gestor de paquetes, Actualizaciones pendientes, Controladores, Particiones, Discos físicos, Conexiones de red, Herramientas de red (último diagnóstico), Redes WiFi, Red local, Firewall, Carpetas compartidas, Usuarios, Credenciales, Certificados, Conexiones remotas, Sesiones activas, Eventos, Historial PowerShell, Dispositivos USB, Impresoras, Bluetooth, Cuentas de correo, Móviles Android (último informe) e Inventario de migración.</p>
+</section>
+
+<section id="cat-sistema">
+<h2>&#128187; Sistema</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Secci&oacute;n</th><th>Qu&eacute; hace</th><th>En pantalla</th></tr></thead>
+<tbody>
+<tr><td><strong>&#128187; Sistema</strong></td><td>Fichas de hardware, sistema operativo, placa base y BIOS. Reinicio directo en la configuraci&#243;n de firmware (BIOS/UEFI). &#171;Windows 11&#8230;&#187; comprueba todos los requisitos de Windows 11 y &#171;Rendimiento&#8230;&#187; mide CPU, RAM, disco, red y procesos durante minutos u horas y dice cu&#225;ndo se satura el equipo y qui&#233;n lo provoca.</td><td><strong>Botones:</strong> &#128268; Reiniciar en BIOS/UEFI &#183; &#129695; Windows 11&#8230; &#183; &#128200; Rendimiento&#8230;</td></tr>
+<tr><td><strong>&#128451;&#65039; Registro de Windows</strong></td><td>B&#250;squeda en el registro, escaneo de entradas hu&#233;rfanas, copia de seguridad de ramas antes de tocar y borrado seguro.</td><td><strong>Botones:</strong> &#128269; Buscar &#183; &#9209; Detener &#183; &#128190; Backup Rama &#183; &#9888;&#65039; Comprobar Cadenas Rotas &#183; Seleccionar Todo &#183; Deseleccionar &#183; Copiar Ruta &#183; Abrir en Regedit &#183; &#10005; Eliminar Todas las Hu&#233;rfanas &#183; &#10005; Eliminar Seleccionados</td></tr>
+<tr><td><strong>&#127912; Iconos</strong></td><td>Bibliotecas de iconos de Windows con extracci&#243;n a ICO y PNG, reconstrucci&#243;n de las cach&#233;s de iconos y miniaturas, accesos directos rotos, espaciado y posici&#243;n de los iconos del escritorio, prioridad de los iconos superpuestos (OneDrive, Dropbox, Git&#8230;) e iconos personalizados de unidades.</td><td><strong>Pesta&#241;as:</strong> &#128218; Bibliotecas &#183; &#128444;&#65039; Iconos de aplicaciones &#183; &#129658; Reparaci&#243;n &#183; &#9881;&#65039; Configuraci&#243;n<br><a href="#iconos">Ver el apartado completo</a></td></tr>
+<tr><td><strong>&#128279; Extensiones y programas</strong></td><td>Qu&#233; programa abre cada extensi&#243;n y cada protocolo, calculado igual que el Explorador. Detecta elecciones rotas, las restablece y exporta o importa las asociaciones en el XML de DISM.</td><td><strong>Pesta&#241;as:</strong> &#128196; Extensiones &#183; &#127760; Protocolos &#183; &#128230; Por programa<br><strong>Botones:</strong> &#128228; Exportar XML&#8230; &#183; &#128229; Importar XML&#8230;<br><a href="#asoc">Ver el apartado completo</a></td></tr>
+<tr><td><strong>&#129513; Caracter&#237;sticas de Windows</strong></td><td>Caracter&#237;sticas opcionales y capacidades (RSAT, OpenSSH, idiomas&#8230;) en una sola tabla, perfiles listos &#8212; puesto de soporte IT, desarrollo, endurecer el equipo, programas antiguos &#8212; que ense&#241;an antes qu&#233; cambian, e instalaci&#243;n de .NET 3.5 sin internet.</td><td><strong>Botones:</strong> &#10004;&#65039; Activar &#183; &#10005; Quitar &#183; &#128203; Perfiles&#8230; &#183; &#128191; .NET 3.5 sin internet&#8230;<br><a href="#carac">Ver el apartado completo</a></td></tr>
+<tr><td><strong>&#129658; Estabilidad</strong></td><td>Pantallazos azules con el c&#243;digo explicado y su causa habitual, an&#225;lisis del volcado para saber qu&#233; controlador lo provoc&#243;, apagados inesperados, apps que se cierran o dejan de responder e &#237;ndice de estabilidad de Windows.</td><td><strong>Pesta&#241;as:</strong> &#128338; L&#237;nea de tiempo &#183; &#128165; Pantallazos azules<br><strong>Botones:</strong> &#128203; Visor de eventos &#183; &#128200; Monitor de confiabilidad &#183; &#128300; Analizar volcado &#183; &#128194; Carpeta de volcados<br><a href="#estab">Ver el apartado completo</a></td></tr>
+<tr><td><strong>&#9881;&#65039; Procesos</strong></td><td>Tabla con panel de detalle y notas, cambio de prioridad, finalizar / suspender / reanudar y detecci&#243;n de procesos sospechosos.</td><td><strong>Botones:</strong> Aplicar prioridad &#183; &#10006; Finalizar &#183; &#9208; Suspender &#183; &#9654; Reanudar &#183; &#128221; Nota &#183; &#10005; Borrar nota</td></tr>
+<tr><td><strong>&#128640; Programas de Inicio</strong></td><td>Claves Run de HKLM/HKCU (32 y 64 bits) y carpetas de inicio de todos los usuarios. Activar/desactivar por fila o en lote usando la misma clave que el Administrador de tareas, con verificaci&#243;n de firma digital.</td><td><strong>Botones:</strong> &#9989; Habilitar seleccionados &#183; &#128683; Deshabilitar seleccionados</td></tr>
+<tr><td><strong>&#128736;&#65039; Servicios</strong></td><td>Iniciar / detener / reiniciar, cambio de tipo de arranque, notas, y detecci&#243;n de servicios sospechosos, con rutas sin comillas o atascados.</td><td><strong>Botones:</strong> Aplicar tipo de inicio &#183; &#9654; Iniciar &#183; &#9632; Detener &#183; &#8634; Reiniciar &#183; &#128221; Nota &#183; &#10005; Borrar nota</td></tr>
+<tr><td><strong>&#128260; Actualizaciones</strong></td><td>Listado de actualizaciones, instalaci&#243;n de un KB concreto y restablecimiento completo de Windows Update.</td><td><strong>Botones:</strong> &#11015;&#65039; Instalar seleccionada &#183; &#129695; Abrir Windows Update</td></tr>
+<tr><td><strong>&#127760; Variables Entorno</strong></td><td>Alta, edici&#243;n y borrado de variables, desglose y b&#250;squeda dentro de PATH, copia del registro antes de escribir e historial de cambios.</td><td><strong>Botones:</strong> &#10133; Nueva variable &#183; &#9999;&#65039; Editar valor &#183; &#10006; Eliminar &#183; &#128221; Nota &#183; &#10005; Borrar nota &#183; &#128203; Ver PATH desglosado &#183; &#128257; Buscar y reemplazar en PATH</td></tr>
+<tr><td><strong>&#9888;&#65039; Eventos Sistema</strong></td><td>Consulta del visor de eventos con detalle por evento, filtros y aviso de eventos cr&#237;ticos recientes.</td><td><strong>Botones:</strong> &#128450;&#65039; Abrir Visor de eventos</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="cat-disco">
+<h2>&#128190; Disco y Archivos</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Secci&oacute;n</th><th>Qu&eacute; hace</th><th>En pantalla</th></tr></thead>
+<tbody>
+<tr><td><strong>&#128194; Carpetas Compartidas</strong></td><td>An&#225;lisis de los recursos compartidos del equipo o de una ruta concreta, con control de profundidad, vista jer&#225;rquica (recurso &#8594; usuario &#8594; permisos) o de carpetas, e historial de conexiones. Permisos de carpetas en cuatro pesta&#241;as: leer y editar permisos de carpetas y de red (tambi&#233;n el propietario y quitar una cuenta de una rama), an&#225;lisis de riesgos (Todos con escritura, cuentas eliminadas, herencia cortada&#8230;), acceso efectivo de una cuenta y copias de permisos que se restauran en el mismo servidor o en otro dominio.</td><td><strong>Pesta&#241;as:</strong> &#128194; Recursos compartidos &#183; &#128193; Permisos de carpetas &#183; &#9888;&#65039; An&#225;lisis de permisos &#183; &#129517; Acceso de una cuenta &#183; &#128190; Copias de permisos<br><strong>Botones:</strong> &#128269; Analizar &#183; &#128100; Otro Usuario &#183; &#9209;&#65039; Parar &#183; &#10133; Expandir Todo &#183; &#128193; Carpetas<br><a href="#permisos">Ver el apartado completo</a></td></tr>
+<tr><td><strong>&#128190; Unidades Remotas</strong></td><td>Unidades de red mapeadas: conectar, desconectar, probar y ver el historial de conexiones.</td><td><strong>Botones:</strong> &#128194; Abrir &#183; &#128269; Probar &#183; &#128268; Desconectar &#183; &#128339; Historial</td></tr>
+<tr><td><strong>&#128193; Contenido</strong></td><td>B&#250;squeda de archivos y carpetas por nombre o expresi&#243;n regular, extensi&#243;n, tama&#241;o y fecha, acotada a un &#225;mbito (perfil de usuario, escritorio o ubicaci&#243;n libre). Gesti&#243;n de la papelera de reciclaje.</td><td><strong>Botones:</strong> &#128269; Buscar &#183; &#9209; Detener &#183; Abrir en Explorer &#183; Copiar ruta &#183; Exportar &#183; &#128194; Copiar a... &#183; &#9986;&#65039; Mover a... &#183; &#128230; Comprimir a ZIP &#183; &#127795; &#193;rbol &#183; &#10133; Expandir Todo &#183; &#10005; Enviar a la papelera</td></tr>
+<tr><td><strong>&#128189; Discos Duros</strong></td><td>Salud de cada disco, verificaci&#243;n con CHKDSK y b&#250;squeda de archivos duplicados grandes (&#8805; 500 MB) que solo propone, nunca borra. &#171;Microparadas&#8230;&#187; mide la latencia de cada lectura del disco sin cach&#233; y cuenta las paradas.</td><td><strong>Botones:</strong> &#9201;&#65039; Microparadas&#8230;</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="cat-red">
+<h2>&#127760; Red</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Secci&oacute;n</th><th>Qu&eacute; hace</th><th>En pantalla</th></tr></thead>
+<tbody>
+<tr><td><strong>&#128246; WiFi</strong></td><td>Perfiles guardados con su clave, generaci&#243;n de c&#243;digo QR para compartir una red con un m&#243;vil, y escaneo de redes cercanas con conexi&#243;n directa.</td><td><strong>Botones:</strong> &#128269; Detectar redes cercanas &#183; &#128268; Desconectar</td></tr>
+<tr><td><strong>&#127760; Conexiones Red</strong></td><td>Conexiones activas con resoluci&#243;n de nombre de host y men&#250; contextual.</td><td>&mdash;</td></tr>
+<tr><td><strong>&#128293; Firewall</strong></td><td>Reglas del cortafuegos con cambio de acci&#243;n/estado, comprobaci&#243;n de puertos concretos y an&#225;lisis de puertos abiertos poco habituales.</td><td>&mdash;</td></tr>
+<tr><td><strong>&#128274; Conexiones Remotas</strong></td><td>Sesiones y configuraci&#243;n de escritorio remoto (RDP). &#171;Auditor&#237;a de accesos&#8230;&#187; saca un informe de todos los accesos al equipo (inicios y cierres de sesi&#243;n, fallos, Escritorio remoto, bloqueos y cambios en cuentas) y &#171;Aviso de RDP&#8230;&#187; muestra, quita o restaura la advertencia al abrir archivos .rdp.</td><td><strong>Botones:</strong> &#128272; Activar Auditor&#237;a &#183; &#128270; Auditor&#237;a de accesos&#8230; &#183; &#128423; Aviso de RDP&#8230;</td></tr>
+<tr><td><strong>&#127760; Redes</strong></td><td>Adaptadores de red: habilitar, deshabilitar y reiniciar; vaciado de la cach&#233; DNS.</td><td><strong>Botones:</strong> &#9654;&#65039; Habilitar &#183; &#9208;&#65039; Deshabilitar &#183; &#128260; Reiniciar Adaptador &#183; &#128257; Liberar/Renovar IP</td></tr>
+<tr><td><strong>&#128269; Red Local</strong></td><td>Tabla ARP: equipos vistos en el segmento de red local, con el fabricante de cada uno seg&#250;n el registro del IEEE.</td><td><strong>Botones:</strong> &#128260; Buscar Dispositivos</td></tr>
+<tr><td><strong>&#129514; Herramientas de red</strong></td><td>Diagn&#243;stico por capas de cualquier destino &#8212; de la tarjeta de red a Microsoft 365 &#8212; con investigaci&#243;n de puertos e informe t&#233;cnico o para el cliente. Consultas DNS en varios servidores, WHOIS (RDAP), cabeceras web, certificado TLS e IP p&#250;blica. Pesta&#241;a &#171;Vigilancia y TLS&#187;: diagn&#243;stico HTTPS/TLS con arreglo (activa TLS 1.2 en Windows y .NET guardando copia para deshacer), vigilancia de microcortes de red y de impresoras de red.</td><td><strong>Pesta&#241;as:</strong> &#128300; Diagn&#243;stico por capas &#183; &#128270; Consultas<br><a href="#red">Ver el apartado completo</a></td></tr>
+</tbody></table></div>
+</section>
+
+<section id="cat-usuarios">
+<h2>&#128101; Usuarios y Seguridad</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Secci&oacute;n</th><th>Qu&eacute; hace</th><th>En pantalla</th></tr></thead>
+<tbody>
+<tr><td><strong>&#128101; Usuarios</strong></td><td>Cuentas locales, de dominio y del sistema: activar/desactivar, permisos e historial, con exportaci&#243;n.</td><td>&mdash;</td></tr>
+<tr><td><strong>&#128273; Credenciales</strong></td><td>Administrador de credenciales de Windows: probar, a&#241;adir, editar y eliminar entradas, con la fecha y la persistencia reales de cada una.</td><td><strong>Botones:</strong> &#10133; Agregar &#183; &#128269; Probar &#183; &#10005; Eliminar &#183; &#128190; Copia de seguridad (Windows)</td></tr>
+<tr><td><strong>&#128272; Certificados</strong></td><td>Almacenes de certificados del equipo y del usuario, con exportaci&#243;n y aviso de certificados sospechosos.</td><td>&mdash;</td></tr>
+<tr><td><strong>&#128231; Cuentas Correo</strong></td><td>Cuentas y firmas de Outlook, con exportaci&#243;n de buzones a ficheros PST independientes. Cinco pesta&#241;as m&#225;s: probar una cuenta contra los servidores de su proveedor y darla de alta en Outlook, comprobar direcciones una a una o en lista, informe del dominio de correo (MX, SPF, DKIM, DMARC, MTA-STS, listas negras&#8230;), configuraci&#243;n de Outlook por elementos y visor PST/OST sin Outlook. &#171;Thunderbird&#8230;&#187; exporta contactos, calendario, correo local y firmas antes de pasar a Outlook.</td><td><strong>Pesta&#241;as:</strong> &#128231; Cuentas &#183; &#128273; Probar cuenta &#183; &#9993;&#65039; Comprobar direcciones &#183; &#127760; Dominio de correo &#183; &#128450;&#65039; Configuraci&#243;n de Outlook &#183; &#128236; Visor PST/OST<br><strong>Botones:</strong> &#128269; Detectar cuenta &#183; &#128190; Backup configuraci&#243;n &#183; &#128228; Exportar a PST &#183; &#9993;&#65039; Thunderbird&#8230;<br><a href="#correo">Ver el apartado completo</a></td></tr>
+<tr><td><strong>&#9729;&#65039; Navegadores y Nube</strong></td><td>Firefox, Chrome y Edge por perfil: marcadores, historial, descargas, extensiones y contrase&#241;as guardadas. Gestor de favoritos para cargarlos, revisarlos, editarlos, comprobar enlaces rotos, reorganizarlos y volver a escribirlos en el navegador o migrarlos a otro (exporta e importa en formato est&#225;ndar). Auditor&#237;a de contrase&#241;as: fortaleza, reutilizadas y comprobaci&#243;n de si est&#225;n expuestas en filtraciones conocidas mediante Have I Been Pwned, sin que la contrase&#241;a salga del equipo (k-anonymity). Cuentas y carpetas vinculadas de OneDrive.</td><td><strong>Botones:</strong> &#128278; Favoritos &#183; &#128220; Historial &#183; &#11015;&#65039; Descargas &#183; &#129513; Extensiones &#183; &#128273; Contrase&#241;as guardadas &#183; &#128737;&#65039; Auditar contrase&#241;as<br><a href="#navegadores">Ver el apartado completo</a></td></tr>
+<tr><td><strong>&#127970; Active Directory</strong></td><td>Consulta del dominio mediante RSAT, con instalador de RSAT integrado si no est&#225; presente.</td><td><strong>Botones:</strong> &#128229; Instalar RSAT &#183; &#128260; Consultar AD</td></tr>
+<tr><td><strong>&#127963;&#65039; Pol&#237;ticas de Grupo</strong></td><td>Estado de uni&#243;n a dominio / Entra ID (dsregcmd), GPO aplicadas (gpresult) e inscripci&#243;n en Intune/MDM. No depende de RSAT: siempre disponible.</td><td><strong>Botones:</strong> &#128229; Instalar RSAT &#183; &#128736;&#65039; Abrir Editor de Directivas de Grupo &#183; &#128196; Ver informe detallado</td></tr>
+<tr><td><strong>&#128100; Sesiones Activas</strong></td><td>Sesiones de usuario abiertas en el equipo en este momento.</td><td><strong>Botones:</strong> &#128423; Historial RDP</td></tr>
+<tr><td><strong>&#128737;&#65039; Seguridad</strong></td><td>Fichas de antivirus, cortafuegos, cifrado (BitLocker) y endurecimiento (UAC, SMBv1, PowerShell Remoting, AutoRun, Credential Guard, protecci&#243;n LSA&#8230;), con informe de seguridad. &#171;Claves de BitLocker&#8230;&#187; muestra el estado de cada unidad y sus contrase&#241;as de recuperaci&#243;n.</td><td><strong>Botones:</strong> &#128273; Claves de BitLocker&#8230;</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="cat-hardware">
+<h2>&#128421;&#65039; Hardware y Periféricos</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Secci&oacute;n</th><th>Qu&eacute; hace</th><th>En pantalla</th></tr></thead>
+<tbody>
+<tr><td><strong>&#128421;&#65039; Adm. Dispositivos</strong></td><td>Controladores instalados, copia de seguridad completa de los controladores de terceros (para antes de reinstalar Windows), dispositivos ocultos o fantasma y dispositivos con problema.</td><td><strong>Botones:</strong> &#128295; Abrir Administrador de dispositivos</td></tr>
+<tr><td><strong>&#128424;&#65039; Impresoras</strong></td><td>Impresoras instaladas, cola de impresi&#243;n por impresora (pausar / reanudar / eliminar trabajos) y reinicio del servicio de cola (Spooler). &#171;Vigilar impresoras&#8230;&#187; detecta ca&#237;das, problemas del puerto de impresi&#243;n, cambios de MAC (conflictos de IP) y colas atascadas.</td><td><strong>Botones:</strong> &#128424;&#65039; Abrir Impresoras y esc&#225;neres &#183; &#128225; Vigilar impresoras&#8230;</td></tr>
+<tr><td><strong>&#128268; Dispositivos USB</strong></td><td>Dispositivos actuales, historial completo de almacenamiento USB conectado alguna vez al equipo, y detecci&#243;n de dispositivos sospechosos tipo BadUSB (mismo VID/PID present&#225;ndose con varias clases a la vez).</td><td>&mdash;</td></tr>
+<tr><td><strong>&#128421;&#65039; Gr&#225;ficas y Monitores</strong></td><td>Adaptadores gr&#225;ficos y monitores; cambio de resoluci&#243;n de forma independiente por monitor, con cuenta atr&#225;s de seguridad para confirmar.</td><td><strong>Botones:</strong> &#128421;&#65039; Abrir Configuraci&#243;n de pantalla &#183; &#128421;&#65039; Cambiar resoluci&#243;n</td></tr>
+<tr><td><strong>&#128309; Bluetooth</strong></td><td>Adaptadores y dispositivos Bluetooth emparejados.</td><td>&mdash;</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="cat-admin">
+<h2>&#128230; Administración</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Secci&oacute;n</th><th>Qu&eacute; hace</th><th>En pantalla</th></tr></thead>
+<tbody>
+<tr><td><strong>&#128230; Software Instalado</strong></td><td>Inventario de programas con lista negra, desinstalaci&#243;n y men&#250; contextual. &#171;Instalar Office&#8230;&#187; hace la instalaci&#243;n desatendida de Microsoft 365 Apps / Office con la herramienta oficial de Microsoft (ODT).</td><td><strong>Botones:</strong> &#128683; Lista negra &#183; &#128230; Abrir Programas y caracter&#237;sticas &#183; &#128229; Instalar Office&#8230;</td></tr>
+<tr><td><strong>&#9200; Tareas Programadas</strong></td><td>Tareas del programador de Windows con detecci&#243;n de tareas sospechosas y calendario de pr&#243;ximas ejecuciones.</td><td><strong>Botones:</strong> &#128467;&#65039; Abrir Programador de tareas</td></tr>
+<tr><td><strong>&#128220; Historial PS</strong></td><td>Historial de comandos de PowerShell con detecci&#243;n de bypass y ofuscaci&#243;n, y un lanzador de scripts .ps1 propios del t&#233;cnico. Desde &#171;Lanzar Scripts&#187; se abre la ventana de Microsoft 365, con 16 herramientas para el inquilino del cliente.</td><td><strong>Botones:</strong> &#128309; Abrir PowerShell (Admin) &#183; &#128640; Lanzar Scripts</td></tr>
+<tr><td><strong>&#128273; Licencias</strong></td><td>Estado de activaci&#243;n de Windows y de Office / Microsoft 365 le&#237;do de la plataforma de protecci&#243;n de software (SPP).</td><td>&mdash;</td></tr>
+<tr><td><strong>&#128230; Gestor de Paquetes</strong></td><td>Paquetes de winget: instalaci&#243;n individual o en lote en segundo plano y bloqueo/desbloqueo de la actualizaci&#243;n de un paquete concreto.</td><td><strong>Botones:</strong> &#11014;&#65039; Instalar seleccionadas &#183; &#11014;&#65039; Instalar todas</td></tr>
+<tr><td><strong>&#128452;&#65039; SQL Server</strong></td><td>Detecci&#243;n de instancias de SQL Server, Express y LocalDB por registro; control de sus servicios (motor y agente) y copia de seguridad .bak de las bases de datos.</td><td>&mdash;</td></tr>
+<tr><td><strong>&#129523; Inventario de migraci&#243;n</strong></td><td>Todo lo que hay que tener en cuenta al cambiar de equipo, en 18 categor&#237;as y sin copiar datos ni contrase&#241;as. En el equipo nuevo dice qu&#233; falta, reinstala los programas con winget y genera una lista de comprobaci&#243;n imprimible.</td><td><strong>Botones:</strong> &#128190; Guardar&#8230; &#183; &#128194; Comparar&#8230; &#183; &#128257; Reinstalar con winget&#8230; &#183; &#127760; Lista de comprobaci&#243;n&#8230;<br><a href="#mig">Ver el apartado completo</a></td></tr>
+</tbody></table></div>
+</section>
+
+<section id="fuera">
+<h2>&#129520; Fuera de las secciones</h2>
+<p>Funciones que no son una secci&oacute;n del &aacute;rbol: tienen su bot&oacute;n bajo el &aacute;rbol o dentro de una secci&oacute;n.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Funci&oacute;n</th><th>Descripci&oacute;n</th></tr></thead>
+<tbody>
+<tr><td><strong><strong>Base de conocimiento</strong></strong></td><td>170 problemas habituales en 18 temas, con s&#237;ntomas, causas y los pasos para resolverlos dentro de MASys. &#171;Ir a&#187; abre la secci&#243;n y la pesta&#241;a exactas, y &#171;Comprobar ahora&#187; revisa el problema en el equipo. Admite fichas propias.</td></tr>
+<tr><td><strong><strong>Acceso remoto</strong></strong></td><td>Agenda de equipos de clientes por empresa y conexi&#243;n en un clic con RustDesk, Asistencia r&#225;pida, Escritorio remoto o ver la sesi&#243;n del usuario. Contrase&#241;as guardadas con DPAPI e historial de conexiones. Puede usar un servidor de RustDesk propio, montado y gestionado desde MASys.</td></tr>
+<tr><td><strong><strong>Agente de an&#225;lisis remoto</strong></strong></td><td>Un ejecutable para el cliente que lee su equipo con los mismos 33 apartados de &#171;Sincronizar Todo&#187;, quita los secretos y genera un informe cifrado. Llega por archivo o directamente por internet con un c&#243;digo de un solo uso, y se abre en MASys como si fuera el equipo del cliente.</td></tr>
+<tr><td><strong><strong>Empresas y correo a los clientes</strong></strong></td><td>Cat&#225;logo com&#250;n de empresas y usuarios con su correo y tel&#233;fono, y env&#237;o de correos desde cuentas SMTP, Gmail o Microsoft 365, con plantillas e historial de lo enviado.</td></tr>
+<tr><td><strong><strong>Microsoft 365</strong></strong></td><td>16 herramientas para el inquilino del cliente: cuentas, contrase&#241;as, invitados, buzones compartidos, permisos, salas, cambio de dominio, migraci&#243;n IMAP a Exchange Online, env&#237;os masivos e inventario de SharePoint. Preparan sus plantillas CSV y se lanzan en una consola visible; las que cambian algo tienen modo de simulaci&#243;n.</td></tr>
+<tr><td><strong><strong>M&#243;viles Android</strong></strong></td><td>Ventana con su propio bot&#243;n en el men&#250; lateral: informes de MASysMov por empresa, usuario y m&#243;vil, recibidos por la wifi o importados de un archivo, en 16 pesta&#241;as (ficha, seguridad, apps, conexiones, evoluci&#243;n, cambios, espacio, bater&#237;a, rastreadores, procesos, hardware, red, consumo de datos, pruebas, datos personales y copias). Emparejamiento con un c&#243;digo QR, informe HTML y CSV, y &#171;Puertos desde fuera&#187; para saber si un puerto de la red se ve desde internet.</td></tr>
+<tr><td><strong><strong>Diagn&#243;stico de Windows</strong></strong></td><td>Diez herramientas con su bot&#243;n en la secci&#243;n donde encajan y una ventana com&#250;n con la salida en vivo, bot&#243;n de parar, informe y gu&#237;a de uso: accesos, aviso de RDP, BitLocker, TLS, Windows 11, Thunderbird, Office, microcortes, impresoras y rendimiento.</td></tr>
+</tbody></table></div>
+</section>
+
 <section id="kb">
 <h2>&#128218; Base de conocimiento</h2>
 <p>Botón <strong>&#128218; Base de conocimiento</strong>, abajo a la izquierda, encima de <strong>&#9881;&#65039; Configuración y perfiles</strong>. Abre una ventana con los problemas habituales de equipos y redes y, para cada uno, qué herramientas de MASys usar y en qué orden. La ventana se puede dejar abierta mientras se trabaja en MASys: no bloquea la ventana principal, y al pulsar el botón otra vez vuelve la misma ventana.</p>
@@ -343,7 +530,6 @@ footer { text-align: center; padding: 32px; color: var(--text-light); font-size:
 <div class="alert-warning"><strong>Las fichas propias son de cada instalación.</strong> Se guardan en <code>multisys.db</code>, junto a MASys (en la versión portable, dentro de su carpeta). Para llevarlas a otro equipo: &#128191; Copias de Seguridad &#8250; Configuración de MASys &#8250; <em>Base de datos local</em>.</div>
 </section>
 
-<!-- ================================================================== -->
 <section id="ar">
 <h2>&#128421;&#65039; Acceso remoto</h2>
 <p>Botón <strong>&#128421;&#65039; Acceso remoto</strong>, abajo a la izquierda, debajo de &#128218; Base de conocimiento. Es una agenda de los equipos de los clientes con su forma de conexión preferida, para conectar con un clic, y el historial de las conexiones. Funciona sin servidor propio y, si tienes uno de RustDesk, conecta a través de él (ver <a href="#ar-servidor">Servidor propio</a>). Como la Base de conocimiento, es una ventana que se puede dejar abierta y que vuelve al pulsar otra vez el botón.</p>
@@ -466,7 +652,6 @@ footer { text-align: center; padding: 32px; color: var(--text-light); font-size:
 <div class="alert-warning"><strong>Con permiso del cliente.</strong> Conectar a un equipo ajeno exige la autorización de su titular y, si lo usan trabajadores, que estén informados. RustDesk, Asistencia rápida y Ver la sesión piden aceptar en el equipo remoto; MASys no usa las opciones para saltarse ese permiso.</div>
 </section>
 
-<!-- ================================================================== -->
 <section id="agente">
 <h2>&#128229; Agente de análisis remoto</h2>
 <p>Para revisar el equipo de un cliente sin estar allí. El cliente ejecuta <code>MASys_Agente_vX.Y.Z.exe</code> (un solo archivo, sin instalar), que lee su equipo con <strong>los mismos lectores que &#128260; Sincronizar Todo</strong> y deja en su Escritorio un archivo cifrado <code>.msysinf</code>. El cliente te lo envía y lo abres en <strong>&#128421;&#65039; Acceso remoto &#8250; &#128229; Informes del agente</strong>.</p>
@@ -558,7 +743,74 @@ footer { text-align: center; padding: 32px; color: var(--text-light); font-size:
 <div class="alert-info"><strong>Solo ver y comparar.</strong> Arreglar cosas en el equipo del cliente se hace conectándote por RustDesk. Para comparar con la visita anterior: <em>&#8644; Cambios con el anterior</em> en Informes del agente.</div>
 </section>
 
-<!-- ================================================================== -->
+<section id="herr-diag">
+<h2>&#129658; Herramientas de diagn&oacute;stico de Windows</h2>
+<p>Cada una con un bot&#243;n en la secci&#243;n donde encaja y su gu&#237;a de uso; los resultados quedan en <code>INFORMES\&lt;herramienta&gt;\&lt;fecha&gt;</code>. Se abren en una ventana com&uacute;n con la salida en vivo, bot&oacute;n de parar, informe y gu&iacute;a de uso.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Herramienta</th><th>Qu&eacute; hace</th></tr></thead>
+<tbody>
+<tr><td><strong><strong>Auditor&#237;a de accesos</strong></strong></td><td>Informe de accesos a partir del registro de Seguridad de Windows.</td></tr>
+<tr><td><strong><strong>Aviso de Escritorio remoto</strong></strong></td><td>Quita, en todos los usuarios con sesi&#243;n, la advertencia que muestra Escritorio remoto al abrir archivos .rdp desde las actualizaciones de abril de 2026.</td></tr>
+<tr><td><strong><strong>Claves de recuperaci&#243;n BitLocker</strong></strong></td><td>Estado de BitLocker y contrase&#241;as de recuperaci&#243;n de 48 d&#237;gitos de cada unidad.</td></tr>
+<tr><td><strong><strong>Diagn&#243;stico HTTPS / TLS</strong></strong></td><td>Diagnostica y corrige los fallos de conexi&#243;n segura (SSL/TLS) de programas, scripts e integraciones.</td></tr>
+<tr><td><strong><strong>Evaluaci&#243;n de Windows 11</strong></strong></td><td>Eval&#250;a un equipo con Windows 10 u 11 de cara a Windows 11.</td></tr>
+<tr><td><strong><strong>Exportar Thunderbird</strong></strong></td><td>Guarda lo que solo existe en el equipo, como contactos y calendario, antes de pasar de Thunderbird a Outlook.</td></tr>
+<tr><td><strong><strong>Instalar Microsoft 365 / Office</strong></strong></td><td>Instala Office en silencio con la Herramienta de implementaci&#243;n de Office (ODT) de Microsoft.</td></tr>
+<tr><td><strong><strong>Vigilar microcortes de red</strong></strong></td><td>Detecta los cortes de pocos segundos con un ping cada segundo a la puerta de enlace y a otros destinos.</td></tr>
+<tr><td><strong><strong>Monitor de impresoras de red</strong></strong></td><td>Comprueba cada pocos segundos todas las impresoras de red para cazar los fallos intermitentes.</td></tr>
+<tr><td><strong><strong>Monitor de rendimiento</strong></strong></td><td>Tarea programada que mide en segundo plano y, tras uno a tres d&#237;as de uso, genera un informe de por qu&#233; va lento el equipo.</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="m365">
+<h2>&#9729;&#65039; Herramientas de Microsoft 365, Exchange Online y SharePoint</h2>
+<p>En <strong>Administraci&#243;n &#8250; Historial PS &#8250; &#128640; Lanzar Scripts &#8250; &#9729;&#65039; Microsoft 365</strong>. Cada una con su gu&#237;a de uso y su plantilla CSV.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Herramienta</th><th>Qu&eacute; hace</th></tr></thead>
+<tbody>
+<tr><td><strong><strong>Crear buzones compartidos</strong></strong></td><td>Crea buzones compartidos desde un CSV y da Acceso total y Enviar como a los usuarios de cada fila.</td></tr>
+<tr><td><strong><strong>Cambio de dominio de correo</strong></strong></td><td>Cambia la direcci&#243;n principal de una lista de buzones a otro dominio; la antigua queda como alias.</td></tr>
+<tr><td><strong><strong>Correos grandes de la migraci&#243;n</strong></strong></td><td>Localiza los correos que una migraci&#243;n IMAP omite por superar el l&#237;mite de tama&#241;o de Exchange Online (LargeItem).</td></tr>
+<tr><td><strong><strong>Estado de la migraci&#243;n IMAP</strong></strong></td><td>Estado de los lotes de migraci&#243;n cuenta por cuenta, con CSV, para saber qu&#233; cuentas necesitan intervenci&#243;n.</td></tr>
+<tr><td><strong><strong>Migraci&#243;n IMAP a Exchange Online</strong></strong></td><td>Migra el correo de un proveedor IMAP a Exchange Online: crea el origen de migraci&#243;n y un lote con las cuentas.</td></tr>
+<tr><td><strong><strong>Permisos de buzones</strong></strong></td><td>Aplica en lote los permisos de buzones de usuario, compartidos y salas: acceso, enviar como, enviar en nombre y calendario.</td></tr>
+<tr><td><strong><strong>Reintentar un usuario de la migraci&#243;n IMAP</strong></strong></td><td>Saca de su lote una cuenta con la contrase&#241;a incorrecta o caducada y la mete en uno nuevo con la contrase&#241;a correcta.</td></tr>
+<tr><td><strong><strong>Salas de reuniones</strong></strong></td><td>Crea o reconfigura salas que se reservan desde Outlook y Teams, con sus reglas de reserva.</td></tr>
+<tr><td><strong><strong>Crear cuentas en Microsoft 365</strong></strong></td><td>Crea de una vez todas las cuentas de un CSV en un inquilino de Microsoft 365.</td></tr>
+<tr><td><strong><strong>Env&#237;o masivo de correo personalizado</strong></strong></td><td>Env&#237;a a cada persona de un CSV su propio correo a partir de una plantilla HTML con sus datos.</td></tr>
+<tr><td><strong><strong>Informe de lo compartido con externos</strong></strong></td><td>Excel con los sitios de SharePoint y los OneDrive que comparten contenido con personas externas.</td></tr>
+<tr><td><strong><strong>Invitados externos (B2B)</strong></strong></td><td>Da de alta como invitados a personas de otras empresas a partir de un CSV.</td></tr>
+<tr><td><strong><strong>Respuestas a un correo a Excel</strong></strong></td><td>Lee las respuestas a un env&#237;o masivo y las ordena en un Excel.</td></tr>
+<tr><td><strong><strong>Restablecer contrase&#241;as</strong></strong></td><td>Restablece la contrase&#241;a de las cuentas de un CSV: la indicada o una generada de 16 caracteres.</td></tr>
+<tr><td><strong><strong>Verificar cuentas</strong></strong></td><td>Revisa las cuentas de un CSV o de todo el inquilino y da un veredicto de cada una.</td></tr>
+<tr><td><strong><strong>Inventario de sitios de SharePoint</strong></strong></td><td>Lista en CSV todos los sitios de SharePoint Online y, por defecto, los OneDrive personales.</td></tr>
+</tbody></table></div>
+<div class="alert-info">Las que cambian algo tienen modo de simulaci&oacute;n: primero se ve qu&eacute; har&iacute;an y despu&eacute;s se lanzan de verdad.</div>
+</section>
+
+<section id="copias">
+<h2>&#128191; Copias de seguridad</h2>
+<p>Bot&oacute;n <strong>&#128191; Copias de Seguridad</strong> bajo el &aacute;rbol: diez copias distintas, cada una con su restauraci&oacute;n.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Copia</th><th>Contenido</th></tr></thead>
+<tbody>
+<tr><td><strong><strong>Registro de Windows</strong></strong></td><td>HKLM\\SOFTWARE, HKLM\\SYSTEM y HKCU.</td></tr>
+<tr><td><strong><strong>Credenciales y accesos</strong></strong></td><td>Administrador de credenciales (con sus claves DPAPI), perfiles WiFi con clave, SSH y Git.</td></tr>
+<tr><td><strong><strong>Navegadores</strong></strong></td><td>Marcadores, contrase&#241;as, historial, cookies y sesiones de un perfil.</td></tr>
+<tr><td><strong><strong>Configuraci&#243;n del sistema</strong></strong></td><td>Firewall, tareas, servicios, variables de entorno, red, impresoras, directiva local y certificados.</td></tr>
+<tr><td><strong><strong>Correo</strong></strong></td><td>Configuraci&#243;n de cuentas y firmas de Outlook.</td></tr>
+<tr><td><strong><strong>Perfil de usuario</strong></strong></td><td>Escritorio, Documentos, Im&#225;genes, V&#237;deos, M&#250;sica, Descargas y AppData\\Roaming.</td></tr>
+<tr><td><strong><strong>Nube</strong></strong></td><td>Cuentas y carpetas vinculadas de OneDrive.</td></tr>
+<tr><td><strong><strong>Configuraci&#243;n de MASys</strong></strong></td><td>Ajustes propios: lista negra, v&#237;nculos winget, avisos validados y cat&#225;logo de scripts.</td></tr>
+<tr><td><strong><strong>Bases de datos SQL Server</strong></strong></td><td>BACKUP DATABASE (.bak) de una instancia local, con autenticaci&#243;n de Windows.</td></tr>
+<tr><td><strong><strong>Forense / auditor&#237;a</strong></strong></td><td>Captura pericial con el motor MaPeriT &#8212; en caliente sobre el equipo en marcha o en fr&#237;o sobre un disco conectado sin arrancar &#8212; con consola elevada, informe HTML y cadena de custodia.</td></tr>
+<tr><td><strong><code>MASys_Setup_v5.7.3.exe</code></strong></td><td>Instalador Inno Setup por usuario, sin administrador, en <code>%LOCALAPPDATA%\Programs\MASys</code>. Al actualizar sustituye <code>_internal\</code> y no toca los datos ni <code>SCRIPTS\</code>. Al desinstalar los datos se quedan. Admite <code>/SILENT</code> y <code>/VERYSILENT /SUPPRESSMSGBOXES</code></td></tr>
+<tr><td><strong><code>MASys_Portable_v5.7.3.zip</code></strong></td><td>La misma compilaci&#243;n con <code>SCRIPTS\</code>, manual, ficha, licencia de libpff y <code>LEEME_PORTABLE.txt</code>. Todo se guarda dentro de su carpeta</td></tr>
+<tr><td><strong><code>MASys_Agente_v5.7.3.exe</code></strong></td><td>Agente de an&#225;lisis para enviar al cliente (onefile, <code>INSTALL\MASys_Agente.spec</code>); el instalador y la portable lo dejan en <code>AGENTE\</code></td></tr>
+<tr><td><strong><code>unico\MASys_v5.7.3.exe</code></strong></td><td>Un solo ejecutable (PyInstaller onefile, <code>INSTALL\MASys_unico.spec</code>); los datos se guardan junto a &#233;l</td></tr>
+</tbody></table></div>
+</section>
+
 <section id="correo">
 <h2>&#128231; Correo</h2>
 <p>Desde la 4.9.0 la sección <strong>&#128231; Cuentas Correo</strong> tiene pestañas: <em>&#128231; Cuentas</em> es la de siempre (cuentas del equipo, &#128269; Detectar cuenta, &#128190; Backup configuración y &#128228; Exportar a PST, sin cambios) y las otras cinco son la operativa de MACorreo adaptada a MASys. Nada de esto guarda contraseñas: la de <em>Probar cuenta</em> solo vive en su cuadro de texto.</p>
@@ -601,9 +853,424 @@ footer { text-align: center; padding: 32px; color: var(--text-light); font-size:
 <div class="alert-warning"><strong>Correos seguros de ver.</strong> El cuerpo se enseña sin scripts, sin formularios y sin cargar imágenes de Internet (así el remitente no sabe que se ha abierto). Los enlaces piden confirmación y los adjuntos que pueden ejecutar programas (.exe, .js, .docm…) avisan antes de abrirse. Un OST que esté usando Outlook está bloqueado: cierra Outlook o abre una copia.</div>
 </section>
 
-<!-- ================================================================== -->
+<section id="estab">
+<h2>&#129658; Estabilidad</h2>
+<p>Categoría <strong>Sistema</strong>. Lo que hace que el equipo falle: pantallazos azules, apagados inesperados y apps que se cierran o dejan de responder, leídos del registro de eventos de Windows (en unos 2 segundos). <strong>Solo lectura</strong>: no cambia nada.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Control</th><th>Qué hace</th></tr></thead>
+<tbody>
+<tr><td>&#128269; Buscar</td><td>Filtra la pestaña visible por app, código o texto.</td></tr>
+<tr><td>Periodo</td><td>Últimos 7 días · <em>Últimos 30 días</em> (por defecto) · Últimos 90 días · Último año. Al cambiarlo se vuelve a leer.</td></tr>
+<tr><td>&#128203; Visor de eventos</td><td>Abre el Visor de eventos de Windows.</td></tr>
+<tr><td>&#128200; Monitor de confiabilidad</td><td>Abre el historial de estabilidad de Windows día a día.</td></tr>
+<tr><td>&#128260; Actualizar</td><td>Vuelve a leer (también actualiza la salud del Dashboard).</td></tr>
+<tr><td>Cifras</td><td><em>Pantallazos azules</em> (rojo si hay alguno) · <em>Apagados inesperados</em> · <em>Fallos de apps</em> (y cuántas apps distintas) · <em>Índice de estabilidad de Windows</em> de 1 a 10 (verde desde 7, ámbar desde 4, rojo por debajo; «—» si Windows no lo calcula en este equipo).</td></tr>
+</tbody></table></div>
+<h3>Pestañas</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Pestaña</th><th>Contenido</th></tr></thead>
+<tbody>
+<tr><td>&#128338; Línea de tiempo</td><td>Fecha · Hora · Tipo (Pantallazo azul en rojo, Apagado inesperado en ámbar, La app se cerró / La app dejó de responder en azul) · Qué pasó · Detalle. Lo más reciente primero.</td></tr>
+<tr><td>&#128165; Pantallazos azules</td><td>Fecha · Hora · Código · Nombre · Qué significa · Causa habitual · Controlador · Volcado. Con los botones <strong>&#128300; Analizar volcado</strong> y <strong>&#128194; Carpeta de volcados</strong> (abre <code>C:\Windows\Minidump</code>).</td></tr>
+<tr><td>&#128201; Apps que fallan</td><td>App · Fallos (en rojo desde 5) · Se cerró · Dejó de responder · Último · Módulo que falla · Qué significa · Ruta. Ordenada por número de fallos.</td></tr>
+</tbody></table></div>
+<p><strong>De dónde sale cada cosa:</strong> un pantallazo deja en el registro «System» el evento 41 de Kernel-Power con el código y el 1001 con la ruta del volcado; MASys los junta en uno. Un evento 41 sin código, o el 6008 («el apagado anterior fue inesperado»), es un apagado inesperado: corte de luz, botón de encendido mantenido o el equipo se quedó colgado. Los fallos de apps son los eventos 1000 (se cerró) y 1002 (dejó de responder) del registro «Application».</p>
+<p><strong>Analizar volcado:</strong> el código de un pantallazo lo da Windows, pero el controlador que lo provocó solo se sabe analizando el volcado. Si están instaladas las <em>Herramientas de depuración para Windows</em> (parte del Windows SDK de Microsoft, gratuito), este botón lo analiza (<code>kd.exe</code>, MASys como administrador; la primera vez descarga símbolos de Microsoft y puede tardar unos minutos) y rellena la columna Controlador con su nombre y qué es (por ejemplo «nvlddmkm.sys · Tarjeta gráfica NVIDIA»). Si no están, lo dice.</p>
+<div class="alert-info"><strong>Módulo que falla:</strong> si no es de la propia app (por ejemplo una DLL de un antivirus o de un complemento), la causa suele ser ese otro programa.</div>
+</section>
+
+<section id="iconos">
+<h2>&#127912; Iconos</h2>
+<p>Categoría <strong>Sistema</strong>. Cuatro pestañas.</p>
+
+<h3 id="iconos-bib">&#128218; Bibliotecas</h3>
+<p>Muestra todos los iconos que contiene un archivo, con su número de orden (índice) y su identificador (ID).</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Control</th><th>Qué hace</th></tr></thead>
+<tbody>
+<tr><td>Desplegable de bibliotecas</td><td>Las de Windows que existen en el equipo: imageres.dll (iconos modernos), shell32.dll (clásicos del Explorador), ddores.dll (dispositivos y hardware), netshell.dll (conexiones de red), wmploc.dll (multimedia), mmres.dll (sonido), setupapi.dll (instalación de hardware), pifmgr.dll (iconos antiguos de programas), moricons.dll (programas MS-DOS), compstui.dll (impresión), ieframe.dll (Internet Explorer), accessibilitycpl.dll (accesibilidad), dmdskres.dll (administración de discos), mstscax.dll (escritorio remoto), pnidui.dll (red en la barra de tareas), sensorscpl.dll (sensores) y explorer.exe. Los archivos abiertos con «Abrir archivo» se añaden al final.</td></tr>
+<tr><td>&#128194; Abrir archivo…</td><td>Cualquier .exe, .dll, .icl, .cpl, .ico, .ocx, .scr o .mun.</td></tr>
+<tr><td>&#128269; Índice o ID…</td><td>Deja solo los iconos cuyo índice o ID empieza por lo escrito (se acepta el signo menos).</td></tr>
+<tr><td>Tamaño</td><td>32, 48 (por defecto), 64 o 96 px en la cuadrícula.</td></tr>
+<tr><td>Cuadrícula</td><td>Clic = ver el icono en grande a la derecha. Ctrl o Mayús + clic = marcar varios.</td></tr>
+<tr><td>Panel derecho</td><td>Vista a 256 px, «Índice N · ID N», la <strong>referencia</strong> (<code>ruta,-ID</code>, lo que se pone en un acceso directo o en el registro) y los tamaños que trae.</td></tr>
+<tr><td>&#128203; Copiar referencia</td><td>Copia la referencia al portapapeles.</td></tr>
+<tr><td>&#128190; Guardar ICO…</td><td>Guarda el icono con todos sus tamaños.</td></tr>
+<tr><td>&#128444;&#65039; Guardar PNG…</td><td>Guarda el tamaño mayor, con transparencia.</td></tr>
+<tr><td>&#128230; Extraer todos…</td><td>Todos los iconos de la biblioteca (o solo los marcados, si hay más de uno) en ICO y PNG, en una carpeta <code>Iconos_&lt;biblioteca&gt;</code> dentro de la que se elija. Al terminar ofrece abrirla.</td></tr>
+</tbody></table></div>
+
+<h3 id="iconos-apps">&#128444;&#65039; Iconos de aplicaciones</h3>
+<p>Los programas del escritorio, el menú Inicio y la barra de tareas (del usuario actual y de todos los usuarios), con su icono real.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Columna / botón</th><th>Contenido</th></tr></thead>
+<tbody>
+<tr><td>Aplicación</td><td>Nombre del acceso directo, con su icono.</td></tr>
+<tr><td>Dónde</td><td>Escritorio · Escritorio público · Menú Inicio · Menú Inicio (todos) · Barra de tareas · Inicio rápido.</td></tr>
+<tr><td>Programa</td><td>Archivo al que apunta.</td></tr>
+<tr><td>Icono</td><td>De dónde sale el icono, o «(el del programa)».</td></tr>
+<tr><td>&#128190; Guardar ICO… / &#128444;&#65039; Guardar PNG…</td><td>Extraen el icono de la aplicación elegida.</td></tr>
+<tr><td>&#128218; Ver su biblioteca</td><td>Abre el archivo del icono en la pestaña Bibliotecas para ver todos los que tiene (también con doble clic).</td></tr>
+</tbody></table></div>
+
+<h3 id="iconos-rep">&#129658; Reparación</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Control</th><th>Qué hace</th></tr></thead>
+<tbody>
+<tr><td>Caché de iconos / de miniaturas</td><td>Número de archivos y tamaño actual de cada caché.</td></tr>
+<tr><td>&#129529; Reconstruir caché de iconos</td><td>Para iconos en blanco, equivocados o que no se actualizan. Borra la caché y reinicia el Explorador (la barra de tareas desaparece un momento y se cierran las ventanas de carpetas).</td></tr>
+<tr><td>&#129529; Reconstruir caché de miniaturas</td><td>Para vistas previas de fotos y documentos que salen mal. Mismo aviso.</td></tr>
+<tr><td>Filtro</td><td><em>Con problemas</em> (por defecto) o <em>Todos</em>.</td></tr>
+<tr><td>&#128194; Abrir ubicación</td><td>Abre la carpeta del acceso directo con él marcado.</td></tr>
+<tr><td>&#10005; Quitar</td><td>Envía los accesos directos marcados a la <strong>Papelera</strong> (se pueden recuperar). Los del menú Inicio de todos los usuarios necesitan administrador.</td></tr>
+<tr><td>Tabla</td><td>Acceso directo · Dónde · Estado · Destino · Icono.</td></tr>
+</tbody></table></div>
+<p><strong>Estados:</strong> <em>Correcto</em> (verde) · <em>Destino no encontrado</em> (rojo) · <em>Icono no encontrado</em> (ámbar) · <em>Ruta de red (no comprobada)</em> · <em>Acceso especial (aplicación de la Tienda o instalador)</em>.</p>
+
+<h3 id="iconos-conf">&#9881;&#65039; Configuración</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Grupo</th><th>Controles</th></tr></thead>
+<tbody>
+<tr><td>&#128421;&#65039; Iconos del escritorio</td><td>Casillas <em>Este equipo</em>, <em>Archivos del usuario</em>, <em>Red</em>, <em>Papelera de reciclaje</em> y <em>Panel de control</em>: marcar = se ve en el escritorio. Se aplica al momento.</td></tr>
+<tr><td>&#8596;&#65039; Espaciado de los iconos del escritorio</td><td><em>Horizontal</em> y <em>Vertical</em> de 32 a 182 px. <strong>&#10004;&#65039; Aplicar</strong> lo guarda y reinicia el Explorador. <strong>&#8617;&#65039; Valores de Windows</strong> vuelve a 75 px.</td></tr>
+<tr><td>&#128208; Posición de los iconos del escritorio</td><td><strong>&#128190; Guardar la actual…</strong> pide un nombre (p. ej. «Trabajo», «Dos monitores»). <strong>&#8617;&#65039; Restaurar</strong> deja los iconos como en la posición elegida. <strong>&#10005; Quitar</strong> la envía a la Papelera. Tabla: Nombre · Fecha · Equipo · Archivo.</td></tr>
+<tr><td>&#129513; Iconos superpuestos (OneDrive, Dropbox, Git...)</td><td>Windows solo tiene 15 plazas y reserva 4; las reparte por orden alfabético del nombre. Tabla: Posición · Nombre · Programa · Estado (<em>Activo</em>, <em>Puede quedar fuera</em>, <em>Sin plaza (no se ve)</em>) · Archivo. <strong>&#11014;&#65039; Dar prioridad</strong> pone el elegido el primero (antes guarda una copia .reg en <code>BACKUPS\ICONOS</code>; si la copia falla no cambia nada) y reinicia el Explorador. <strong>&#128194; Copias del registro</strong> abre esa carpeta.</td></tr>
+<tr><td>&#128189; Iconos personalizados de unidades</td><td><strong>&#127912; Poner icono a una unidad…</strong>: elegir la letra y el icono en el selector (Bibliotecas en pequeño, con «Usar este icono»). Se ve al volver a abrir «Este equipo». <strong>&#10005; Quitar personalización</strong> devuelve el icono y nombre de Windows. Tabla: Unidad · Icono · Nombre.</td></tr>
+</tbody></table></div>
+<div class="alert-warning">Sin permisos de administrador los iconos superpuestos y los de las unidades se pueden ver pero no cambiar (lo indica una nota arriba).</div>
+</section>
+
+<section id="asoc">
+<h2>&#128279; Extensiones y programas</h2>
+<p>Categoría <strong>Sistema</strong>. Qué programa abre cada tipo de archivo y cada protocolo, calculado igual que lo hace el Explorador.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Control</th><th>Qué hace</th></tr></thead>
+<tbody>
+<tr><td>&#128228; Exportar XML…</td><td>Guarda las asociaciones de este equipo en el formato de DISM (para otro equipo o una GPO).</td></tr>
+<tr><td>&#128229; Importar XML…</td><td>Necesita administrador. Windows lo aplica a los usuarios <strong>nuevos</strong> y a cada usuario la próxima vez que inicie sesión; no cambia al instante las elecciones ya hechas. Se deshace con <code>DISM /Remove-DefaultAppAssociations</code>.</td></tr>
+<tr><td>Pestaña &#128196; Extensiones</td><td>Tabla Extensión · Tipo de archivo · Abre con · Origen · Estado · Programa.</td></tr>
+<tr><td>Pestaña &#127760; Protocolos</td><td>Lo mismo para http, mailto, tel, teams… (Protocolo · Identificador · …).</td></tr>
+<tr><td>Pestaña &#128230; Por programa</td><td>Programa · Nº · Extensiones y protocolos · Programa (ruta). Se calcula con lo leído en las otras dos pestañas; ordenada por número.</td></tr>
+<tr><td>Filtro</td><td><em>Con programa</em> (por defecto) · <em>Con problemas</em> · <em>Elegidas por el usuario</em> · <em>Sin programa</em> · <em>Todas</em>.</td></tr>
+<tr><td>&#129695; Abrir con…</td><td>(Solo Extensiones; también con doble clic.) Abre el diálogo de Windows para elegir el programa; hay que marcar «Usar siempre» y luego pulsar &#128260; Actualizar.</td></tr>
+<tr><td>&#8617;&#65039; Restablecer</td><td>Quita la elección del usuario: Windows vuelve a la suya o pregunta la próxima vez. Solo actúa si hay elección del usuario o está rota.</td></tr>
+<tr><td>&#9881;&#65039; Aplicaciones predeterminadas</td><td>Abre Configuración › Aplicaciones › Aplicaciones predeterminadas.</td></tr>
+</tbody></table></div>
+<p><strong>Origen:</strong> <em>Elegido por el usuario</em> (azul) o <em>Del sistema o del programa</em>. <strong>Estado:</strong> <em>Correcto</em> · <em>Sin programa (Windows pregunta)</em> · <em>Programa no encontrado</em> · <em>Elección rota (el programa ya no está)</em>.</p>
+<div class="alert-info">MASys no fija el programa predeterminado escribiendo en el registro: Windows protege esa elección con una firma y la anularía. Por eso usa el diálogo «Abrir con» de Windows.</div>
+</section>
+
+<section id="carac">
+<h2>&#129513; Características de Windows</h2>
+<p>Categoría <strong>Sistema</strong>. Las características opcionales y las capacidades (RSAT, OpenSSH, idiomas…) en una sola tabla, con nombre en español.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Control</th><th>Qué hace</th></tr></thead>
+<tbody>
+<tr><td>Filtro</td><td><em>Sin idiomas ni controladores</em> (por defecto) · <em>Activadas</em> · <em>Desactivadas</em> · <em>Con aviso de seguridad</em> · <em>Solo características</em> · <em>Solo capacidades</em> · <em>Idiomas</em> · <em>Controladores</em> · <em>Todas</em>.</td></tr>
+<tr><td>&#10004;&#65039; Activar</td><td>Activa las marcadas que estén desactivadas (se pueden marcar varias). Puede tardar varios minutos (algunas se descargan de Windows Update).</td></tr>
+<tr><td>&#10005; Quitar</td><td>Desactiva las marcadas que estén activadas. Lo que las use dejará de funcionar.</td></tr>
+<tr><td>&#128203; Perfiles…</td><td>Abre «Perfiles de características»: a la izquierda los perfiles, a la derecha qué <em>se activarán</em>, qué <em>se quitarán</em>, qué <em>ya están como pide el perfil</em> y cuáles <em>no existen en esta versión de Windows</em>. «&#10004;&#65039; Aplicar este perfil» solo se habilita si hay algo que cambiar.</td></tr>
+<tr><td>&#128191; .NET 3.5 sin internet…</td><td>Instala .NET Framework 3.5 desde la carpeta <code>\sources\sxs</code> de un USB o ISO de la <strong>misma</strong> versión de Windows, cuando Windows Update falla.</td></tr>
+<tr><td>Tabla</td><td>Nombre · Tipo (<em>Característica</em> / <em>Capacidad</em>) · Estado (<em>Activada</em>, <em>Desactivada</em>, <em>Pendiente de reinicio</em>, <em>No disponible</em>) · Categoría · Nombre técnico · Aviso (en rojo).</td></tr>
+</tbody></table></div>
+<h3>Perfiles</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Perfil</th><th>Cambios</th></tr></thead>
+<tbody>
+<tr><td>&#128736;&#65039; Puesto de soporte IT</td><td>Activa RSAT de Active Directory, directiva de grupo, DNS, DHCP, Administrador del servidor y recuperación de BitLocker, el cliente OpenSSH y la consola de administración de impresión.</td></tr>
+<tr><td>&#128187; Desarrollo y máquinas virtuales</td><td>Activa WSL, Plataforma de máquina virtual, Hyper-V, Espacio aislado de Windows y el modo de desarrollador.</td></tr>
+<tr><td>&#128737;&#65039; Endurecer el equipo</td><td>Quita SMB 1.0 (cliente y servidor), PowerShell 2.0, cliente Telnet, cliente TFTP, Servicios TCP/IP simples e Internet Explorer.</td></tr>
+<tr><td>&#128450;&#65039; Programas antiguos</td><td>Activa .NET 3.5, componentes heredados y DirectPlay.</td></tr>
+</tbody></table></div>
+<p>Los cambios no reinician el equipo: si Windows lo necesita, se avisa al terminar («Windows pide reiniciar para terminar»). Si ya hay un reinicio pendiente, se indica arriba de la tabla.</p>
+<div class="alert-warning">Sin permisos de administrador solo se ven las características (no las capacidades como RSAT u OpenSSH) y no se puede cambiar nada.</div>
+</section>
+
+<section id="red">
+<h2>&#129514; Herramientas de red</h2>
+<p>Categoría <strong>Red</strong>. Dos pestañas.</p>
+
+<h3 id="red-diag">&#128300; Diagnóstico por capas</h3>
+<p>Prueba un destino de abajo arriba: contexto (VPN, proxy), tarjeta de red, puerta de enlace y ARP, ping y traza, puertos, TLS, DNS en varios servidores, web y, si se marca, Microsoft 365.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Control</th><th>Qué hace</th></tr></thead>
+<tbody>
+<tr><td>Destino</td><td>Dominio o IP (p. ej. <code>masoft.es</code>, <code>192.168.1.10</code>). Intro lanza el diagnóstico.</td></tr>
+<tr><td>Microsoft 365</td><td>Casilla (marcada por defecto): añade las pruebas de Microsoft 365 / Entra ID.</td></tr>
+<tr><td>Puertos</td><td>Separados por comas con nombre opcional. Por defecto <code>80 HTTP, 443 HTTPS, 22 SSH, 3389 RDP, 445 SMB, 25 SMTP</code>.</td></tr>
+<tr><td>&#9654;&#65039; Diagnosticar</td><td>Lanza las pruebas; a la derecha se ve el avance y al final «N correctas · N avisos · N errores».</td></tr>
+<tr><td>Filtro</td><td><em>Todas</em> · <em>Con problemas</em> · <em>Correctas</em>.</td></tr>
+<tr><td>&#128269; Investigar puerto</td><td>Sobre una fila «Puerto …» con aviso o error (también con doble clic): repite pruebas alrededor de ese puerto y dice por qué falla. La conclusión se añade al detalle.</td></tr>
+<tr><td>&#127760; Informe técnico…</td><td>HTML con todas las pruebas.</td></tr>
+<tr><td>&#128100; Informe para el cliente…</td><td>HTML con veredicto y hallazgos en lenguaje llano, sin la parte técnica que esté bien.</td></tr>
+<tr><td>Tabla</td><td>Capa (Contexto, 1 · Física, 2 · Enlace, 3 · Red, 4 · Transporte, 5-6 · Sesión/Seguridad, 7 · Aplicación, M365 / Entra ID) · Prueba · Estado · Tiempo · Detalle.</td></tr>
+</tbody></table></div>
+
+<h3 id="red-cons">&#128270; Consultas</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Herramienta</th><th>Qué escribir</th><th>Resultado</th></tr></thead>
+<tbody>
+<tr><td><span class="param-name">DNS</span></td><td>Dominio o IP + tipo</td><td>Registros del tipo elegido.</td></tr>
+<tr><td><span class="param-name">DNS en varios servidores</span></td><td>Dominio + tipo</td><td>El mismo registro en Sistema, Google, Cloudflare y Quad9 (para ver si un cambio se ha propagado).</td></tr>
+<tr><td><span class="param-name">WHOIS (RDAP)</span></td><td>Dominio o IP</td><td>Quién tiene el dominio o la red y cuándo caduca.</td></tr>
+<tr><td><span class="param-name">Web: cabeceras y redirecciones</span></td><td>Dirección web (masoft.es o https://…)</td><td>Respuesta, redirecciones y cabeceras de seguridad.</td></tr>
+<tr><td><span class="param-name">Certificado TLS</span></td><td>Dominio o dominio:puerto (p. ej. correo.ejemplo.com:993)</td><td>Para quién es, quién lo emite y cuándo caduca.</td></tr>
+<tr><td><span class="param-name">Mi IP pública</span></td><td>Nada</td><td>La IP con la que este equipo sale a internet.</td></tr>
+</tbody></table></div>
+<p>El tipo de registro (solo en las de DNS) puede ser A, AAAA, MX, TXT, NS, CNAME, SOA, SRV, CAA o PTR. <strong>&#128270; Consultar</strong> (o Intro) lanza la consulta; la tabla muestra Dato · Valor con color de estado.</p>
+</section>
+
+<section id="mig">
+<h2>&#129523; Inventario de migración</h2>
+<p>Categoría <strong>Administración</strong>. Apunta todo lo que hay que tener en cuenta al cambiar de equipo y, en el equipo nuevo, dice qué falta. <strong>No copia ningún dato ni guarda ninguna contraseña.</strong></p>
+<div class="flow">
+  <div class="flow-step">Equipo viejo: &#128260; Actualizar (1-3 minutos)</div>
+  <div class="flow-step">&#128190; Guardar… (.msysinv)</div>
+  <div class="flow-step">Equipo nuevo: &#128194; Comparar…</div>
+  <div class="flow-step">&#128257; Reinstalar con winget…</div>
+  <div class="flow-step">&#127760; Lista de comprobación… o HTML (barra inferior)</div>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Control</th><th>Qué hace</th></tr></thead>
+<tbody>
+<tr><td>&#128260; Actualizar</td><td>Hace el inventario de este equipo. La nota de la segunda fila enseña el avance y al final el resumen (elementos e importantes, en amarillo).</td></tr>
+<tr><td>&#128190; Guardar…</td><td>Guarda el inventario en un archivo <code>.msysinv</code>. No lleva contraseñas, pero sí nombres de cuentas, redes y programas: guardarlo en un sitio seguro.</td></tr>
+<tr><td>&#128194; Comparar…</td><td>En el equipo <strong>nuevo</strong>: abre el inventario del viejo, hace el de este y marca cada elemento. Si el archivo es de este mismo equipo, pregunta antes.</td></tr>
+<tr><td>&#128257; Reinstalar con winget…</td><td>Tras comparar: lista de programas del equipo viejo que faltan aquí y winget sabe instalar, todos marcados (<em>Marcar todos</em>, <em>Ninguno</em>). <strong>&#128257; Instalar los marcados</strong> abre una ventana de winget para ver el avance. Los programas de pago necesitarán su licencia.</td></tr>
+<tr><td>&#127760; Lista de comprobación…</td><td>HTML imprimible con una <strong>casilla por elemento</strong> para ir marcando lo hecho: un apartado por categoría con su número, tabla Elemento · Detalle · Qué hacer en el equipo nuevo (y «En el equipo nuevo» con su estado en color si se ha comparado), filas importantes en amarillo y el resumen presentes / faltan / distintos. Se guarda como <code>Migracion_&lt;equipo&gt;_AAAAMMDD_HHMM.html</code>.</td></tr>
+<tr><td>HTML (barra inferior, junto a CSV)</td><td>Informe con el mismo diseño y funcionamiento que el de MIGRACION.PS1: cabecera «INFORME DE MIGRACIÓN - equipo» con la fecha, buscador, «+ Expandir todo», «- Contraer todo» e «Imprimir», un apartado plegable por categoría con su número (abierto solo el primero), tabla Elemento · Detalle · Qué hacer en el equipo nuevo (y «En el equipo nuevo» si se ha comparado), insignia IMPORTANTE y los mismos avisos bajo cada apartado (contraseñas que no se exportan, certificados con clave privada, cuentas que iniciar…). Se guarda como <code>Informe_&lt;equipo&gt;_AAAAMMDD_HHMMSS.html</code>, igual que el script.</td></tr>
+<tr><td>Categoría</td><td><em>Todas las categorías</em> o una de las 18.</td></tr>
+<tr><td>Filtro</td><td><em>Todo</em> · <em>Solo lo importante</em> · <em>Faltan en este equipo</em> (se elige solo al comparar) · <em>Distintos</em> · <em>Presentes</em>.</td></tr>
+<tr><td>Tabla</td><td>Categoría · Elemento · Detalle · Qué hacer en el equipo nuevo · En este equipo (solo al comparar: <em>Presente</em> verde, <em>Falta</em> rojo, <em>Distinto</em> ámbar).</td></tr>
+</tbody></table></div>
+<h3>Categorías</h3>
+<p>Equipo · Seguridad y licencias · Red · Unidades y carpetas compartidas · Usuarios y perfiles · Credenciales y certificados · Correo · Navegadores · Nube · Office · Programas · Reinstalables con winget · Impresoras · Tareas programadas · Dispositivos y monitores · Datos del usuario · Personalización · Programas predeterminados.</p>
+</section>
+
+<section id="movil">
+<h2>&#128241; Móviles Android</h2>
+<p>Desde la 5.3.0 es una <strong>ventana propia</strong> que se abre con el botón <strong>&#128241; Móviles Android</strong> bajo el árbol, entre <em>&#128421;&#65039; Acceso remoto</em> y <em>&#9881;&#65039; Configuración y perfiles</em> (antes era la sección «Móvil Android» del árbol, en Hardware y periféricos). Recibe y analiza los informes de la app <strong>MASysMov</strong>. Hay dos formas de recibirlos, y valen las dos a la vez:</p>
+<div class="flow">
+  <div class="flow-step">Marcar «Recibir del móvil»</div>
+  <div class="flow-step">&#128242; Emparejar móvil… (empresa y usuario)</div>
+  <div class="flow-step">Sale un QR</div>
+  <div class="flow-step">En el móvil: Ajustes › Enlace con MASys › Emparejar con el PC</div>
+  <div class="flow-step">Llega el primer informe</div>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Control</th><th>Qué hace</th></tr></thead>
+<tbody>
+<tr><td>&#128101; Empresas</td><td>El catálogo de empresas y usuarios de tus clientes (el mismo de Acceso remoto).</td></tr>
+<tr><td>&#128682; Puertos desde fuera</td><td>Ventana con los pedidos de puertos de <strong>todos</strong> los móviles (ver más abajo).</td></tr>
+<tr><td>Recibir del móvil</td><td>Casilla. MASys escucha en el puerto 47880 de la red local mientras está abierto, <strong>aunque esta ventana esté cerrada</strong>; se recuerda para la próxima vez. La primera vez, con administrador, ofrece abrir ese puerto en el firewall de Windows <strong>solo para redes privadas y de dominio</strong> (nunca en públicas). La nota de debajo dice en qué IP está recibiendo.</td></tr>
+<tr><td>&#128242; Emparejar móvil…</td><td>Pide primero la <strong>empresa y el usuario</strong> del móvil y después enseña un código QR que vale 10 minutos y para un solo móvil (marca «Recibir del móvil» si no lo estaba). Al emparejar, el móvil queda en su sitio del árbol.</td></tr>
+<tr><td>&#128229; Importar archivo…</td><td>Abre un informe <code>.msysmov</code> exportado en MASysMov y pide su contraseña. Si el móvil no tiene empresa, la pide (Cancelar = no se importa). Si ya estaba importado, no lo duplica.</td></tr>
+<tr><td>&#127760; Informe HTML…</td><td>Informe completo del informe elegido (con los cambios respecto al anterior y las tablas de todas las pestañas). Los datos personales no van en el informe.</td></tr>
+<tr><td>&#128196; CSV…</td><td>Guarda en CSV la pestaña que se ve (todas sus subpestañas).</td></tr>
+<tr><td>&#10005; Quitar móvil</td><td>Borra de este PC el móvil, sus informes y lo recibido de contactos, llamadas y SMS; deja de aceptar sus envíos. Las copias guardadas en la carpeta no se borran.</td></tr>
+<tr><td>Datos personales</td><td>Lo que mandan los móviles de contactos, llamadas y SMS: <em>No recibir</em> (por defecto), <em>Solo recuentos</em> o <em>Completo</em>. Ver más abajo.</td></tr>
+<tr><td>Informes</td><td>Lista debajo del árbol con los informes del móvil elegido, del más reciente al más antiguo, con fecha y origen.</td></tr>
+</tbody></table></div>
+
+<h3 id="movil-arbol">Empresa, usuario y terminal</h3>
+<p>A la izquierda, un árbol <strong>Empresa › Usuario › Terminal</strong>. Al abrir la ventana las empresas salen plegadas; al abrir una empresa se pliega la que estaba abierta, y dentro de una empresa solo hay un usuario abierto a la vez. La empresa y el usuario se eligen del catálogo &#128101; Empresas o se escriben; si no están en el catálogo, MASys pregunta si los añade (con «No» se guardan igual en el móvil, como en la agenda de Acceso remoto). Los móviles que ya había antes de la 5.3.0 salen en <strong>&#10068; Sin asignar</strong>: clic derecho › <em>&#128101; Asignar a empresa y usuario…</em> (vale también para cambiarlos de sitio). Pasando el ratón por un terminal se ve su modelo, número de informes, vía (Wi-Fi o archivo) y fecha del último informe.</p>
+
+<h3 id="movil-pest">Pestañas del móvil</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Pestaña</th><th>Contenido</th></tr></thead>
+<tbody>
+<tr><td>&#128203; Ficha</td><td>Móvil, Android (ámbar si es anterior a Android 12), parche de seguridad (ámbar con más de 90 días, rojo con más de 180), procesador, nivel de acceso de MASysMov, encendido desde hace, batería (nivel, estado, salud, temperatura, ciclos), batería en detalle (tensión, tecnología, gasto habitual por hora, horas que quedan), DNS privado, Bluetooth (emparejados y conectados), procesos (en marcha, CPU, temperatura), temporales de las apps (ámbar con más de 2 GB), liberado con MASysMov, eliminados recuperables, memoria, almacenamiento (ámbar &gt;85 % usado, rojo &gt;95 %), red y Wi-Fi (ámbar si está sin cifrar), IP / puerta / DNS, apps, cuentas e informe.</td></tr>
+<tr><td>&#128737;&#65039; Seguridad</td><td>Estado (Bien, Revisar, Importante, Info) · Hallazgo · Detalle: la revisión de seguridad del propio móvil más parche antiguo, apps instaladas fuera de una tienda, apps que contactan con publicidad o analítica, almacenamiento casi lleno (&gt;90 %), Wi-Fi sin cifrar, rastreadores sin cortar, muchos temporales (más de 2 GB), 3 o más apps sin usar en 30 días y, desde MASysMov 1.3.2, batería gastada (menos del 80 % de su capacidad original), pruebas con fallo y Wi-Fi en un canal saturado.</td></tr>
+<tr><td>&#128230; Apps</td><td>App · Notas · Permisos sensibles · Origen (Play Store, Galaxy Store, AppGallery, GetApps, Amazon Appstore, App Market, V-Appstore, APK a mano o fuera de tienda) · Versión · Paquete. Con búsqueda.</td></tr>
+<tr><td>&#127760; Conexiones</td><td>App · Dominio · Consultas · Bloqueadas · Publicidad (nombre del servicio de publicidad o analítica, en ámbar). De los últimos 7 días, si el monitor de red de MASysMov está activo. Con búsqueda.</td></tr>
+<tr><td>&#128200; Evolución</td><td>Una fila por informe: Fecha · Batería · Salud · Temperatura · Ciclos · Almacenamiento · Apps · Velocidad · Vía.</td></tr>
+<tr><td>&#128260; Cambios</td><td>Respecto al informe anterior: <em>App nueva</em>, <em>App quitada</em>, <em>Permisos nuevos</em>, <em>Actualizada</em>; y, con &#128276;, los avisos que guardó el propio móvil (apps y permisos nuevos) con su fecha.</td></tr>
+<tr><td>&#128189; Espacio</td><td>Subpestañas: <em>Apps</em> (App · Total · Programa · Datos · Temporales) · <em>Carpetas</em> (Carpeta · Tamaño · Archivos) · <em>Tipos de archivo</em> (Tipo · Tamaño · Archivos) · <em>Archivos grandes</em> (Archivo · Carpeta · Tamaño · Fecha · Hora · Tipo) · <em>Mensajería</em> (App · Carpeta · Tamaño · Archivos · Ruta) · <em>Apps sin usar</em> (App · Último uso · Tamaño) · <em>Copias en el móvil</em> (App · Versión · Fecha · Hora · Tamaño · Contenido · Instalable). Carpetas, tipos, grandes y mensajería necesitan «Acceso a todos los archivos» en el móvil.</td></tr>
+<tr><td>&#128267; Batería</td><td><em>Consumo por app</em> (App · mAh · % del gasto; solo si el móvil tiene modo avanzado o root) · <em>Historial (7 días)</em> (Fecha · Hora · Nivel · Cargando) · <em>Salud</em> (salud real, capacidad original, capacidad actual y ciclos; MASysMov 1.3.2; «El móvil no lo informa» si el fabricante no lo da).</td></tr>
+<tr><td>&#128373;&#65039; Rastreadores</td><td><em>Servicios</em> (Servicio · Consultas · Cortadas · Apps · Se corta) · <em>Apps</em> (App · Consultas · Cortadas · Servicios). De los últimos 7 días, con el monitor de red de MASysMov activo.</td></tr>
+<tr><td>&#9881;&#65039; Procesos</td><td>App · Memoria · CPU · Procesos, de más a menos memoria (los de otras apps solo con modo avanzado o root).</td></tr>
+<tr><td>&#128295; Hardware</td><td>Grupo · Dato · Valor: lo de <em>Sistema › Información</em> de MASysMov (equipo, sistema, procesador, pantalla, cámaras, memoria, seguridad, temperaturas y sensores). MASysMov 1.3.2.</td></tr>
+<tr><td>&#128246; Red</td><td><em>Líneas SIM</em> (Línea · Operador · Red · Señal · Calidad · Banda · Antena · Datos · Itinerancia; banda y antena con el permiso de ubicación) · <em>Wi-Fi</em> (encendida, estándar más alto, bandas, WPA3, Wi-Fi Direct, red conectada con canal, velocidad del enlace y canal recomendado) · <em>Redes cercanas</em> (Red · Señal · Canal · Banda · Seguridad · Estándar) · <em>Redes guardadas</em> (solo con modo avanzado o root) · <em>Bluetooth</em> (Dispositivo · Tipo · Conectado · Batería) · <em>Velocidad</em> (los últimos 10 tests: Fecha · Hora · Bajada · Subida · Ping · Jitter · Red · Servidor).</td></tr>
+<tr><td>&#128202; Consumo de datos</td><td>App · Wi-Fi · Datos móviles · Total, de los últimos 30 días.</td></tr>
+<tr><td>&#9989; Pruebas</td><td>Grupo · Prueba · Resultado (Bien, Fallo, No tiene o Sin hacer) · Fecha · Hora · Detalle: las 22 pruebas de <em>Pruebas</em> de MASysMov. MASysMov 1.3.2.</td></tr>
+<tr><td>&#128101; Datos personales</td><td><em>Resumen</em> · <em>Contactos</em> · <em>Llamadas</em> · <em>SMS</em> (ver abajo).</td></tr>
+<tr><td>&#128190; Copias</td><td>Copias de apps y de Datos que manda el móvil (ver abajo).</td></tr>
+</tbody></table></div>
+
+<h3 id="movil-datos">&#128101; Datos personales</h3>
+<p>El técnico elige en <strong>Datos personales</strong> (arriba a la derecha) qué mandan los móviles en cada envío por Wi-Fi. Vale para todos los móviles y se aplica en el siguiente envío de cada uno. Se guarda solo lo último que mandó cada móvil, protegido con DPAPI como los informes.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Opción</th><th>Qué llega</th></tr></thead>
+<tbody>
+<tr><td><span class="param-name">No recibir</span> <span class="badge badge-default">por defecto</span></td><td>Nada. Lo ya recibido de antes se sigue viendo hasta que se quite el móvil.</td></tr>
+<tr><td><span class="param-name">Solo recuentos</span></td><td><em>Resumen</em>: cuántos contactos, llamadas y SMS (y en cuántas conversaciones) tiene el móvil.</td></tr>
+<tr><td><span class="param-name">Completo</span></td><td>Además: <em>Contactos</em> (Nombre · Teléfonos · Correos · Cuentas · Favorito), <em>Llamadas</em> (Fecha · Hora · Número · Nombre · Tipo · Duración) y <em>SMS</em> (Fecha · Hora · Número · Tipo · Leído · Texto), hasta 5.000 de cada (los más recientes).</td></tr>
+</tbody></table></div>
+<p>Si al móvil le falta el permiso de contactos, llamadas o SMS, el Resumen lo dice («Sin permiso en el móvil»): MASysMov no los pide por su cuenta. Los importados por archivo no mandan datos personales.</p>
+
+<h3 id="movil-copias">&#128190; Copias de apps y de Datos</h3>
+<p>Las copias de apps que se hacen en MASysMov 1.2.3 o posterior (Sistema › Espacio › Copias de apps) llegan aquí por la Wi-Fi, cifradas y en trozos de 4 MB: si el envío se corta, la vez siguiente sigue donde se quedó. Cada archivo se comprueba con su huella (SHA-256); si llega dañado, se borra y se pide entero otra vez. Desde MASysMov 1.2.4 cada copia llega como una <strong>carpeta con su <code>.apk</code> instalable</strong> (y sus piezas <code>…_split_….apk</code> si la app va en varias, el <code>.json</code> y los datos <code>.tar</code>); las de MASysMov 1.2.3 llegan como <code>.zip</code>. Desde MASysMov 1.3.2 también llegan las <strong>copias de Datos</strong> (<code>.msysdatos</code>: contactos, llamadas y SMS cifrados con la contraseña que se puso en el móvil) que se guarden con <em>Guardar en la carpeta de copias</em>. Todo va a una subcarpeta por móvil.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Control</th><th>Qué hace</th></tr></thead>
+<tbody>
+<tr><td>&#128193; ruta</td><td>Carpeta donde se guardan las copias del móvil elegido (se puede seleccionar y copiar).</td></tr>
+<tr><td>&#128193; Carpeta…</td><td>Elegir la carpeta de las copias de todos los móviles (por defecto <code>COPIAS_MOVIL</code> junto a MASys). Las ya recibidas no se mueven.</td></tr>
+<tr><td>&#128194; Abrir carpeta</td><td>Abre la carpeta del móvil en el Explorador.</td></tr>
+<tr><td>Traer las copias nuevas en cada envío</td><td>Marcado (por defecto): cada vez que el móvil manda su informe, envía también las copias que falten. Se guarda por móvil.</td></tr>
+<tr><td>&#128232; Pedir al móvil</td><td>Encarga al móvil que mande sus copias en su próximo envío (para móviles con la casilla desmarcada).</td></tr>
+<tr><td>Tabla</td><td>Una fila por copia: App · Versión · Fecha · Hora · Instalable (<em>N .apk</em>, <em>1 .apk</em>, <em>Varias piezas (.apks)</em>, <em>No (copia de Datos)</em> o <em>Formato antiguo (.zip)</em>) · Tamaño · Contenido · Estado (<em>Recibida</em> en verde, <em>Recibiendo N %</em>, <em>Pendiente</em>, <em>Borrada en el PC</em> en ámbar: se volverá a pedir). Doble clic: abre la carpeta de la copia (en los archivos sueltos, lo muestra en el Explorador).</td></tr>
+</tbody></table></div>
+<p>Para restaurar una copia en el móvil (u otro móvil), copia su carpeta entera (o el archivo) a la carpeta de copias de MASysMov. Una copia de Datos se restaura en MASysMov › Datos › Copia de seguridad › Restaurar, con su contraseña. Quitar un móvil no borra sus copias del disco.</p>
+
+<h3 id="movil-puerto">&#128682; Puertos desde fuera</h3>
+<p>Comprueba si un puerto de una red se ve <strong>desde internet</strong>. El pedido no es de un móvil concreto: lo hace el <strong>primer móvil emparejado por Wi-Fi que envíe su informe</strong>, con sus datos móviles (aunque esté en la Wi-Fi). Si ese móvil no tiene datos móviles, el pedido vuelve a la espera para el siguiente (y ese móvil no lo vuelve a coger en 30 minutos); si un móvil se lo lleva y no contesta en 10 minutos, también vuelve a la espera. Se abre con el botón de la cabecera de Móviles Android.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Control</th><th>Qué hace</th></tr></thead>
+<tbody>
+<tr><td>Dirección</td><td>Vacío = la IP pública de la Wi-Fi del móvil (que es la red de este PC: el enlace solo funciona en la red local); o un dominio.</td></tr>
+<tr><td>Puertos</td><td>Separados por comas (por defecto <code>3389, 443, 80</code>; máximo 20).</td></tr>
+<tr><td>&#128232; Pedir</td><td>Guarda el pedido. Si no hay ningún móvil emparejado por Wi-Fi, lo dice en la barra de estado.</td></tr>
+<tr><td>&#10005; Quitar</td><td>Quita de la lista el pedido elegido.</td></tr>
+<tr><td>Tabla</td><td>Pedido · Dirección (con la IP pública comprobada) · Puertos · Estado (<em>Esperando a un móvil</em>, <em>Asignado a un móvil</em>, <em>Enviado al móvil</em>, <em>Hecho</em>; con «(N sin datos)» si algún móvil lo intentó sin datos móviles) · Resultado (por puerto: abierto, cerrado o filtrado) · Móvil.</td></tr>
+<tr><td>Detalle</td><td>Debajo de la tabla, del pedido elegido: Empresa › Usuario › Terminal que lo hizo, red, resultado completo y móviles que lo intentaron sin datos móviles (con fecha).</td></tr>
+</tbody></table></div>
+<p>Al quitar un móvil, sus pedidos hechos se quedan en la lista y los que tenía a medias vuelven a la espera.</p>
+<div class="alert-info"><strong>Seguridad del enlace.</strong> Solo red local; todo cifrado con AES-256-GCM con una clave por móvil que se crea al emparejar. En el PC la clave se guarda protegida por Windows (DPAPI). Un mensaje de un móvil no vale para otro ni para otra petición. El PC no puede dar órdenes al móvil: solo pedirle comprobaciones y datos que la app conoce (puertos, copias y datos personales).</div>
+</section>
+
+<section id="navegadores">
+<h2>&#128278; Navegadores: favoritos y contraseñas</h2>
+<p>En la sección <strong>&#127760; Navegadores</strong>, además del visor de cuentas, historial, descargas y extensiones, la barra superior tiene dos herramientas de gestión añadidas en la versión 4.3.1: el <strong>Gestor de favoritos</strong> y la <strong>Auditoría de contraseñas</strong>. Ambas leen los datos reales de los perfiles de Chrome, Edge y Firefox directamente del disco (funcionan con el navegador abierto o cerrado, porque copian antes los archivos bloqueados a un temporal).</p>
+
+<h3 id="fav">&#128278; Gestor de favoritos</h3>
+<p>Botón <strong>&#128278; Favoritos</strong>. Sustituye al antiguo visor de marcadores (que solo dejaba mirar): ahora se pueden editar, revisar, reorganizar, comprobar qué enlaces están rotos y <strong>volver a escribirlos en el propio navegador</strong> o migrarlos a otro.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Acción</th><th>Qué hace</th></tr></thead>
+<tbody>
+<tr><td><span class="param-name">Perfil &middot; &#128260; Cargar</span></td><td>Elige el perfil (Chrome/Edge/Firefox) y carga sus favoritos en un árbol con las carpetas reales. En Chrome/Edge respeta las tres raíces: Barra de marcadores, Otros marcadores y Dispositivos&nbsp;/&nbsp;móvil.</td></tr>
+<tr><td><span class="param-name">Editar</span></td><td>Doble clic en un marcador para cambiar su título o su URL. En carpetas, el título.</td></tr>
+<tr><td><span class="param-name">Reorganizar</span></td><td>Arrastrar y soltar para mover marcadores entre carpetas o reordenarlos. Las tres raíces no se mueven.</td></tr>
+<tr><td><span class="param-name">&#10133; Carpeta</span></td><td>Crea una carpeta nueva dentro de la seleccionada.</td></tr>
+<tr><td><span class="param-name">&#10006; Quitar</span></td><td>Quita de la lista los marcadores o carpetas seleccionados. No cambia el navegador hasta que se pulsa «Sustituir».</td></tr>
+<tr><td><span class="param-name">&#128279; Comprobar enlaces</span></td><td>Visita cada enlace (en paralelo) y marca su estado: <span style="color:#16a34a">OK</span>, <span style="color:#2563eb">Redirige</span>, <span style="color:#dc2626">Roto</span> (404, etc.) o <span style="color:#ca8a04">Sin conexión</span>. Al terminar muestra el recuento.</td></tr>
+<tr><td><span class="param-name">&#128228; Exportar (HTML estándar)</span></td><td>Guarda todo en el formato Netscape que importa cualquier navegador (Chrome, Edge, Firefox, Brave&hellip;). Es la vía para <strong>migrar</strong> a otro navegador.</td></tr>
+<tr><td><span class="param-name">&#128229; Importar HTML&hellip;</span></td><td>Carga un archivo de marcadores exportado de otro navegador y lo añade en una carpeta «Importado».</td></tr>
+<tr><td><span class="param-name">&#128190; Sustituir en el navegador</span></td><td>Reescribe los marcadores del perfil <strong>Chrome o Edge</strong> con la lista actual. Antes hace una copia de seguridad del archivo original y exige el navegador cerrado. Firefox es de solo lectura: para él se usa Exportar&nbsp;+&nbsp;importar desde Firefox.</td></tr>
+</tbody></table></div>
+<div class="alert-warning"><strong>Antes de sustituir.</strong> «Sustituir» reemplaza TODOS los marcadores del perfil por los de la lista. Se guarda una copia del archivo <code>Bookmarks</code> original en <code>INFORMES\BACKUPS_REPARACION\</code> y el cambio queda en el historial de reparaciones. El navegador debe estar cerrado del todo (si no, al cerrarlo descartaría los cambios).</div>
+
+<h3 id="audit-pass">&#128737;&#65039; Auditoría de contraseñas</h3>
+<p>Botón <strong>&#128737;&#65039; Auditar contraseñas</strong>. <strong>Solo audita</strong> las contraseñas que Chrome/Edge ya tienen guardadas (no las cambia, no las mueve). Antes de descifrar pide confirmación; se muestran ocultas salvo que se marque «Mostrar en claro», y la exportación respeta ese estado.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Comprobación</th><th>Qué hace</th><th>Internet</th></tr></thead>
+<tbody>
+<tr><td><span class="param-name">Fortaleza</span></td><td>Clasifica cada contraseña (Muy débil / Débil / Aceptable / Fuerte) por longitud, variedad de caracteres y patrones típicos (secuencias, años, palabra+números, las más usadas&hellip;), con el motivo.</td><td>No</td></tr>
+<tr><td><span class="param-name">Reutilización</span></td><td>Indica en cuántos sitios distintos se repite la misma contraseña (se comparan por hash en memoria, nunca se guarda el texto).</td><td>No</td></tr>
+<tr><td><span class="param-name">&#127760; Exposición</span></td><td>Botón «Comprobar exposición»: consulta <em>Have I Been Pwned – Pwned Passwords</em> y dice cuántas veces aparece cada contraseña en filtraciones conocidas.</td><td>Sí</td></tr>
+</tbody></table></div>
+<div class="alert-info"><strong>Privacidad de la comprobación (k-anonimato).</strong> Para saber si una contraseña está filtrada se calcula su hash SHA-1 en el equipo y solo se envían los <strong>5 primeros caracteres</strong> del hash; el servidor devuelve todos los finales que empiezan igual y la comparación se hace en local. La contraseña, y su hash completo, no salen nunca del equipo.</div>
+<div class="alert-warning"><strong>Por qué no se prueba «si la contraseña funciona» en cada web.</strong> Entrar de verdad en cada servicio para validar la contraseña sería prueba de credenciales contra terceros: puede bloquear cuentas y viola sus términos de uso. Por eso la auditoría se queda en fortaleza, reutilización y exposición en filtraciones.</div>
+</section>
+
+<section id="permisos">
+<h2>&#128194; Permisos de carpetas</h2>
+<p>La sección <strong>&#128194; Carpetas Compartidas</strong> tiene desde la versión 4.4.0 cinco pestañas. La primera, <strong>&#128194; Recursos compartidos</strong>, es la de siempre (sin cambios). Las otras cuatro trabajan con los <strong>permisos NTFS</strong> de un árbol de carpetas, en este equipo o en un servidor de la red (<code>\\servidor\recurso</code> o una unidad conectada como <code>H:</code>):</p>
+<div class="feature-list">
+  <div class="feature-item"><div class="feature-icon">&#128193;</div><div class="feature-text"><strong>Permisos de carpetas</strong><span>Leer, ver, editar, cambiar el propietario y quitar una cuenta de toda una rama.</span></div></div>
+  <div class="feature-item"><div class="feature-icon">&#9888;&#65039;</div><div class="feature-text"><strong>Análisis de permisos</strong><span>Lo que conviene revisar, por niveles: crítico, aviso e información.</span></div></div>
+  <div class="feature-item"><div class="feature-icon">&#129517;</div><div class="feature-text"><strong>Acceso de una cuenta</strong><span>Qué puede hacer un usuario o grupo en cada carpeta, sumando sus grupos y el permiso de red.</span></div></div>
+  <div class="feature-item"><div class="feature-icon">&#128190;</div><div class="feature-text"><strong>Copias de permisos</strong><span>Guardar, comparar, restaurar (aquí o en otro servidor) y exportar para icacls.</span></div></div>
+</div>
+<div class="alert-info"><strong>Más rápido que el análisis de la primera pestaña.</strong> Se lee con la API de Windows y en paralelo (no un PowerShell por carpeta): unas 20.000 carpetas con sus archivos en menos de un minuto en un disco local. Admite rutas de más de 260 caracteres.</div>
+
+<h3 id="perm-leer">&#128193; Leer y ver</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Control</th><th>Qué hace</th></tr></thead>
+<tbody>
+<tr><td><span class="param-name">Carpeta</span><span class="badge badge-required">obligatoria</span></td><td>Ruta local (<code>D:\Datos</code>), unidad de red (<code>H:\</code>) o ruta de red (<code>\\SRV\Datos</code>). &#128194; para elegirla. Se recuerda la última.</td></tr>
+<tr><td><span class="param-name">Archivos</span><span class="badge badge-default">Carpetas y archivos con permisos propios</span></td><td><em>Solo carpetas</em> · <em>Carpetas y archivos con permisos propios</em> (los que solo heredan no aportan nada) · <em>Carpetas y todos los archivos</em> (para ver propietarios de archivos; más lento).</td></tr>
+<tr><td><span class="param-name">Profundidad</span><span class="badge badge-default">99</span></td><td>Niveles de subcarpetas (1 = solo la carpeta indicada).</td></tr>
+<tr><td><span class="param-name">Ocultas</span><span class="badge badge-default">Sí</span></td><td>Incluir carpetas y archivos ocultos.</td></tr>
+<tr><td><span class="param-name">&#128269; Leer permisos · &#9209;&#65039; Parar</span></td><td>Lee el árbol. Parar a medias deja lo leído marcado como «parado a medias».</td></tr>
+<tr><td><span class="param-name">Filtro</span><span class="badge badge-default">Todo</span></td><td>Todo · Con permisos propios · Herencia cortada · Con avisos · No se pudieron leer. Se ven también las carpetas de arriba de cada una, para saber dónde está.</td></tr>
+<tr><td><span class="param-name">Búsqueda</span></td><td>Por nombre de carpeta, propietario o cuenta con permisos propios.</td></tr>
+</tbody></table></div>
+<p>El árbol tiene las columnas <strong>Propietario</strong>, <strong>Herencia</strong> (Hereda / Cortada), <strong>Propios</strong> (número de permisos puestos a mano; en negrita las que tienen) y <strong>Avisos</strong> del análisis. A la derecha, la carpeta elegida: propietario, herencia, avisos con qué hacer y la lista de permisos (las heredadas en gris). Las uniones y vínculos (como <code>Documents and Settings</code>) se apuntan pero no se entra en ellas, para no dar vueltas.</p>
+<p>Si la carpeta es un recurso compartido, o tiene recursos compartidos dentro, también se leen sus <strong>permisos de red</strong> (sin necesidad de WinRM en el servidor).</p>
+
+<h3 id="perm-editar">&#9999;&#65039; Editar permisos, propietario y quitar una cuenta</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Botón</th><th>Qué hace</th></tr></thead>
+<tbody>
+<tr><td><span class="param-name">&#9999;&#65039; Editar permisos…</span> (o doble clic)</td><td>Ventana con los permisos de la carpeta o archivo: <strong>&#10133; Añadir…</strong> (cuenta o grupo comprobado en el equipo de la ruta, Permitir/Denegar, permiso y «Se aplica a» igual que en Windows), <strong>&#10005; Quitar</strong> (solo las propias; las heredadas se cambian arriba), <strong>Heredar los permisos de la carpeta de arriba</strong> (al quitarla pregunta si los heredados se convierten en propios o se quitan) y <strong>Que todo lo que hay dentro pierda sus permisos propios y herede de esta carpeta</strong> (como «Reemplazar todas las entradas de permisos de objetos secundarios» del Explorador). Abajo se ve lo que va a cambiar.</td></tr>
+<tr><td><span class="param-name">&#128100; Propietario…</span></td><td>Nuevo propietario de la carpeta, y si se marca, de <strong>todo lo que tiene dentro</strong> (subcarpetas y todos los archivos, aunque no se hayan leído). Necesita MASys como administrador.</td></tr>
+<tr><td><span class="param-name">&#10005; Quitar una cuenta de la rama…</span></td><td>Quita los permisos propios de una cuenta en la carpeta y en todo lo leído de dentro (lo heredado desaparece solo). Antes enseña dónde los tiene.</td></tr>
+</tbody></table></div>
+<div class="alert-warning"><strong>Antes de cada cambio</strong> se guarda una copia de cómo está ahora lo que se va a cambiar («Antes_…» en <code>INFORMES\PERMISOS</code>); si el cambio llega a todo lo de dentro (propietario de la rama, herencia de lo de dentro), se copia la rama entera. Restaurar esa copia deshace el cambio. Todo queda en el historial de reparaciones. Windows aplica lo heredable a todo lo de dentro: en carpetas con muchos archivos tarda.</div>
+<p>Si una carpeta no deja entrar ni a los administradores, MASys (como administrador) la lee y la escribe con los privilegios de copia de seguridad y restauración de Windows. En ese caso avisa de que lo de dentro no se ha recalculado.</p>
+
+<h3 id="perm-analisis">&#9888;&#65039; Análisis de permisos</h3>
+<p>Se hace solo al leer. Filtros por nivel y por tipo, búsqueda, y <strong>&#128193; Ver la carpeta</strong> (o doble clic) para ir a ella en el árbol.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Nivel</th><th>Qué pasa</th><th>Qué hacer</th></tr></thead>
+<tbody>
+<tr><td><span style="color:#dc2626">Crítico</span></td><td>Todos (o Anónimo) pueden escribir · Sin lista de permisos (acceso total) · Todos pueden escribir por la red (recurso compartido y carpeta abiertos a la vez)</td><td>Cambiar Todos por el grupo que debe entrar</td></tr>
+<tr><td><span style="color:#ca8a04">Aviso</span></td><td>Todos los usuarios (Usuarios autentificados, Usuarios, Usuarios del dominio) pueden escribir · Alguien que no es administrador puede cambiar los permisos (Control total) · Permiso de una cuenta eliminada · Propietario eliminado · Entrada de denegar · Nadie tiene acceso · Los administradores no tienen acceso · No se pudieron leer los permisos · No se pudo ver lo que hay dentro</td><td>Cada fila trae su «Qué hacer»</td></tr>
+<tr><td><span style="color:#2563eb">Información</span></td><td>Herencia cortada · Permiso directo a un usuario (mejor por grupos) · Propietario: un usuario (solo donde empieza) · Recurso compartido abierto a todos pero limitado por la carpeta</td><td>Revisar que es a propósito</td></tr>
+</tbody></table></div>
+
+<h3 id="perm-acceso">&#129517; Acceso de una cuenta</h3>
+<p>Sobre lo leído: escribe un usuario o grupo (<code>DOMINIO\usuario</code>, <code>Contabilidad</code>, <code>Todos</code>…) y pulsa <strong>&#129517; Consultar</strong>. MASys busca sus grupos (los locales del servidor, también los indirectos, y los del dominio, también los anidados, consultando Active Directory) y calcula en cada carpeta lo que le queda, con las reglas de Windows (denegar gana). Columnas: permiso en la carpeta, <strong>por red</strong> (si está dentro de un recurso compartido), <strong>efectivo</strong> (el más restrictivo de los dos), quién se lo da y quién se lo deniega.</p>
+<p><strong>Solo donde cambia</strong> (marcado de serie) enseña la carpeta principal y solo las carpetas y archivos donde el acceso es distinto del de la carpeta de arriba. Sin marcar, una fila por cada elemento leído.</p>
+<div class="alert-info">Si la consulta es de un <strong>grupo</strong>, se ve lo que tiene el grupo, no lo que cada usuario tiene además por otros grupos. Si no se puede consultar Active Directory, se usan los grupos directos del dominio y se avisa.</div>
+
+<h3 id="perm-copias">&#128190; Copias y restauración</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Botón</th><th>Qué hace</th></tr></thead>
+<tbody>
+<tr><td><span class="param-name">&#128190; Guardar copia de lo leído</span></td><td>Guarda propietario, herencia y todos los permisos de lo leído, más los permisos de red de los recursos compartidos de dentro, en <code>INFORMES\PERMISOS\Permisos_&lt;equipo&gt;_&lt;carpeta&gt;_AAAAMMDD_HHMMSS.msysperm</code>.</td></tr>
+<tr><td><span class="param-name">&#9851;&#65039; Restaurar…</span> (o doble clic)</td><td>Ventana de restauración: <strong>Destino</strong> (la misma carpeta u otra, en este equipo o en otro servidor), <strong>Rama</strong> (solo una subcarpeta) y <strong>&#128269; Comparar con lo actual</strong>, que enseña qué cambiaría sin tocar nada. Después, <strong>Restaurar lo seleccionado</strong> (una o varias carpetas) o <strong>Restaurar todo</strong>. En «&#127760; Permisos de red» se ven los recursos compartidos distintos y, si se marca, se crean los que falten.</td></tr>
+<tr><td><span class="param-name">&#128256; Equivalencias de cuentas…</span></td><td>Para restaurar en <strong>otro servidor o dominio</strong>. Las cuentas de Windows (Todos, Administradores, SYSTEM…) valen en cualquier equipo; las del dominio o del servidor se buscan por nombre en el destino, cambiando el dominio (o el nombre del servidor, para sus cuentas locales) en la tabla de arriba. Doble clic en «Cuenta en el destino» para poner otra a mano. Las que no existen en el destino se quitan al restaurar; si el propietario no existe, pasa a Administradores. Se abre sola al comparar con un destino de otro equipo.</td></tr>
+<tr><td><span class="param-name">&#8644; Comparar dos copias</span></td><td>Con dos copias seleccionadas (Ctrl + clic): qué cambió de la más antigua a la más nueva (nuevas, desaparecidas y qué permisos se pusieron o quitaron).</td></tr>
+<tr><td><span class="param-name">&#128194; Abrir en «Permisos»</span></td><td>Ver y analizar una copia sin cambiar nada (por ejemplo, la de un cliente). Con una copia abierta los botones de cambiar están apagados.</td></tr>
+<tr><td><span class="param-name">&#128228; Exportar para icacls…</span></td><td>Copia adicional en el formato de <code>icacls /save</code>, para restaurarla con <code>icacls /restore</code> en un equipo sin MASys. No incluye propietarios.</td></tr>
+<tr><td><span class="param-name">&#128193; Carpeta · &#128229; Otra copia…</span></td><td>Abrir <code>INFORMES\PERMISOS</code> o una copia guardada en otro sitio.</td></tr>
+</tbody></table></div>
+<div class="flow">
+  <div class="flow-step">Leer la carpeta</div>
+  <div class="flow-step">&#128190; Guardar copia</div>
+  <div class="flow-step">&#9851;&#65039; Restaurar… &#8250; Comparar</div>
+  <div class="flow-step">Restaurar lo seleccionado o todo</div>
+</div>
+<div class="alert-warning"><strong>Qué se restaura.</strong> Se comparan y escriben el propietario, si la herencia está cortada y los permisos puestos a mano. Lo heredado lo recalcula Windows desde la carpeta de arriba, igual que hace el Explorador. Las carpetas que hay en el destino y no estaban en la copia no se tocan. Antes de restaurar se guarda una copia de cómo estaba el destino.</div>
+</section>
+
+<section id="informes">
+<h2>&#127760; Informes HTML</h2>
+<p>Todos los informes HTML de MASys (el de la barra inferior de cada sección, el informe completo del Dashboard, las tablas de los diálogos de Soporte, Navegadores, los datos de navegador y el informe del móvil) usan el mismo diseño. Se abren en cualquier navegador, sin internet.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Elemento</th><th>Qué hace</th></tr></thead>
+<tbody>
+<tr><td>Cabecera</td><td>Título, equipo, fecha, número de módulos y de registros.</td></tr>
+<tr><td>Índice lateral</td><td>Con más de un módulo: <strong>agrupado por categoría</strong> (Sistema, Disco y Archivos, Red, Usuarios y Seguridad, Hardware y Periféricos, Administración), cada grupo plegable tocando su nombre. Cada módulo con su número de filas y un punto rojo (tiene críticos o errores) o ámbar (tiene avisos). Arriba, el resumen y «&#128218; Todos los módulos». Se oculta en pantallas estrechas.</td></tr>
+<tr><td>Ver un solo módulo</td><td>Clic en un módulo del índice, en su fila del resumen o elegirlo en el desplegable «Módulo» de la barra: se ve solo ese módulo. «&#8592; Todos» o «&#128218; Todos los módulos» vuelve a todos. Abrir el archivo con <code>#s3</code> al final de la dirección abre directamente ese módulo.</td></tr>
+<tr><td>Resumen por módulo</td><td>En el resumen, tabla Categoría · Módulo · Registros · Críticos · Avisos (ordenable); clic en una fila para ver ese módulo.</td></tr>
+<tr><td>&#128270; Buscar en todo el informe</td><td>Deja solo las filas que contienen el texto, en todos los módulos, y <strong>resalta en amarillo</strong> lo encontrado; oculta los módulos y categorías sin resultados y dice «N de M filas».</td></tr>
+<tr><td>Todos · &#128308; Crítico · &#9888;&#65039; Advertencia · &#9989; OK</td><td>Solo si alguna celda tiene nivel: deja las filas de ese nivel.</td></tr>
+<tr><td>&#10005; Limpiar</td><td>Quita la búsqueda, el nivel y todos los filtros de columna.</td></tr>
+<tr><td>Expandir / Contraer</td><td>Abre o pliega todos los módulos. Cada módulo también se pliega tocando su título.</td></tr>
+<tr><td>&#128424;&#65039; Imprimir</td><td>Abre la impresión del navegador (elige «Guardar como PDF» para un PDF). Al imprimir se despliega todo y se ocultan los controles.</td></tr>
+<tr><td>Título de cada módulo</td><td>Nombre, filas (visibles de totales cuando hay filtros), &#128308; filas críticas y &#9888;&#65039; filas con aviso.</td></tr>
+<tr><td>Filtros (en cada módulo)</td><td>Una caja bajo cada columna; si la columna tiene pocos valores distintos (Estado, Tipo…), un <strong>desplegable</strong> con esos valores. Se combinan entre sí y con el buscador; el filtro en uso se marca en azul. Con 15 filas o más salen ya abiertos. Volver a pulsar «Filtros» los quita.</td></tr>
+<tr><td>CSV (en cada módulo)</td><td>Descarga en CSV (Excel) las filas que se ven en ese momento.</td></tr>
+<tr><td>Ordenar</td><td>Tocar el título de una columna. Fechas DD/MM/AAAA como fechas, números como números y tamaños en su unidad (2,5 GB va antes que 300 MB).</td></tr>
+<tr><td>Niveles de color</td><td>Rojo oscuro = crítico · rojo claro = error · ámbar = advertencia · verde = correcto.</td></tr>
+</tbody></table></div>
+<p>En el informe completo, el <strong>Resumen ejecutivo</strong> (tarjetas, hallazgos de seguridad y resumen por módulo) va arriba; después, los módulos agrupados por categoría con el primero abierto y los demás plegados. En el Inventario de migración, el HTML de la barra inferior es el informe de MIGRACION.PS1 y el botón de arriba, la lista de comprobación con casillas (ver la sección).</p>
+</section>
+
 <section id="rev54">
-<h2>&#128270; Revisión 5.4: qué cambia</h2>
+<h2>&#128337; Novedades por versión (5.4 – 5.7.3)</h2>
 <p>La versión 5.4 es una revisión completa de MASys: cada sección, cada botón de solo lectura y cada sincronización se
 probó contra un equipo real, y las acciones que cambian el sistema se probaron con elementos de prueba propios (un usuario,
 un servicio, una tarea, una regla de firewall, un certificado, una impresora, una unidad de red&#8230;) que se borraron después.</p>
@@ -700,462 +1367,6 @@ adaptador, cerrar sesión, reiniciar en BIOS), las que instalan o desinstalan so
 y las copias de Credenciales y Navegadores (sacan credenciales a disco). Su código se revisó línea a línea.</div>
 </section>
 
-<section id="dashboard">
-<h2>&#128202; Dashboard: salud, visitas y módulos</h2>
-<h3>Salud del equipo</h3>
-<p>Al lado de la puntuación de <strong>SEGURIDAD</strong> (que ya existía y no cambia) está <strong>SALUD DEL EQUIPO</strong>: de 0 a 100, en verde desde 90, en amarillo desde 70 y en rojo por debajo. Mide lo que hace que el equipo vaya mal o falle, no lo que lo hace vulnerable. Sale sola al abrir MASys (lee la estabilidad de los últimos 30 días y el espacio libre) y se completa con lo que cargue <strong>&#128260; Sincronizar Todo</strong>.</p>
-<div class="table-wrap"><table>
-<thead><tr><th>Motivo</th><th>Resta</th></tr></thead>
-<tbody>
-<tr><td>Pantallazo azul en el periodo</td><td>10 cada uno (máximo 30)</td></tr>
-<tr><td>Apagado inesperado</td><td>3 cada uno (máximo 12)</td></tr>
-<tr><td>Cierres o bloqueos de apps</td><td>3 con 5 o más; 6 con 20 o más</td></tr>
-<tr><td>Avisos de Soporte de salud: discos y espacio, dispositivos, impresoras, actualizaciones, servicios atascados, Bluetooth, eventos críticos, unidades de red, Wi-Fi, red y PATH</td><td>5 cada uno (máximo 15 por sección). Los avisos que has validado no cuentan.</td></tr>
-<tr><td>Espacio libre en la unidad del sistema (si no se ha cargado la sección Discos)</td><td>15 por debajo del 10 %; 5 por debajo del 20 %</td></tr>
-</tbody></table></div>
-<p><strong>Ver motivos</strong> abre la lista (Motivo · Sección · Puntos). Doble clic en un motivo, o <strong>&#10145;&#65039; Ir a la sección</strong>, lleva a la sección donde se arregla.</p>
-<h3>Cambios desde la última visita</h3>
-<p>Cada vez que termina <strong>&#128260; Sincronizar Todo</strong>, MASys guarda una foto del equipo (una «visita») y la compara sola con la anterior <strong>del mismo equipo</strong>. El panel bajo las puntuaciones resume lo que ha cambiado, por ejemplo: «Desde el 20/09/2026 10:15: Programas: +1 −1 1 cambiados · Servicios: +1».</p>
-<div class="table-wrap"><table>
-<thead><tr><th>Control</th><th>Qué hace</th></tr></thead>
-<tbody>
-<tr><td>&#128269; Ver cambios</td><td>Lista completa: Módulo · Cambio (&#128994; Nuevo, &#128308; Ya no está, &#128993; Cambiado) · Elemento · Antes · Ahora. Desplegable para ver un solo módulo y buscador.</td></tr>
-<tr><td>&#128344; Otra visita…</td><td>Elegir cualquier visita guardada de este equipo (fecha, elementos y secciones) y compararla con la más reciente.</td></tr>
-</tbody></table></div>
-<p>Se comparan: programas (y su versión), servicios (tipo de inicio), programas de inicio, tareas programadas, usuarios (estado y grupos), controladores (versión), reglas de firewall, actualizaciones instaladas y pendientes, certificados, impresoras, variables de entorno y dispositivos USB. <strong>No</strong> cuentan los procesos, las conexiones ni si un servicio está en marcha o parado, porque cambian solos a cada momento. Solo se comparan las secciones cargadas en las dos visitas: si una no se cargó, sus elementos no se dan por quitados. Si no ha cambiado nada, no se guarda otra visita igual.</p>
-<div class="alert-info">Las visitas se guardan en <code>INFORMES\Visitas\&lt;equipo&gt;\</code> (las 60 últimas de cada equipo). Con MASys en un USB, cada equipo tiene las suyas. Solo nombres, versiones y estados: ninguna contraseña ni dato personal.</div>
-<h3>Resumen por módulo</h3>
-<p>Bajo las puntuaciones, <strong>5 módulos a la vista</strong>, cada uno en una ficha grande del mismo alto: franja superior de su color, <strong>círculo grande</strong> (medidor con el porcentaje o la cifra), el valor, el nombre, todo su detalle (por ejemplo, en Procesos la memoria total, los dos programas que más gastan y cuántos usuarios) y abajo una etiqueta de estado en color: verde (bien), ámbar (aviso) o rojo (problema), como «2 sin firma», «1 casi llena» o «Críticas». A la derecha, <strong>&#9650;</strong> pasa a los 5 anteriores, la posición («6–10 de 27») y <strong>&#9660;</strong> a los 5 siguientes. Sin barra de desplazamiento.</p>
-<p>Módulos que aparecen (los que tengan datos cargados): Estabilidad, Extensiones y programas, Características de Windows, Procesos, Servicios, Programas de inicio, Tareas programadas, Software instalado, Gestor de paquetes, Actualizaciones pendientes, Controladores, Particiones, Discos físicos, Conexiones de red, Herramientas de red (último diagnóstico), Redes WiFi, Red local, Firewall, Carpetas compartidas, Usuarios, Credenciales, Certificados, Conexiones remotas, Sesiones activas, Eventos, Historial PowerShell, Dispositivos USB, Impresoras, Bluetooth, Cuentas de correo, Móviles Android (último informe) e Inventario de migración.</p>
-</section>
-
-<!-- ================================================================== -->
-<section id="informes">
-<h2>&#127760; Informes HTML</h2>
-<p>Todos los informes HTML de MASys (el de la barra inferior de cada sección, el informe completo del Dashboard, las tablas de los diálogos de Soporte, Navegadores, los datos de navegador y el informe del móvil) usan el mismo diseño. Se abren en cualquier navegador, sin internet.</p>
-<div class="table-wrap"><table>
-<thead><tr><th>Elemento</th><th>Qué hace</th></tr></thead>
-<tbody>
-<tr><td>Cabecera</td><td>Título, equipo, fecha, número de módulos y de registros.</td></tr>
-<tr><td>Índice lateral</td><td>Con más de un módulo: <strong>agrupado por categoría</strong> (Sistema, Disco y Archivos, Red, Usuarios y Seguridad, Hardware y Periféricos, Administración), cada grupo plegable tocando su nombre. Cada módulo con su número de filas y un punto rojo (tiene críticos o errores) o ámbar (tiene avisos). Arriba, el resumen y «&#128218; Todos los módulos». Se oculta en pantallas estrechas.</td></tr>
-<tr><td>Ver un solo módulo</td><td>Clic en un módulo del índice, en su fila del resumen o elegirlo en el desplegable «Módulo» de la barra: se ve solo ese módulo. «&#8592; Todos» o «&#128218; Todos los módulos» vuelve a todos. Abrir el archivo con <code>#s3</code> al final de la dirección abre directamente ese módulo.</td></tr>
-<tr><td>Resumen por módulo</td><td>En el resumen, tabla Categoría · Módulo · Registros · Críticos · Avisos (ordenable); clic en una fila para ver ese módulo.</td></tr>
-<tr><td>&#128270; Buscar en todo el informe</td><td>Deja solo las filas que contienen el texto, en todos los módulos, y <strong>resalta en amarillo</strong> lo encontrado; oculta los módulos y categorías sin resultados y dice «N de M filas».</td></tr>
-<tr><td>Todos · &#128308; Crítico · &#9888;&#65039; Advertencia · &#9989; OK</td><td>Solo si alguna celda tiene nivel: deja las filas de ese nivel.</td></tr>
-<tr><td>&#10005; Limpiar</td><td>Quita la búsqueda, el nivel y todos los filtros de columna.</td></tr>
-<tr><td>Expandir / Contraer</td><td>Abre o pliega todos los módulos. Cada módulo también se pliega tocando su título.</td></tr>
-<tr><td>&#128424;&#65039; Imprimir</td><td>Abre la impresión del navegador (elige «Guardar como PDF» para un PDF). Al imprimir se despliega todo y se ocultan los controles.</td></tr>
-<tr><td>Título de cada módulo</td><td>Nombre, filas (visibles de totales cuando hay filtros), &#128308; filas críticas y &#9888;&#65039; filas con aviso.</td></tr>
-<tr><td>Filtros (en cada módulo)</td><td>Una caja bajo cada columna; si la columna tiene pocos valores distintos (Estado, Tipo…), un <strong>desplegable</strong> con esos valores. Se combinan entre sí y con el buscador; el filtro en uso se marca en azul. Con 15 filas o más salen ya abiertos. Volver a pulsar «Filtros» los quita.</td></tr>
-<tr><td>CSV (en cada módulo)</td><td>Descarga en CSV (Excel) las filas que se ven en ese momento.</td></tr>
-<tr><td>Ordenar</td><td>Tocar el título de una columna. Fechas DD/MM/AAAA como fechas, números como números y tamaños en su unidad (2,5 GB va antes que 300 MB).</td></tr>
-<tr><td>Niveles de color</td><td>Rojo oscuro = crítico · rojo claro = error · ámbar = advertencia · verde = correcto.</td></tr>
-</tbody></table></div>
-<p>En el informe completo, el <strong>Resumen ejecutivo</strong> (tarjetas, hallazgos de seguridad y resumen por módulo) va arriba; después, los módulos agrupados por categoría con el primero abierto y los demás plegados. En el Inventario de migración, el HTML de la barra inferior es el informe de MIGRACION.PS1 y el botón de arriba, la lista de comprobación con casillas (ver la sección).</p>
-</section>
-
-<!-- ================================================================== -->
-<section id="estab">
-<h2>&#129658; Estabilidad</h2>
-<p>Categoría <strong>Sistema</strong>. Lo que hace que el equipo falle: pantallazos azules, apagados inesperados y apps que se cierran o dejan de responder, leídos del registro de eventos de Windows (en unos 2 segundos). <strong>Solo lectura</strong>: no cambia nada.</p>
-<div class="table-wrap"><table>
-<thead><tr><th>Control</th><th>Qué hace</th></tr></thead>
-<tbody>
-<tr><td>&#128269; Buscar</td><td>Filtra la pestaña visible por app, código o texto.</td></tr>
-<tr><td>Periodo</td><td>Últimos 7 días · <em>Últimos 30 días</em> (por defecto) · Últimos 90 días · Último año. Al cambiarlo se vuelve a leer.</td></tr>
-<tr><td>&#128203; Visor de eventos</td><td>Abre el Visor de eventos de Windows.</td></tr>
-<tr><td>&#128200; Monitor de confiabilidad</td><td>Abre el historial de estabilidad de Windows día a día.</td></tr>
-<tr><td>&#128260; Actualizar</td><td>Vuelve a leer (también actualiza la salud del Dashboard).</td></tr>
-<tr><td>Cifras</td><td><em>Pantallazos azules</em> (rojo si hay alguno) · <em>Apagados inesperados</em> · <em>Fallos de apps</em> (y cuántas apps distintas) · <em>Índice de estabilidad de Windows</em> de 1 a 10 (verde desde 7, ámbar desde 4, rojo por debajo; «—» si Windows no lo calcula en este equipo).</td></tr>
-</tbody></table></div>
-<h3>Pestañas</h3>
-<div class="table-wrap"><table>
-<thead><tr><th>Pestaña</th><th>Contenido</th></tr></thead>
-<tbody>
-<tr><td>&#128338; Línea de tiempo</td><td>Fecha · Hora · Tipo (Pantallazo azul en rojo, Apagado inesperado en ámbar, La app se cerró / La app dejó de responder en azul) · Qué pasó · Detalle. Lo más reciente primero.</td></tr>
-<tr><td>&#128165; Pantallazos azules</td><td>Fecha · Hora · Código · Nombre · Qué significa · Causa habitual · Controlador · Volcado. Con los botones <strong>&#128300; Analizar volcado</strong> y <strong>&#128194; Carpeta de volcados</strong> (abre <code>C:\Windows\Minidump</code>).</td></tr>
-<tr><td>&#128201; Apps que fallan</td><td>App · Fallos (en rojo desde 5) · Se cerró · Dejó de responder · Último · Módulo que falla · Qué significa · Ruta. Ordenada por número de fallos.</td></tr>
-</tbody></table></div>
-<p><strong>De dónde sale cada cosa:</strong> un pantallazo deja en el registro «System» el evento 41 de Kernel-Power con el código y el 1001 con la ruta del volcado; MASys los junta en uno. Un evento 41 sin código, o el 6008 («el apagado anterior fue inesperado»), es un apagado inesperado: corte de luz, botón de encendido mantenido o el equipo se quedó colgado. Los fallos de apps son los eventos 1000 (se cerró) y 1002 (dejó de responder) del registro «Application».</p>
-<p><strong>Analizar volcado:</strong> el código de un pantallazo lo da Windows, pero el controlador que lo provocó solo se sabe analizando el volcado. Si están instaladas las <em>Herramientas de depuración para Windows</em> (parte del Windows SDK de Microsoft, gratuito), este botón lo analiza (<code>kd.exe</code>, MASys como administrador; la primera vez descarga símbolos de Microsoft y puede tardar unos minutos) y rellena la columna Controlador con su nombre y qué es (por ejemplo «nvlddmkm.sys · Tarjeta gráfica NVIDIA»). Si no están, lo dice.</p>
-<div class="alert-info"><strong>Módulo que falla:</strong> si no es de la propia app (por ejemplo una DLL de un antivirus o de un complemento), la causa suele ser ese otro programa.</div>
-</section>
-
-<!-- ================================================================== -->
-<section id="iconos">
-<h2>&#127912; Iconos</h2>
-<p>Categoría <strong>Sistema</strong>. Cuatro pestañas.</p>
-
-<h3 id="iconos-bib">&#128218; Bibliotecas</h3>
-<p>Muestra todos los iconos que contiene un archivo, con su número de orden (índice) y su identificador (ID).</p>
-<div class="table-wrap"><table>
-<thead><tr><th>Control</th><th>Qué hace</th></tr></thead>
-<tbody>
-<tr><td>Desplegable de bibliotecas</td><td>Las de Windows que existen en el equipo: imageres.dll (iconos modernos), shell32.dll (clásicos del Explorador), ddores.dll (dispositivos y hardware), netshell.dll (conexiones de red), wmploc.dll (multimedia), mmres.dll (sonido), setupapi.dll (instalación de hardware), pifmgr.dll (iconos antiguos de programas), moricons.dll (programas MS-DOS), compstui.dll (impresión), ieframe.dll (Internet Explorer), accessibilitycpl.dll (accesibilidad), dmdskres.dll (administración de discos), mstscax.dll (escritorio remoto), pnidui.dll (red en la barra de tareas), sensorscpl.dll (sensores) y explorer.exe. Los archivos abiertos con «Abrir archivo» se añaden al final.</td></tr>
-<tr><td>&#128194; Abrir archivo…</td><td>Cualquier .exe, .dll, .icl, .cpl, .ico, .ocx, .scr o .mun.</td></tr>
-<tr><td>&#128269; Índice o ID…</td><td>Deja solo los iconos cuyo índice o ID empieza por lo escrito (se acepta el signo menos).</td></tr>
-<tr><td>Tamaño</td><td>32, 48 (por defecto), 64 o 96 px en la cuadrícula.</td></tr>
-<tr><td>Cuadrícula</td><td>Clic = ver el icono en grande a la derecha. Ctrl o Mayús + clic = marcar varios.</td></tr>
-<tr><td>Panel derecho</td><td>Vista a 256 px, «Índice N · ID N», la <strong>referencia</strong> (<code>ruta,-ID</code>, lo que se pone en un acceso directo o en el registro) y los tamaños que trae.</td></tr>
-<tr><td>&#128203; Copiar referencia</td><td>Copia la referencia al portapapeles.</td></tr>
-<tr><td>&#128190; Guardar ICO…</td><td>Guarda el icono con todos sus tamaños.</td></tr>
-<tr><td>&#128444;&#65039; Guardar PNG…</td><td>Guarda el tamaño mayor, con transparencia.</td></tr>
-<tr><td>&#128230; Extraer todos…</td><td>Todos los iconos de la biblioteca (o solo los marcados, si hay más de uno) en ICO y PNG, en una carpeta <code>Iconos_&lt;biblioteca&gt;</code> dentro de la que se elija. Al terminar ofrece abrirla.</td></tr>
-</tbody></table></div>
-
-<h3 id="iconos-apps">&#128444;&#65039; Iconos de aplicaciones</h3>
-<p>Los programas del escritorio, el menú Inicio y la barra de tareas (del usuario actual y de todos los usuarios), con su icono real.</p>
-<div class="table-wrap"><table>
-<thead><tr><th>Columna / botón</th><th>Contenido</th></tr></thead>
-<tbody>
-<tr><td>Aplicación</td><td>Nombre del acceso directo, con su icono.</td></tr>
-<tr><td>Dónde</td><td>Escritorio · Escritorio público · Menú Inicio · Menú Inicio (todos) · Barra de tareas · Inicio rápido.</td></tr>
-<tr><td>Programa</td><td>Archivo al que apunta.</td></tr>
-<tr><td>Icono</td><td>De dónde sale el icono, o «(el del programa)».</td></tr>
-<tr><td>&#128190; Guardar ICO… / &#128444;&#65039; Guardar PNG…</td><td>Extraen el icono de la aplicación elegida.</td></tr>
-<tr><td>&#128218; Ver su biblioteca</td><td>Abre el archivo del icono en la pestaña Bibliotecas para ver todos los que tiene (también con doble clic).</td></tr>
-</tbody></table></div>
-
-<h3 id="iconos-rep">&#129658; Reparación</h3>
-<div class="table-wrap"><table>
-<thead><tr><th>Control</th><th>Qué hace</th></tr></thead>
-<tbody>
-<tr><td>Caché de iconos / de miniaturas</td><td>Número de archivos y tamaño actual de cada caché.</td></tr>
-<tr><td>&#129529; Reconstruir caché de iconos</td><td>Para iconos en blanco, equivocados o que no se actualizan. Borra la caché y reinicia el Explorador (la barra de tareas desaparece un momento y se cierran las ventanas de carpetas).</td></tr>
-<tr><td>&#129529; Reconstruir caché de miniaturas</td><td>Para vistas previas de fotos y documentos que salen mal. Mismo aviso.</td></tr>
-<tr><td>Filtro</td><td><em>Con problemas</em> (por defecto) o <em>Todos</em>.</td></tr>
-<tr><td>&#128194; Abrir ubicación</td><td>Abre la carpeta del acceso directo con él marcado.</td></tr>
-<tr><td>&#10005; Quitar</td><td>Envía los accesos directos marcados a la <strong>Papelera</strong> (se pueden recuperar). Los del menú Inicio de todos los usuarios necesitan administrador.</td></tr>
-<tr><td>Tabla</td><td>Acceso directo · Dónde · Estado · Destino · Icono.</td></tr>
-</tbody></table></div>
-<p><strong>Estados:</strong> <em>Correcto</em> (verde) · <em>Destino no encontrado</em> (rojo) · <em>Icono no encontrado</em> (ámbar) · <em>Ruta de red (no comprobada)</em> · <em>Acceso especial (aplicación de la Tienda o instalador)</em>.</p>
-
-<h3 id="iconos-conf">&#9881;&#65039; Configuración</h3>
-<div class="table-wrap"><table>
-<thead><tr><th>Grupo</th><th>Controles</th></tr></thead>
-<tbody>
-<tr><td>&#128421;&#65039; Iconos del escritorio</td><td>Casillas <em>Este equipo</em>, <em>Archivos del usuario</em>, <em>Red</em>, <em>Papelera de reciclaje</em> y <em>Panel de control</em>: marcar = se ve en el escritorio. Se aplica al momento.</td></tr>
-<tr><td>&#8596;&#65039; Espaciado de los iconos del escritorio</td><td><em>Horizontal</em> y <em>Vertical</em> de 32 a 182 px. <strong>&#10004;&#65039; Aplicar</strong> lo guarda y reinicia el Explorador. <strong>&#8617;&#65039; Valores de Windows</strong> vuelve a 75 px.</td></tr>
-<tr><td>&#128208; Posición de los iconos del escritorio</td><td><strong>&#128190; Guardar la actual…</strong> pide un nombre (p. ej. «Trabajo», «Dos monitores»). <strong>&#8617;&#65039; Restaurar</strong> deja los iconos como en la posición elegida. <strong>&#10005; Quitar</strong> la envía a la Papelera. Tabla: Nombre · Fecha · Equipo · Archivo.</td></tr>
-<tr><td>&#129513; Iconos superpuestos (OneDrive, Dropbox, Git...)</td><td>Windows solo tiene 15 plazas y reserva 4; las reparte por orden alfabético del nombre. Tabla: Posición · Nombre · Programa · Estado (<em>Activo</em>, <em>Puede quedar fuera</em>, <em>Sin plaza (no se ve)</em>) · Archivo. <strong>&#11014;&#65039; Dar prioridad</strong> pone el elegido el primero (antes guarda una copia .reg en <code>BACKUPS\ICONOS</code>; si la copia falla no cambia nada) y reinicia el Explorador. <strong>&#128194; Copias del registro</strong> abre esa carpeta.</td></tr>
-<tr><td>&#128189; Iconos personalizados de unidades</td><td><strong>&#127912; Poner icono a una unidad…</strong>: elegir la letra y el icono en el selector (Bibliotecas en pequeño, con «Usar este icono»). Se ve al volver a abrir «Este equipo». <strong>&#10005; Quitar personalización</strong> devuelve el icono y nombre de Windows. Tabla: Unidad · Icono · Nombre.</td></tr>
-</tbody></table></div>
-<div class="alert-warning">Sin permisos de administrador los iconos superpuestos y los de las unidades se pueden ver pero no cambiar (lo indica una nota arriba).</div>
-</section>
-
-<!-- ================================================================== -->
-<section id="asoc">
-<h2>&#128279; Extensiones y programas</h2>
-<p>Categoría <strong>Sistema</strong>. Qué programa abre cada tipo de archivo y cada protocolo, calculado igual que lo hace el Explorador.</p>
-<div class="table-wrap"><table>
-<thead><tr><th>Control</th><th>Qué hace</th></tr></thead>
-<tbody>
-<tr><td>&#128228; Exportar XML…</td><td>Guarda las asociaciones de este equipo en el formato de DISM (para otro equipo o una GPO).</td></tr>
-<tr><td>&#128229; Importar XML…</td><td>Necesita administrador. Windows lo aplica a los usuarios <strong>nuevos</strong> y a cada usuario la próxima vez que inicie sesión; no cambia al instante las elecciones ya hechas. Se deshace con <code>DISM /Remove-DefaultAppAssociations</code>.</td></tr>
-<tr><td>Pestaña &#128196; Extensiones</td><td>Tabla Extensión · Tipo de archivo · Abre con · Origen · Estado · Programa.</td></tr>
-<tr><td>Pestaña &#127760; Protocolos</td><td>Lo mismo para http, mailto, tel, teams… (Protocolo · Identificador · …).</td></tr>
-<tr><td>Pestaña &#128230; Por programa</td><td>Programa · Nº · Extensiones y protocolos · Programa (ruta). Se calcula con lo leído en las otras dos pestañas; ordenada por número.</td></tr>
-<tr><td>Filtro</td><td><em>Con programa</em> (por defecto) · <em>Con problemas</em> · <em>Elegidas por el usuario</em> · <em>Sin programa</em> · <em>Todas</em>.</td></tr>
-<tr><td>&#129695; Abrir con…</td><td>(Solo Extensiones; también con doble clic.) Abre el diálogo de Windows para elegir el programa; hay que marcar «Usar siempre» y luego pulsar &#128260; Actualizar.</td></tr>
-<tr><td>&#8617;&#65039; Restablecer</td><td>Quita la elección del usuario: Windows vuelve a la suya o pregunta la próxima vez. Solo actúa si hay elección del usuario o está rota.</td></tr>
-<tr><td>&#9881;&#65039; Aplicaciones predeterminadas</td><td>Abre Configuración › Aplicaciones › Aplicaciones predeterminadas.</td></tr>
-</tbody></table></div>
-<p><strong>Origen:</strong> <em>Elegido por el usuario</em> (azul) o <em>Del sistema o del programa</em>. <strong>Estado:</strong> <em>Correcto</em> · <em>Sin programa (Windows pregunta)</em> · <em>Programa no encontrado</em> · <em>Elección rota (el programa ya no está)</em>.</p>
-<div class="alert-info">MASys no fija el programa predeterminado escribiendo en el registro: Windows protege esa elección con una firma y la anularía. Por eso usa el diálogo «Abrir con» de Windows.</div>
-</section>
-
-<!-- ================================================================== -->
-<section id="carac">
-<h2>&#129513; Características de Windows</h2>
-<p>Categoría <strong>Sistema</strong>. Las características opcionales y las capacidades (RSAT, OpenSSH, idiomas…) en una sola tabla, con nombre en español.</p>
-<div class="table-wrap"><table>
-<thead><tr><th>Control</th><th>Qué hace</th></tr></thead>
-<tbody>
-<tr><td>Filtro</td><td><em>Sin idiomas ni controladores</em> (por defecto) · <em>Activadas</em> · <em>Desactivadas</em> · <em>Con aviso de seguridad</em> · <em>Solo características</em> · <em>Solo capacidades</em> · <em>Idiomas</em> · <em>Controladores</em> · <em>Todas</em>.</td></tr>
-<tr><td>&#10004;&#65039; Activar</td><td>Activa las marcadas que estén desactivadas (se pueden marcar varias). Puede tardar varios minutos (algunas se descargan de Windows Update).</td></tr>
-<tr><td>&#10005; Quitar</td><td>Desactiva las marcadas que estén activadas. Lo que las use dejará de funcionar.</td></tr>
-<tr><td>&#128203; Perfiles…</td><td>Abre «Perfiles de características»: a la izquierda los perfiles, a la derecha qué <em>se activarán</em>, qué <em>se quitarán</em>, qué <em>ya están como pide el perfil</em> y cuáles <em>no existen en esta versión de Windows</em>. «&#10004;&#65039; Aplicar este perfil» solo se habilita si hay algo que cambiar.</td></tr>
-<tr><td>&#128191; .NET 3.5 sin internet…</td><td>Instala .NET Framework 3.5 desde la carpeta <code>\sources\sxs</code> de un USB o ISO de la <strong>misma</strong> versión de Windows, cuando Windows Update falla.</td></tr>
-<tr><td>Tabla</td><td>Nombre · Tipo (<em>Característica</em> / <em>Capacidad</em>) · Estado (<em>Activada</em>, <em>Desactivada</em>, <em>Pendiente de reinicio</em>, <em>No disponible</em>) · Categoría · Nombre técnico · Aviso (en rojo).</td></tr>
-</tbody></table></div>
-<h3>Perfiles</h3>
-<div class="table-wrap"><table>
-<thead><tr><th>Perfil</th><th>Cambios</th></tr></thead>
-<tbody>
-<tr><td>&#128736;&#65039; Puesto de soporte IT</td><td>Activa RSAT de Active Directory, directiva de grupo, DNS, DHCP, Administrador del servidor y recuperación de BitLocker, el cliente OpenSSH y la consola de administración de impresión.</td></tr>
-<tr><td>&#128187; Desarrollo y máquinas virtuales</td><td>Activa WSL, Plataforma de máquina virtual, Hyper-V, Espacio aislado de Windows y el modo de desarrollador.</td></tr>
-<tr><td>&#128737;&#65039; Endurecer el equipo</td><td>Quita SMB 1.0 (cliente y servidor), PowerShell 2.0, cliente Telnet, cliente TFTP, Servicios TCP/IP simples e Internet Explorer.</td></tr>
-<tr><td>&#128450;&#65039; Programas antiguos</td><td>Activa .NET 3.5, componentes heredados y DirectPlay.</td></tr>
-</tbody></table></div>
-<p>Los cambios no reinician el equipo: si Windows lo necesita, se avisa al terminar («Windows pide reiniciar para terminar»). Si ya hay un reinicio pendiente, se indica arriba de la tabla.</p>
-<div class="alert-warning">Sin permisos de administrador solo se ven las características (no las capacidades como RSAT u OpenSSH) y no se puede cambiar nada.</div>
-</section>
-
-<!-- ================================================================== -->
-<section id="red">
-<h2>&#129514; Herramientas de red</h2>
-<p>Categoría <strong>Red</strong>. Dos pestañas.</p>
-
-<h3 id="red-diag">&#128300; Diagnóstico por capas</h3>
-<p>Prueba un destino de abajo arriba: contexto (VPN, proxy), tarjeta de red, puerta de enlace y ARP, ping y traza, puertos, TLS, DNS en varios servidores, web y, si se marca, Microsoft 365.</p>
-<div class="table-wrap"><table>
-<thead><tr><th>Control</th><th>Qué hace</th></tr></thead>
-<tbody>
-<tr><td>Destino</td><td>Dominio o IP (p. ej. <code>masoft.es</code>, <code>192.168.1.10</code>). Intro lanza el diagnóstico.</td></tr>
-<tr><td>Microsoft 365</td><td>Casilla (marcada por defecto): añade las pruebas de Microsoft 365 / Entra ID.</td></tr>
-<tr><td>Puertos</td><td>Separados por comas con nombre opcional. Por defecto <code>80 HTTP, 443 HTTPS, 22 SSH, 3389 RDP, 445 SMB, 25 SMTP</code>.</td></tr>
-<tr><td>&#9654;&#65039; Diagnosticar</td><td>Lanza las pruebas; a la derecha se ve el avance y al final «N correctas · N avisos · N errores».</td></tr>
-<tr><td>Filtro</td><td><em>Todas</em> · <em>Con problemas</em> · <em>Correctas</em>.</td></tr>
-<tr><td>&#128269; Investigar puerto</td><td>Sobre una fila «Puerto …» con aviso o error (también con doble clic): repite pruebas alrededor de ese puerto y dice por qué falla. La conclusión se añade al detalle.</td></tr>
-<tr><td>&#127760; Informe técnico…</td><td>HTML con todas las pruebas.</td></tr>
-<tr><td>&#128100; Informe para el cliente…</td><td>HTML con veredicto y hallazgos en lenguaje llano, sin la parte técnica que esté bien.</td></tr>
-<tr><td>Tabla</td><td>Capa (Contexto, 1 · Física, 2 · Enlace, 3 · Red, 4 · Transporte, 5-6 · Sesión/Seguridad, 7 · Aplicación, M365 / Entra ID) · Prueba · Estado · Tiempo · Detalle.</td></tr>
-</tbody></table></div>
-
-<h3 id="red-cons">&#128270; Consultas</h3>
-<div class="table-wrap"><table>
-<thead><tr><th>Herramienta</th><th>Qué escribir</th><th>Resultado</th></tr></thead>
-<tbody>
-<tr><td><span class="param-name">DNS</span></td><td>Dominio o IP + tipo</td><td>Registros del tipo elegido.</td></tr>
-<tr><td><span class="param-name">DNS en varios servidores</span></td><td>Dominio + tipo</td><td>El mismo registro en Sistema, Google, Cloudflare y Quad9 (para ver si un cambio se ha propagado).</td></tr>
-<tr><td><span class="param-name">WHOIS (RDAP)</span></td><td>Dominio o IP</td><td>Quién tiene el dominio o la red y cuándo caduca.</td></tr>
-<tr><td><span class="param-name">Web: cabeceras y redirecciones</span></td><td>Dirección web (masoft.es o https://…)</td><td>Respuesta, redirecciones y cabeceras de seguridad.</td></tr>
-<tr><td><span class="param-name">Certificado TLS</span></td><td>Dominio o dominio:puerto (p. ej. correo.ejemplo.com:993)</td><td>Para quién es, quién lo emite y cuándo caduca.</td></tr>
-<tr><td><span class="param-name">Mi IP pública</span></td><td>Nada</td><td>La IP con la que este equipo sale a internet.</td></tr>
-</tbody></table></div>
-<p>El tipo de registro (solo en las de DNS) puede ser A, AAAA, MX, TXT, NS, CNAME, SOA, SRV, CAA o PTR. <strong>&#128270; Consultar</strong> (o Intro) lanza la consulta; la tabla muestra Dato · Valor con color de estado.</p>
-</section>
-
-<!-- ================================================================== -->
-<section id="mig">
-<h2>&#129523; Inventario de migración</h2>
-<p>Categoría <strong>Administración</strong>. Apunta todo lo que hay que tener en cuenta al cambiar de equipo y, en el equipo nuevo, dice qué falta. <strong>No copia ningún dato ni guarda ninguna contraseña.</strong></p>
-<div class="flow">
-  <div class="flow-step">Equipo viejo: &#128260; Actualizar (1-3 minutos)</div>
-  <div class="flow-step">&#128190; Guardar… (.msysinv)</div>
-  <div class="flow-step">Equipo nuevo: &#128194; Comparar…</div>
-  <div class="flow-step">&#128257; Reinstalar con winget…</div>
-  <div class="flow-step">&#127760; Lista de comprobación… o HTML (barra inferior)</div>
-</div>
-<div class="table-wrap"><table>
-<thead><tr><th>Control</th><th>Qué hace</th></tr></thead>
-<tbody>
-<tr><td>&#128260; Actualizar</td><td>Hace el inventario de este equipo. La nota de la segunda fila enseña el avance y al final el resumen (elementos e importantes, en amarillo).</td></tr>
-<tr><td>&#128190; Guardar…</td><td>Guarda el inventario en un archivo <code>.msysinv</code>. No lleva contraseñas, pero sí nombres de cuentas, redes y programas: guardarlo en un sitio seguro.</td></tr>
-<tr><td>&#128194; Comparar…</td><td>En el equipo <strong>nuevo</strong>: abre el inventario del viejo, hace el de este y marca cada elemento. Si el archivo es de este mismo equipo, pregunta antes.</td></tr>
-<tr><td>&#128257; Reinstalar con winget…</td><td>Tras comparar: lista de programas del equipo viejo que faltan aquí y winget sabe instalar, todos marcados (<em>Marcar todos</em>, <em>Ninguno</em>). <strong>&#128257; Instalar los marcados</strong> abre una ventana de winget para ver el avance. Los programas de pago necesitarán su licencia.</td></tr>
-<tr><td>&#127760; Lista de comprobación…</td><td>HTML imprimible con una <strong>casilla por elemento</strong> para ir marcando lo hecho: un apartado por categoría con su número, tabla Elemento · Detalle · Qué hacer en el equipo nuevo (y «En el equipo nuevo» con su estado en color si se ha comparado), filas importantes en amarillo y el resumen presentes / faltan / distintos. Se guarda como <code>Migracion_&lt;equipo&gt;_AAAAMMDD_HHMM.html</code>.</td></tr>
-<tr><td>HTML (barra inferior, junto a CSV)</td><td>Informe con el mismo diseño y funcionamiento que el de MIGRACION.PS1: cabecera «INFORME DE MIGRACIÓN - equipo» con la fecha, buscador, «+ Expandir todo», «- Contraer todo» e «Imprimir», un apartado plegable por categoría con su número (abierto solo el primero), tabla Elemento · Detalle · Qué hacer en el equipo nuevo (y «En el equipo nuevo» si se ha comparado), insignia IMPORTANTE y los mismos avisos bajo cada apartado (contraseñas que no se exportan, certificados con clave privada, cuentas que iniciar…). Se guarda como <code>Informe_&lt;equipo&gt;_AAAAMMDD_HHMMSS.html</code>, igual que el script.</td></tr>
-<tr><td>Categoría</td><td><em>Todas las categorías</em> o una de las 18.</td></tr>
-<tr><td>Filtro</td><td><em>Todo</em> · <em>Solo lo importante</em> · <em>Faltan en este equipo</em> (se elige solo al comparar) · <em>Distintos</em> · <em>Presentes</em>.</td></tr>
-<tr><td>Tabla</td><td>Categoría · Elemento · Detalle · Qué hacer en el equipo nuevo · En este equipo (solo al comparar: <em>Presente</em> verde, <em>Falta</em> rojo, <em>Distinto</em> ámbar).</td></tr>
-</tbody></table></div>
-<h3>Categorías</h3>
-<p>Equipo · Seguridad y licencias · Red · Unidades y carpetas compartidas · Usuarios y perfiles · Credenciales y certificados · Correo · Navegadores · Nube · Office · Programas · Reinstalables con winget · Impresoras · Tareas programadas · Dispositivos y monitores · Datos del usuario · Personalización · Programas predeterminados.</p>
-</section>
-
-<!-- ================================================================== -->
-<section id="movil">
-<h2>&#128241; Móviles Android</h2>
-<p>Desde la 5.3.0 es una <strong>ventana propia</strong> que se abre con el botón <strong>&#128241; Móviles Android</strong> bajo el árbol, entre <em>&#128421;&#65039; Acceso remoto</em> y <em>&#9881;&#65039; Configuración y perfiles</em> (antes era la sección «Móvil Android» del árbol, en Hardware y periféricos). Recibe y analiza los informes de la app <strong>MASysMov</strong>. Hay dos formas de recibirlos, y valen las dos a la vez:</p>
-<div class="flow">
-  <div class="flow-step">Marcar «Recibir del móvil»</div>
-  <div class="flow-step">&#128242; Emparejar móvil… (empresa y usuario)</div>
-  <div class="flow-step">Sale un QR</div>
-  <div class="flow-step">En el móvil: Ajustes › Enlace con MASys › Emparejar con el PC</div>
-  <div class="flow-step">Llega el primer informe</div>
-</div>
-<div class="table-wrap"><table>
-<thead><tr><th>Control</th><th>Qué hace</th></tr></thead>
-<tbody>
-<tr><td>&#128101; Empresas</td><td>El catálogo de empresas y usuarios de tus clientes (el mismo de Acceso remoto).</td></tr>
-<tr><td>&#128682; Puertos desde fuera</td><td>Ventana con los pedidos de puertos de <strong>todos</strong> los móviles (ver más abajo).</td></tr>
-<tr><td>Recibir del móvil</td><td>Casilla. MASys escucha en el puerto 47880 de la red local mientras está abierto, <strong>aunque esta ventana esté cerrada</strong>; se recuerda para la próxima vez. La primera vez, con administrador, ofrece abrir ese puerto en el firewall de Windows <strong>solo para redes privadas y de dominio</strong> (nunca en públicas). La nota de debajo dice en qué IP está recibiendo.</td></tr>
-<tr><td>&#128242; Emparejar móvil…</td><td>Pide primero la <strong>empresa y el usuario</strong> del móvil y después enseña un código QR que vale 10 minutos y para un solo móvil (marca «Recibir del móvil» si no lo estaba). Al emparejar, el móvil queda en su sitio del árbol.</td></tr>
-<tr><td>&#128229; Importar archivo…</td><td>Abre un informe <code>.msysmov</code> exportado en MASysMov y pide su contraseña. Si el móvil no tiene empresa, la pide (Cancelar = no se importa). Si ya estaba importado, no lo duplica.</td></tr>
-<tr><td>&#127760; Informe HTML…</td><td>Informe completo del informe elegido (con los cambios respecto al anterior y las tablas de todas las pestañas). Los datos personales no van en el informe.</td></tr>
-<tr><td>&#128196; CSV…</td><td>Guarda en CSV la pestaña que se ve (todas sus subpestañas).</td></tr>
-<tr><td>&#10005; Quitar móvil</td><td>Borra de este PC el móvil, sus informes y lo recibido de contactos, llamadas y SMS; deja de aceptar sus envíos. Las copias guardadas en la carpeta no se borran.</td></tr>
-<tr><td>Datos personales</td><td>Lo que mandan los móviles de contactos, llamadas y SMS: <em>No recibir</em> (por defecto), <em>Solo recuentos</em> o <em>Completo</em>. Ver más abajo.</td></tr>
-<tr><td>Informes</td><td>Lista debajo del árbol con los informes del móvil elegido, del más reciente al más antiguo, con fecha y origen.</td></tr>
-</tbody></table></div>
-
-<h3 id="movil-arbol">Empresa, usuario y terminal</h3>
-<p>A la izquierda, un árbol <strong>Empresa › Usuario › Terminal</strong>. Al abrir la ventana las empresas salen plegadas; al abrir una empresa se pliega la que estaba abierta, y dentro de una empresa solo hay un usuario abierto a la vez. La empresa y el usuario se eligen del catálogo &#128101; Empresas o se escriben; si no están en el catálogo, MASys pregunta si los añade (con «No» se guardan igual en el móvil, como en la agenda de Acceso remoto). Los móviles que ya había antes de la 5.3.0 salen en <strong>&#10068; Sin asignar</strong>: clic derecho › <em>&#128101; Asignar a empresa y usuario…</em> (vale también para cambiarlos de sitio). Pasando el ratón por un terminal se ve su modelo, número de informes, vía (Wi-Fi o archivo) y fecha del último informe.</p>
-
-<h3 id="movil-pest">Pestañas del móvil</h3>
-<div class="table-wrap"><table>
-<thead><tr><th>Pestaña</th><th>Contenido</th></tr></thead>
-<tbody>
-<tr><td>&#128203; Ficha</td><td>Móvil, Android (ámbar si es anterior a Android 12), parche de seguridad (ámbar con más de 90 días, rojo con más de 180), procesador, nivel de acceso de MASysMov, encendido desde hace, batería (nivel, estado, salud, temperatura, ciclos), batería en detalle (tensión, tecnología, gasto habitual por hora, horas que quedan), DNS privado, Bluetooth (emparejados y conectados), procesos (en marcha, CPU, temperatura), temporales de las apps (ámbar con más de 2 GB), liberado con MASysMov, eliminados recuperables, memoria, almacenamiento (ámbar &gt;85 % usado, rojo &gt;95 %), red y Wi-Fi (ámbar si está sin cifrar), IP / puerta / DNS, apps, cuentas e informe.</td></tr>
-<tr><td>&#128737;&#65039; Seguridad</td><td>Estado (Bien, Revisar, Importante, Info) · Hallazgo · Detalle: la revisión de seguridad del propio móvil más parche antiguo, apps instaladas fuera de una tienda, apps que contactan con publicidad o analítica, almacenamiento casi lleno (&gt;90 %), Wi-Fi sin cifrar, rastreadores sin cortar, muchos temporales (más de 2 GB), 3 o más apps sin usar en 30 días y, desde MASysMov 1.3.2, batería gastada (menos del 80 % de su capacidad original), pruebas con fallo y Wi-Fi en un canal saturado.</td></tr>
-<tr><td>&#128230; Apps</td><td>App · Notas · Permisos sensibles · Origen (Play Store, Galaxy Store, AppGallery, GetApps, Amazon Appstore, App Market, V-Appstore, APK a mano o fuera de tienda) · Versión · Paquete. Con búsqueda.</td></tr>
-<tr><td>&#127760; Conexiones</td><td>App · Dominio · Consultas · Bloqueadas · Publicidad (nombre del servicio de publicidad o analítica, en ámbar). De los últimos 7 días, si el monitor de red de MASysMov está activo. Con búsqueda.</td></tr>
-<tr><td>&#128200; Evolución</td><td>Una fila por informe: Fecha · Batería · Salud · Temperatura · Ciclos · Almacenamiento · Apps · Velocidad · Vía.</td></tr>
-<tr><td>&#128260; Cambios</td><td>Respecto al informe anterior: <em>App nueva</em>, <em>App quitada</em>, <em>Permisos nuevos</em>, <em>Actualizada</em>; y, con &#128276;, los avisos que guardó el propio móvil (apps y permisos nuevos) con su fecha.</td></tr>
-<tr><td>&#128189; Espacio</td><td>Subpestañas: <em>Apps</em> (App · Total · Programa · Datos · Temporales) · <em>Carpetas</em> (Carpeta · Tamaño · Archivos) · <em>Tipos de archivo</em> (Tipo · Tamaño · Archivos) · <em>Archivos grandes</em> (Archivo · Carpeta · Tamaño · Fecha · Hora · Tipo) · <em>Mensajería</em> (App · Carpeta · Tamaño · Archivos · Ruta) · <em>Apps sin usar</em> (App · Último uso · Tamaño) · <em>Copias en el móvil</em> (App · Versión · Fecha · Hora · Tamaño · Contenido · Instalable). Carpetas, tipos, grandes y mensajería necesitan «Acceso a todos los archivos» en el móvil.</td></tr>
-<tr><td>&#128267; Batería</td><td><em>Consumo por app</em> (App · mAh · % del gasto; solo si el móvil tiene modo avanzado o root) · <em>Historial (7 días)</em> (Fecha · Hora · Nivel · Cargando) · <em>Salud</em> (salud real, capacidad original, capacidad actual y ciclos; MASysMov 1.3.2; «El móvil no lo informa» si el fabricante no lo da).</td></tr>
-<tr><td>&#128373;&#65039; Rastreadores</td><td><em>Servicios</em> (Servicio · Consultas · Cortadas · Apps · Se corta) · <em>Apps</em> (App · Consultas · Cortadas · Servicios). De los últimos 7 días, con el monitor de red de MASysMov activo.</td></tr>
-<tr><td>&#9881;&#65039; Procesos</td><td>App · Memoria · CPU · Procesos, de más a menos memoria (los de otras apps solo con modo avanzado o root).</td></tr>
-<tr><td>&#128295; Hardware</td><td>Grupo · Dato · Valor: lo de <em>Sistema › Información</em> de MASysMov (equipo, sistema, procesador, pantalla, cámaras, memoria, seguridad, temperaturas y sensores). MASysMov 1.3.2.</td></tr>
-<tr><td>&#128246; Red</td><td><em>Líneas SIM</em> (Línea · Operador · Red · Señal · Calidad · Banda · Antena · Datos · Itinerancia; banda y antena con el permiso de ubicación) · <em>Wi-Fi</em> (encendida, estándar más alto, bandas, WPA3, Wi-Fi Direct, red conectada con canal, velocidad del enlace y canal recomendado) · <em>Redes cercanas</em> (Red · Señal · Canal · Banda · Seguridad · Estándar) · <em>Redes guardadas</em> (solo con modo avanzado o root) · <em>Bluetooth</em> (Dispositivo · Tipo · Conectado · Batería) · <em>Velocidad</em> (los últimos 10 tests: Fecha · Hora · Bajada · Subida · Ping · Jitter · Red · Servidor).</td></tr>
-<tr><td>&#128202; Consumo de datos</td><td>App · Wi-Fi · Datos móviles · Total, de los últimos 30 días.</td></tr>
-<tr><td>&#9989; Pruebas</td><td>Grupo · Prueba · Resultado (Bien, Fallo, No tiene o Sin hacer) · Fecha · Hora · Detalle: las 22 pruebas de <em>Pruebas</em> de MASysMov. MASysMov 1.3.2.</td></tr>
-<tr><td>&#128101; Datos personales</td><td><em>Resumen</em> · <em>Contactos</em> · <em>Llamadas</em> · <em>SMS</em> (ver abajo).</td></tr>
-<tr><td>&#128190; Copias</td><td>Copias de apps y de Datos que manda el móvil (ver abajo).</td></tr>
-</tbody></table></div>
-
-<h3 id="movil-datos">&#128101; Datos personales</h3>
-<p>El técnico elige en <strong>Datos personales</strong> (arriba a la derecha) qué mandan los móviles en cada envío por Wi-Fi. Vale para todos los móviles y se aplica en el siguiente envío de cada uno. Se guarda solo lo último que mandó cada móvil, protegido con DPAPI como los informes.</p>
-<div class="table-wrap"><table>
-<thead><tr><th>Opción</th><th>Qué llega</th></tr></thead>
-<tbody>
-<tr><td><span class="param-name">No recibir</span> <span class="badge badge-default">por defecto</span></td><td>Nada. Lo ya recibido de antes se sigue viendo hasta que se quite el móvil.</td></tr>
-<tr><td><span class="param-name">Solo recuentos</span></td><td><em>Resumen</em>: cuántos contactos, llamadas y SMS (y en cuántas conversaciones) tiene el móvil.</td></tr>
-<tr><td><span class="param-name">Completo</span></td><td>Además: <em>Contactos</em> (Nombre · Teléfonos · Correos · Cuentas · Favorito), <em>Llamadas</em> (Fecha · Hora · Número · Nombre · Tipo · Duración) y <em>SMS</em> (Fecha · Hora · Número · Tipo · Leído · Texto), hasta 5.000 de cada (los más recientes).</td></tr>
-</tbody></table></div>
-<p>Si al móvil le falta el permiso de contactos, llamadas o SMS, el Resumen lo dice («Sin permiso en el móvil»): MASysMov no los pide por su cuenta. Los importados por archivo no mandan datos personales.</p>
-
-<h3 id="movil-copias">&#128190; Copias de apps y de Datos</h3>
-<p>Las copias de apps que se hacen en MASysMov 1.2.3 o posterior (Sistema › Espacio › Copias de apps) llegan aquí por la Wi-Fi, cifradas y en trozos de 4 MB: si el envío se corta, la vez siguiente sigue donde se quedó. Cada archivo se comprueba con su huella (SHA-256); si llega dañado, se borra y se pide entero otra vez. Desde MASysMov 1.2.4 cada copia llega como una <strong>carpeta con su <code>.apk</code> instalable</strong> (y sus piezas <code>…_split_….apk</code> si la app va en varias, el <code>.json</code> y los datos <code>.tar</code>); las de MASysMov 1.2.3 llegan como <code>.zip</code>. Desde MASysMov 1.3.2 también llegan las <strong>copias de Datos</strong> (<code>.msysdatos</code>: contactos, llamadas y SMS cifrados con la contraseña que se puso en el móvil) que se guarden con <em>Guardar en la carpeta de copias</em>. Todo va a una subcarpeta por móvil.</p>
-<div class="table-wrap"><table>
-<thead><tr><th>Control</th><th>Qué hace</th></tr></thead>
-<tbody>
-<tr><td>&#128193; ruta</td><td>Carpeta donde se guardan las copias del móvil elegido (se puede seleccionar y copiar).</td></tr>
-<tr><td>&#128193; Carpeta…</td><td>Elegir la carpeta de las copias de todos los móviles (por defecto <code>COPIAS_MOVIL</code> junto a MASys). Las ya recibidas no se mueven.</td></tr>
-<tr><td>&#128194; Abrir carpeta</td><td>Abre la carpeta del móvil en el Explorador.</td></tr>
-<tr><td>Traer las copias nuevas en cada envío</td><td>Marcado (por defecto): cada vez que el móvil manda su informe, envía también las copias que falten. Se guarda por móvil.</td></tr>
-<tr><td>&#128232; Pedir al móvil</td><td>Encarga al móvil que mande sus copias en su próximo envío (para móviles con la casilla desmarcada).</td></tr>
-<tr><td>Tabla</td><td>Una fila por copia: App · Versión · Fecha · Hora · Instalable (<em>N .apk</em>, <em>1 .apk</em>, <em>Varias piezas (.apks)</em>, <em>No (copia de Datos)</em> o <em>Formato antiguo (.zip)</em>) · Tamaño · Contenido · Estado (<em>Recibida</em> en verde, <em>Recibiendo N %</em>, <em>Pendiente</em>, <em>Borrada en el PC</em> en ámbar: se volverá a pedir). Doble clic: abre la carpeta de la copia (en los archivos sueltos, lo muestra en el Explorador).</td></tr>
-</tbody></table></div>
-<p>Para restaurar una copia en el móvil (u otro móvil), copia su carpeta entera (o el archivo) a la carpeta de copias de MASysMov. Una copia de Datos se restaura en MASysMov › Datos › Copia de seguridad › Restaurar, con su contraseña. Quitar un móvil no borra sus copias del disco.</p>
-
-<h3 id="movil-puerto">&#128682; Puertos desde fuera</h3>
-<p>Comprueba si un puerto de una red se ve <strong>desde internet</strong>. El pedido no es de un móvil concreto: lo hace el <strong>primer móvil emparejado por Wi-Fi que envíe su informe</strong>, con sus datos móviles (aunque esté en la Wi-Fi). Si ese móvil no tiene datos móviles, el pedido vuelve a la espera para el siguiente (y ese móvil no lo vuelve a coger en 30 minutos); si un móvil se lo lleva y no contesta en 10 minutos, también vuelve a la espera. Se abre con el botón de la cabecera de Móviles Android.</p>
-<div class="table-wrap"><table>
-<thead><tr><th>Control</th><th>Qué hace</th></tr></thead>
-<tbody>
-<tr><td>Dirección</td><td>Vacío = la IP pública de la Wi-Fi del móvil (que es la red de este PC: el enlace solo funciona en la red local); o un dominio.</td></tr>
-<tr><td>Puertos</td><td>Separados por comas (por defecto <code>3389, 443, 80</code>; máximo 20).</td></tr>
-<tr><td>&#128232; Pedir</td><td>Guarda el pedido. Si no hay ningún móvil emparejado por Wi-Fi, lo dice en la barra de estado.</td></tr>
-<tr><td>&#10005; Quitar</td><td>Quita de la lista el pedido elegido.</td></tr>
-<tr><td>Tabla</td><td>Pedido · Dirección (con la IP pública comprobada) · Puertos · Estado (<em>Esperando a un móvil</em>, <em>Asignado a un móvil</em>, <em>Enviado al móvil</em>, <em>Hecho</em>; con «(N sin datos)» si algún móvil lo intentó sin datos móviles) · Resultado (por puerto: abierto, cerrado o filtrado) · Móvil.</td></tr>
-<tr><td>Detalle</td><td>Debajo de la tabla, del pedido elegido: Empresa › Usuario › Terminal que lo hizo, red, resultado completo y móviles que lo intentaron sin datos móviles (con fecha).</td></tr>
-</tbody></table></div>
-<p>Al quitar un móvil, sus pedidos hechos se quedan en la lista y los que tenía a medias vuelven a la espera.</p>
-<div class="alert-info"><strong>Seguridad del enlace.</strong> Solo red local; todo cifrado con AES-256-GCM con una clave por móvil que se crea al emparejar. En el PC la clave se guarda protegida por Windows (DPAPI). Un mensaje de un móvil no vale para otro ni para otra petición. El PC no puede dar órdenes al móvil: solo pedirle comprobaciones y datos que la app conoce (puertos, copias y datos personales).</div>
-</section>
-
-<!-- ================================================================== -->
-<section id="navegadores">
-<h2>&#128278; Navegadores: favoritos y contraseñas</h2>
-<p>En la sección <strong>&#127760; Navegadores</strong>, además del visor de cuentas, historial, descargas y extensiones, la barra superior tiene dos herramientas de gestión añadidas en la versión 4.3.1: el <strong>Gestor de favoritos</strong> y la <strong>Auditoría de contraseñas</strong>. Ambas leen los datos reales de los perfiles de Chrome, Edge y Firefox directamente del disco (funcionan con el navegador abierto o cerrado, porque copian antes los archivos bloqueados a un temporal).</p>
-
-<h3 id="fav">&#128278; Gestor de favoritos</h3>
-<p>Botón <strong>&#128278; Favoritos</strong>. Sustituye al antiguo visor de marcadores (que solo dejaba mirar): ahora se pueden editar, revisar, reorganizar, comprobar qué enlaces están rotos y <strong>volver a escribirlos en el propio navegador</strong> o migrarlos a otro.</p>
-<div class="table-wrap"><table>
-<thead><tr><th>Acción</th><th>Qué hace</th></tr></thead>
-<tbody>
-<tr><td><span class="param-name">Perfil &middot; &#128260; Cargar</span></td><td>Elige el perfil (Chrome/Edge/Firefox) y carga sus favoritos en un árbol con las carpetas reales. En Chrome/Edge respeta las tres raíces: Barra de marcadores, Otros marcadores y Dispositivos&nbsp;/&nbsp;móvil.</td></tr>
-<tr><td><span class="param-name">Editar</span></td><td>Doble clic en un marcador para cambiar su título o su URL. En carpetas, el título.</td></tr>
-<tr><td><span class="param-name">Reorganizar</span></td><td>Arrastrar y soltar para mover marcadores entre carpetas o reordenarlos. Las tres raíces no se mueven.</td></tr>
-<tr><td><span class="param-name">&#10133; Carpeta</span></td><td>Crea una carpeta nueva dentro de la seleccionada.</td></tr>
-<tr><td><span class="param-name">&#10006; Quitar</span></td><td>Quita de la lista los marcadores o carpetas seleccionados. No cambia el navegador hasta que se pulsa «Sustituir».</td></tr>
-<tr><td><span class="param-name">&#128279; Comprobar enlaces</span></td><td>Visita cada enlace (en paralelo) y marca su estado: <span style="color:#16a34a">OK</span>, <span style="color:#2563eb">Redirige</span>, <span style="color:#dc2626">Roto</span> (404, etc.) o <span style="color:#ca8a04">Sin conexión</span>. Al terminar muestra el recuento.</td></tr>
-<tr><td><span class="param-name">&#128228; Exportar (HTML estándar)</span></td><td>Guarda todo en el formato Netscape que importa cualquier navegador (Chrome, Edge, Firefox, Brave&hellip;). Es la vía para <strong>migrar</strong> a otro navegador.</td></tr>
-<tr><td><span class="param-name">&#128229; Importar HTML&hellip;</span></td><td>Carga un archivo de marcadores exportado de otro navegador y lo añade en una carpeta «Importado».</td></tr>
-<tr><td><span class="param-name">&#128190; Sustituir en el navegador</span></td><td>Reescribe los marcadores del perfil <strong>Chrome o Edge</strong> con la lista actual. Antes hace una copia de seguridad del archivo original y exige el navegador cerrado. Firefox es de solo lectura: para él se usa Exportar&nbsp;+&nbsp;importar desde Firefox.</td></tr>
-</tbody></table></div>
-<div class="alert-warning"><strong>Antes de sustituir.</strong> «Sustituir» reemplaza TODOS los marcadores del perfil por los de la lista. Se guarda una copia del archivo <code>Bookmarks</code> original en <code>INFORMES\BACKUPS_REPARACION\</code> y el cambio queda en el historial de reparaciones. El navegador debe estar cerrado del todo (si no, al cerrarlo descartaría los cambios).</div>
-
-<h3 id="audit-pass">&#128737;&#65039; Auditoría de contraseñas</h3>
-<p>Botón <strong>&#128737;&#65039; Auditar contraseñas</strong>. <strong>Solo audita</strong> las contraseñas que Chrome/Edge ya tienen guardadas (no las cambia, no las mueve). Antes de descifrar pide confirmación; se muestran ocultas salvo que se marque «Mostrar en claro», y la exportación respeta ese estado.</p>
-<div class="table-wrap"><table>
-<thead><tr><th>Comprobación</th><th>Qué hace</th><th>Internet</th></tr></thead>
-<tbody>
-<tr><td><span class="param-name">Fortaleza</span></td><td>Clasifica cada contraseña (Muy débil / Débil / Aceptable / Fuerte) por longitud, variedad de caracteres y patrones típicos (secuencias, años, palabra+números, las más usadas&hellip;), con el motivo.</td><td>No</td></tr>
-<tr><td><span class="param-name">Reutilización</span></td><td>Indica en cuántos sitios distintos se repite la misma contraseña (se comparan por hash en memoria, nunca se guarda el texto).</td><td>No</td></tr>
-<tr><td><span class="param-name">&#127760; Exposición</span></td><td>Botón «Comprobar exposición»: consulta <em>Have I Been Pwned – Pwned Passwords</em> y dice cuántas veces aparece cada contraseña en filtraciones conocidas.</td><td>Sí</td></tr>
-</tbody></table></div>
-<div class="alert-info"><strong>Privacidad de la comprobación (k-anonimato).</strong> Para saber si una contraseña está filtrada se calcula su hash SHA-1 en el equipo y solo se envían los <strong>5 primeros caracteres</strong> del hash; el servidor devuelve todos los finales que empiezan igual y la comparación se hace en local. La contraseña, y su hash completo, no salen nunca del equipo.</div>
-<div class="alert-warning"><strong>Por qué no se prueba «si la contraseña funciona» en cada web.</strong> Entrar de verdad en cada servicio para validar la contraseña sería prueba de credenciales contra terceros: puede bloquear cuentas y viola sus términos de uso. Por eso la auditoría se queda en fortaleza, reutilización y exposición en filtraciones.</div>
-</section>
-
-<!-- ================================================================== -->
-<section id="permisos">
-<h2>&#128194; Permisos de carpetas</h2>
-<p>La sección <strong>&#128194; Carpetas Compartidas</strong> tiene desde la versión 4.4.0 cinco pestañas. La primera, <strong>&#128194; Recursos compartidos</strong>, es la de siempre (sin cambios). Las otras cuatro trabajan con los <strong>permisos NTFS</strong> de un árbol de carpetas, en este equipo o en un servidor de la red (<code>\\servidor\recurso</code> o una unidad conectada como <code>H:</code>):</p>
-<div class="feature-list">
-  <div class="feature-item"><div class="feature-icon">&#128193;</div><div class="feature-text"><strong>Permisos de carpetas</strong><span>Leer, ver, editar, cambiar el propietario y quitar una cuenta de toda una rama.</span></div></div>
-  <div class="feature-item"><div class="feature-icon">&#9888;&#65039;</div><div class="feature-text"><strong>Análisis de permisos</strong><span>Lo que conviene revisar, por niveles: crítico, aviso e información.</span></div></div>
-  <div class="feature-item"><div class="feature-icon">&#129517;</div><div class="feature-text"><strong>Acceso de una cuenta</strong><span>Qué puede hacer un usuario o grupo en cada carpeta, sumando sus grupos y el permiso de red.</span></div></div>
-  <div class="feature-item"><div class="feature-icon">&#128190;</div><div class="feature-text"><strong>Copias de permisos</strong><span>Guardar, comparar, restaurar (aquí o en otro servidor) y exportar para icacls.</span></div></div>
-</div>
-<div class="alert-info"><strong>Más rápido que el análisis de la primera pestaña.</strong> Se lee con la API de Windows y en paralelo (no un PowerShell por carpeta): unas 20.000 carpetas con sus archivos en menos de un minuto en un disco local. Admite rutas de más de 260 caracteres.</div>
-
-<h3 id="perm-leer">&#128193; Leer y ver</h3>
-<div class="table-wrap"><table>
-<thead><tr><th>Control</th><th>Qué hace</th></tr></thead>
-<tbody>
-<tr><td><span class="param-name">Carpeta</span><span class="badge badge-required">obligatoria</span></td><td>Ruta local (<code>D:\Datos</code>), unidad de red (<code>H:\</code>) o ruta de red (<code>\\SRV\Datos</code>). &#128194; para elegirla. Se recuerda la última.</td></tr>
-<tr><td><span class="param-name">Archivos</span><span class="badge badge-default">Carpetas y archivos con permisos propios</span></td><td><em>Solo carpetas</em> · <em>Carpetas y archivos con permisos propios</em> (los que solo heredan no aportan nada) · <em>Carpetas y todos los archivos</em> (para ver propietarios de archivos; más lento).</td></tr>
-<tr><td><span class="param-name">Profundidad</span><span class="badge badge-default">99</span></td><td>Niveles de subcarpetas (1 = solo la carpeta indicada).</td></tr>
-<tr><td><span class="param-name">Ocultas</span><span class="badge badge-default">Sí</span></td><td>Incluir carpetas y archivos ocultos.</td></tr>
-<tr><td><span class="param-name">&#128269; Leer permisos · &#9209;&#65039; Parar</span></td><td>Lee el árbol. Parar a medias deja lo leído marcado como «parado a medias».</td></tr>
-<tr><td><span class="param-name">Filtro</span><span class="badge badge-default">Todo</span></td><td>Todo · Con permisos propios · Herencia cortada · Con avisos · No se pudieron leer. Se ven también las carpetas de arriba de cada una, para saber dónde está.</td></tr>
-<tr><td><span class="param-name">Búsqueda</span></td><td>Por nombre de carpeta, propietario o cuenta con permisos propios.</td></tr>
-</tbody></table></div>
-<p>El árbol tiene las columnas <strong>Propietario</strong>, <strong>Herencia</strong> (Hereda / Cortada), <strong>Propios</strong> (número de permisos puestos a mano; en negrita las que tienen) y <strong>Avisos</strong> del análisis. A la derecha, la carpeta elegida: propietario, herencia, avisos con qué hacer y la lista de permisos (las heredadas en gris). Las uniones y vínculos (como <code>Documents and Settings</code>) se apuntan pero no se entra en ellas, para no dar vueltas.</p>
-<p>Si la carpeta es un recurso compartido, o tiene recursos compartidos dentro, también se leen sus <strong>permisos de red</strong> (sin necesidad de WinRM en el servidor).</p>
-
-<h3 id="perm-editar">&#9999;&#65039; Editar permisos, propietario y quitar una cuenta</h3>
-<div class="table-wrap"><table>
-<thead><tr><th>Botón</th><th>Qué hace</th></tr></thead>
-<tbody>
-<tr><td><span class="param-name">&#9999;&#65039; Editar permisos…</span> (o doble clic)</td><td>Ventana con los permisos de la carpeta o archivo: <strong>&#10133; Añadir…</strong> (cuenta o grupo comprobado en el equipo de la ruta, Permitir/Denegar, permiso y «Se aplica a» igual que en Windows), <strong>&#10005; Quitar</strong> (solo las propias; las heredadas se cambian arriba), <strong>Heredar los permisos de la carpeta de arriba</strong> (al quitarla pregunta si los heredados se convierten en propios o se quitan) y <strong>Que todo lo que hay dentro pierda sus permisos propios y herede de esta carpeta</strong> (como «Reemplazar todas las entradas de permisos de objetos secundarios» del Explorador). Abajo se ve lo que va a cambiar.</td></tr>
-<tr><td><span class="param-name">&#128100; Propietario…</span></td><td>Nuevo propietario de la carpeta, y si se marca, de <strong>todo lo que tiene dentro</strong> (subcarpetas y todos los archivos, aunque no se hayan leído). Necesita MASys como administrador.</td></tr>
-<tr><td><span class="param-name">&#10005; Quitar una cuenta de la rama…</span></td><td>Quita los permisos propios de una cuenta en la carpeta y en todo lo leído de dentro (lo heredado desaparece solo). Antes enseña dónde los tiene.</td></tr>
-</tbody></table></div>
-<div class="alert-warning"><strong>Antes de cada cambio</strong> se guarda una copia de cómo está ahora lo que se va a cambiar («Antes_…» en <code>INFORMES\PERMISOS</code>); si el cambio llega a todo lo de dentro (propietario de la rama, herencia de lo de dentro), se copia la rama entera. Restaurar esa copia deshace el cambio. Todo queda en el historial de reparaciones. Windows aplica lo heredable a todo lo de dentro: en carpetas con muchos archivos tarda.</div>
-<p>Si una carpeta no deja entrar ni a los administradores, MASys (como administrador) la lee y la escribe con los privilegios de copia de seguridad y restauración de Windows. En ese caso avisa de que lo de dentro no se ha recalculado.</p>
-
-<h3 id="perm-analisis">&#9888;&#65039; Análisis de permisos</h3>
-<p>Se hace solo al leer. Filtros por nivel y por tipo, búsqueda, y <strong>&#128193; Ver la carpeta</strong> (o doble clic) para ir a ella en el árbol.</p>
-<div class="table-wrap"><table>
-<thead><tr><th>Nivel</th><th>Qué pasa</th><th>Qué hacer</th></tr></thead>
-<tbody>
-<tr><td><span style="color:#dc2626">Crítico</span></td><td>Todos (o Anónimo) pueden escribir · Sin lista de permisos (acceso total) · Todos pueden escribir por la red (recurso compartido y carpeta abiertos a la vez)</td><td>Cambiar Todos por el grupo que debe entrar</td></tr>
-<tr><td><span style="color:#ca8a04">Aviso</span></td><td>Todos los usuarios (Usuarios autentificados, Usuarios, Usuarios del dominio) pueden escribir · Alguien que no es administrador puede cambiar los permisos (Control total) · Permiso de una cuenta eliminada · Propietario eliminado · Entrada de denegar · Nadie tiene acceso · Los administradores no tienen acceso · No se pudieron leer los permisos · No se pudo ver lo que hay dentro</td><td>Cada fila trae su «Qué hacer»</td></tr>
-<tr><td><span style="color:#2563eb">Información</span></td><td>Herencia cortada · Permiso directo a un usuario (mejor por grupos) · Propietario: un usuario (solo donde empieza) · Recurso compartido abierto a todos pero limitado por la carpeta</td><td>Revisar que es a propósito</td></tr>
-</tbody></table></div>
-
-<h3 id="perm-acceso">&#129517; Acceso de una cuenta</h3>
-<p>Sobre lo leído: escribe un usuario o grupo (<code>DOMINIO\usuario</code>, <code>Contabilidad</code>, <code>Todos</code>…) y pulsa <strong>&#129517; Consultar</strong>. MASys busca sus grupos (los locales del servidor, también los indirectos, y los del dominio, también los anidados, consultando Active Directory) y calcula en cada carpeta lo que le queda, con las reglas de Windows (denegar gana). Columnas: permiso en la carpeta, <strong>por red</strong> (si está dentro de un recurso compartido), <strong>efectivo</strong> (el más restrictivo de los dos), quién se lo da y quién se lo deniega.</p>
-<p><strong>Solo donde cambia</strong> (marcado de serie) enseña la carpeta principal y solo las carpetas y archivos donde el acceso es distinto del de la carpeta de arriba. Sin marcar, una fila por cada elemento leído.</p>
-<div class="alert-info">Si la consulta es de un <strong>grupo</strong>, se ve lo que tiene el grupo, no lo que cada usuario tiene además por otros grupos. Si no se puede consultar Active Directory, se usan los grupos directos del dominio y se avisa.</div>
-
-<h3 id="perm-copias">&#128190; Copias y restauración</h3>
-<div class="table-wrap"><table>
-<thead><tr><th>Botón</th><th>Qué hace</th></tr></thead>
-<tbody>
-<tr><td><span class="param-name">&#128190; Guardar copia de lo leído</span></td><td>Guarda propietario, herencia y todos los permisos de lo leído, más los permisos de red de los recursos compartidos de dentro, en <code>INFORMES\PERMISOS\Permisos_&lt;equipo&gt;_&lt;carpeta&gt;_AAAAMMDD_HHMMSS.msysperm</code>.</td></tr>
-<tr><td><span class="param-name">&#9851;&#65039; Restaurar…</span> (o doble clic)</td><td>Ventana de restauración: <strong>Destino</strong> (la misma carpeta u otra, en este equipo o en otro servidor), <strong>Rama</strong> (solo una subcarpeta) y <strong>&#128269; Comparar con lo actual</strong>, que enseña qué cambiaría sin tocar nada. Después, <strong>Restaurar lo seleccionado</strong> (una o varias carpetas) o <strong>Restaurar todo</strong>. En «&#127760; Permisos de red» se ven los recursos compartidos distintos y, si se marca, se crean los que falten.</td></tr>
-<tr><td><span class="param-name">&#128256; Equivalencias de cuentas…</span></td><td>Para restaurar en <strong>otro servidor o dominio</strong>. Las cuentas de Windows (Todos, Administradores, SYSTEM…) valen en cualquier equipo; las del dominio o del servidor se buscan por nombre en el destino, cambiando el dominio (o el nombre del servidor, para sus cuentas locales) en la tabla de arriba. Doble clic en «Cuenta en el destino» para poner otra a mano. Las que no existen en el destino se quitan al restaurar; si el propietario no existe, pasa a Administradores. Se abre sola al comparar con un destino de otro equipo.</td></tr>
-<tr><td><span class="param-name">&#8644; Comparar dos copias</span></td><td>Con dos copias seleccionadas (Ctrl + clic): qué cambió de la más antigua a la más nueva (nuevas, desaparecidas y qué permisos se pusieron o quitaron).</td></tr>
-<tr><td><span class="param-name">&#128194; Abrir en «Permisos»</span></td><td>Ver y analizar una copia sin cambiar nada (por ejemplo, la de un cliente). Con una copia abierta los botones de cambiar están apagados.</td></tr>
-<tr><td><span class="param-name">&#128228; Exportar para icacls…</span></td><td>Copia adicional en el formato de <code>icacls /save</code>, para restaurarla con <code>icacls /restore</code> en un equipo sin MASys. No incluye propietarios.</td></tr>
-<tr><td><span class="param-name">&#128193; Carpeta · &#128229; Otra copia…</span></td><td>Abrir <code>INFORMES\PERMISOS</code> o una copia guardada en otro sitio.</td></tr>
-</tbody></table></div>
-<div class="flow">
-  <div class="flow-step">Leer la carpeta</div>
-  <div class="flow-step">&#128190; Guardar copia</div>
-  <div class="flow-step">&#9851;&#65039; Restaurar… &#8250; Comparar</div>
-  <div class="flow-step">Restaurar lo seleccionado o todo</div>
-</div>
-<div class="alert-warning"><strong>Qué se restaura.</strong> Se comparan y escriben el propietario, si la herencia está cortada y los permisos puestos a mano. Lo heredado lo recalcula Windows desde la carpeta de arriba, igual que hace el Explorador. Las carpetas que hay en el destino y no estaban en la copia no se tocan. Antes de restaurar se guarda una copia de cómo estaba el destino.</div>
-</section>
-
-<!-- ================================================================== -->
 <section id="opciones">
 <h2>Opciones y valores</h2>
 <div class="table-wrap"><table>
@@ -1214,7 +1425,6 @@ y las copias de Credenciales y Navegadores (sacan credenciales a disco). Su cód
 </tbody></table></div>
 </section>
 
-<!-- ================================================================== -->
 <section id="archivos">
 <h2>Archivos que genera</h2>
 <div class="dir-tree"><span class="folder">MASYS\</span>
@@ -1236,7 +1446,6 @@ y las copias de Credenciales y Navegadores (sacan credenciales a disco). Su cód
 <span class="folder">%TEMP%\MASys_correo\</span>  <span class="file">cuenta_….prf (alta en Outlook, sin contraseña) · adjuntos abiertos desde el visor</span></div>
 </section>
 
-<!-- ================================================================== -->
 <section id="ejemplos">
 <h2>Ejemplos de uso</h2>
 <h3>Configurar el correo de un usuario nuevo en Outlook</h3>
@@ -1365,7 +1574,6 @@ Dirección = <span class="string">midominio.ddns.net</span>   <span class="param
 <span class="comment"># En el móvil: Enviar informe ahora; después, en el árbol: empresa › usuario › terminal › 👥 Datos personales › Contactos › 📄 CSV…</span></pre>
 </section>
 
-<!-- ================================================================== -->
 <section id="problemas">
 <h2>Resolución de problemas</h2>
 <div class="table-wrap"><table>
@@ -1461,7 +1669,6 @@ Dirección = <span class="string">midominio.ddns.net</span>   <span class="param
 </tbody></table></div>
 </section>
 
-<!-- ================================================================== -->
 <section id="legal">
 <h2>Aviso legal</h2>
 <div class="alert-warning"><strong>Herramienta para técnicos.</strong> Varias acciones cambian la configuración de Windows (características, asociaciones, iconos superpuestos, iconos de unidades, firewall) y los permisos y propietarios de carpetas, también en servidores. Úsalas solo en equipos que administres o con permiso de su propietario, y revisa siempre la confirmación antes de aceptar.</div>
@@ -1484,7 +1691,7 @@ Dirección = <span class="string">midominio.ddns.net</span>   <span class="param
 </div>
 </section>
 
-<footer>MASys &middot; Versión 5.7.3 &middot; Actualizado el 16/11/2026<br>Aplicación desarrollada por Masoft.es</footer>
+<footer>MASys &middot; Versión 5.7.3 &middot; Actualizado el 18/11/2026<br>Aplicación desarrollada por Masoft.es</footer>
 </main>
 </body>
 </html>
